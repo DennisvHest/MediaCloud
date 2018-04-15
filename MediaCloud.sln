@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaCloud.Web", "MediaCloud.Web\MediaCloud.Web.csproj", "{15DB4F1B-436A-43E8-AED7-9824DD277758}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaCloud.Services", "MediaCloud.Services\MediaCloud.Services.csproj", "{F7D4CB22-1D0C-4ABB-8D7A-4C553FF3A12F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaCloud.Domain", "MediaCloud.Domain\MediaCloud.Domain.csproj", "{44D27861-4DF4-4D39-84DF-5941F384079F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{15DB4F1B-436A-43E8-AED7-9824DD277758}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15DB4F1B-436A-43E8-AED7-9824DD277758}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15DB4F1B-436A-43E8-AED7-9824DD277758}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7D4CB22-1D0C-4ABB-8D7A-4C553FF3A12F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7D4CB22-1D0C-4ABB-8D7A-4C553FF3A12F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7D4CB22-1D0C-4ABB-8D7A-4C553FF3A12F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7D4CB22-1D0C-4ABB-8D7A-4C553FF3A12F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44D27861-4DF4-4D39-84DF-5941F384079F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44D27861-4DF4-4D39-84DF-5941F384079F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44D27861-4DF4-4D39-84DF-5941F384079F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44D27861-4DF4-4D39-84DF-5941F384079F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
