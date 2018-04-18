@@ -6,7 +6,7 @@
     "ng": "ng",
     "server-start": "dotnet run",
     "client-start": "ng serve -o --proxy-config proxy.config.json",
-    "start": "npm run server-start && npm run client-start",
+    "start": "ng serve -o --proxy-config proxy.config.json",
     "build": "ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
