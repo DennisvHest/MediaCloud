@@ -3,6 +3,6 @@
     <a class="subheader">Libraries</a>
   </li>
   <li *ngFor="let library of libraries">
-    <a class="waves-effect waves-light" href="#">{{library.name}}</a>
+    <a class="waves-effect waves-light" [routerLink]="['/libraries', library.id]">{{library.name}}</a>
   </li>
 </ul>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Library } from '../models/library';
 import { Item } from '../models/item';
-import { LibraryService } from '../library.service';
+import { LibraryService } from '../libraries/library.service';
 
 @Component({
   selector: 'app-side-nav',

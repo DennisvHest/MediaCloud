@@ -1,34 +1,35 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using MediaCloud.Domain.Entities;
+using MediaCloud.Domain.Repositories;
 
 namespace MediaCloud.Services {
 
-    public interface ILibraryService<T> where T : Item {
-        Task<Library<Movie>> Create(string name, string folderPath);
-        IEnumerable<Library<T>> Get();
-        Library<T> Get(int id);
+    public interface ILibraryService<T> where T : Library {
+        Task<T> Create(string name, string folderPath);
+        Task<IEnumerable<T>> Get();
+        Task<T> Get(int id);
     }
 
-    public abstract class LibraryService<T> : ILibraryService<T> where T : Item {
+    public class LibraryService : ILibraryService<Library> {
 
-        private readonly List<Library<T>> _libraries;
+        private readonly IUnitOfWork _unitOfWork;
 
-        protected LibraryService() {
-            _libraries = new List<Library<T>>();
+        protected LibraryService(IUnitOfWork unitOfWork) {
+            _unitOfWork = unitOfWork;
         }
 
-        public abstract Task<Library<Movie>> Create(string name, string folderPath);
-
-        public IEnumerable<Library<T>> Get() {
-            return _libraries;
+        public Task<Library> Create(string name, string folderPath) {
+            throw new NotImplementedException("Not implemented yet.");
         }
 
-        public Library<T> Get(int id) {
-            return _libraries.FirstOrDefault(l => l.Id == id);
+        public async Task<IEnumerable<Library>> Get() {
+            return await _unitOfWork.Libraries.GetAll();
+        }
+
+        public async Task<Library> Get(int id) {
+            return await _unitOfWork.Libraries.GetIncludingItems(id);
         }
     }
 }

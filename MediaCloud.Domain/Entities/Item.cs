@@ -1,4 +1,5 @@
-﻿using TMDbLib.Objects.Search;
+﻿using System.Collections.Generic;
+using TMDbLib.Objects.Search;
 
 namespace MediaCloud.Domain.Entities {
 
@@ -6,6 +7,8 @@ namespace MediaCloud.Domain.Entities {
 
         public int Id { get; set; }
         public string Title { get; set; }
+
+        public virtual IEnumerable<ItemLibrary> ItemLibraries { get; set; }
 
         protected Item() { }
 

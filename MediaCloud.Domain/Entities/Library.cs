@@ -2,10 +2,10 @@
 
 namespace MediaCloud.Domain.Entities {
 
-    public class Library<T> where T : Item {
+    public abstract class Library {
 
         public int Id { get; set; }
         public string Name { get; set; }
-        public IEnumerable<T> Items { get; set; }
+        public virtual ICollection<ItemLibrary> ItemLibraries { get; set; }
     }
 }

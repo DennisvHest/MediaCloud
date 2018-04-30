@@ -1,28 +1,44 @@
 using System.IO;
+using MediaCloud.Domain;
 using MediaCloud.Domain.Entities;
+using MediaCloud.Domain.Repositories;
 using MediaCloud.Domain.Repositories.Movie;
 using MediaCloud.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MediaCloud.Web {
 
   public class Startup {
 
+    public static IConfiguration Configuration { get; set; }
+
     // This method gets called by the runtime. Use this method to add services to the container.
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services) {
       services.AddMvc();
 
+      services.AddDbContext<MediaCloudContext>();
+
       services.AddTransient<IMovieApiRepository, TmdbMovieApiRepository>();
 
-      services.AddTransient<ILibraryService<Movie>, MovieLibraryService>();
+      services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+      services.AddTransient<ILibraryService<MovieLibrary>, MovieLibraryService>();
       services.AddTransient<IItemService<Movie>, MovieService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
+      var builder = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json");
+
+      Configuration = builder.Build();
+
       app.Use(async (context, next) => {
         await next();
         if (context.Response.StatusCode == 404 &&
