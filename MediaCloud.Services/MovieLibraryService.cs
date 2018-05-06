@@ -25,7 +25,8 @@ namespace MediaCloud.Services {
             List<Movie> movies = new List<Movie>();
 
             //Find video files
-            string[] itemFiles = Directory.GetFileSystemEntries(folderPath, "*.mkv", SearchOption.AllDirectories);
+            List<string> itemFiles = Directory.GetFileSystemEntries(folderPath, "*.mkv", SearchOption.AllDirectories).ToList();
+			itemFiles.AddRange(Directory.GetFileSystemEntries(folderPath, "*.mp4", SearchOption.AllDirectories));
 
             foreach (string movieFile in itemFiles) {
                 FileInfo file = new FileInfo(movieFile);

@@ -1,4 +1,5 @@
 export abstract class Item {
-    protected id: number;
-    protected title: string;
+    id: number;
+    title: string;
+    posterPath: string;
 }

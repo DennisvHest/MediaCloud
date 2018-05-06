@@ -1,0 +1,17 @@
+.item-card {
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.item-card .card-content {
+    padding: 5px;
+    color: white;
+    text-align: center;
+    border-top: 3px solid #f47a42;
+}
+
+.item-card .card-content .card-title {
+    font-size: 16px;
+    font-weight: bold;
+}

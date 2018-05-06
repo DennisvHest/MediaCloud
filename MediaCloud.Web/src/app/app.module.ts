@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 import { LibraryDetailComponent } from './libraries/library-detail/library-detail.component';
 import { LibrariesModule } from './libraries/libraries.module';
+import { ItemCardComponent } from './items/item-card/item-card.component';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent }

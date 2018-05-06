@@ -11,9 +11,10 @@ using System;
 namespace MediaCloud.Domain.Migrations
 {
     [DbContext(typeof(MediaCloudContext))]
-    partial class MediaCloudContextModelSnapshot : ModelSnapshot
+    [Migration("20180506123857_AddedPosterPath")]
+    partial class AddedPosterPath
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -7,6 +7,7 @@ namespace MediaCloud.Domain.Entities {
 
         public Movie(SearchMovie apiMovie) : base(apiMovie) {
             Title = apiMovie.Title;
+	        PosterPath = apiMovie.PosterPath;
         }
     }
 }
