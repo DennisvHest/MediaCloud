@@ -9,10 +9,13 @@ namespace MediaCloud.Domain {
 
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Movie> Movies { get; set; }
+        public virtual DbSet<Season> Season { get; set; }
+        public virtual DbSet<Episode> Episodes { get; set; }
 
 		public virtual DbSet<ItemLibrary> ItemLibraries { get; set; }
         public virtual DbSet<Library> Libraries { get; set; }
         public virtual DbSet<MovieLibrary> MovieLibraries { get; set; }
+        public virtual DbSet<SeriesLibrary> SeriesLibraries { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
             optionsBuilder.UseSqlite("Data Source=" + Path.Combine(

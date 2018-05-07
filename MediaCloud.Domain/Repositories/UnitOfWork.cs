@@ -10,12 +10,14 @@ namespace MediaCloud.Domain.Repositories {
 
         public ILibraryRepository Libraries { get; }
         public IMovieLibraryRepository MovieLibraries { get; }
+        public ISeriesLibraryRepository SeriesLibraries { get; }
         public IMovieRepository Movies { get; }
 
         public UnitOfWork(MediaCloudContext context) {
             _context = context;
             Libraries = new LibraryRepository(context);
             MovieLibraries = new MovieLibraryRepository(context);
+            SeriesLibraries = new SeriesLibraryRepository(context);
             Movies = new MovieRepository(context);
         }
 

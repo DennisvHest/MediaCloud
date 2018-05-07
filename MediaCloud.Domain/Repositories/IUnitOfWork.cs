@@ -8,6 +8,7 @@ namespace MediaCloud.Domain.Repositories {
     public interface IUnitOfWork : IDisposable {
         ILibraryRepository Libraries { get; }
         IMovieLibraryRepository MovieLibraries { get; }
+        ISeriesLibraryRepository SeriesLibraries { get; }
         IMovieRepository Movies { get; }
         Task<int> Complete();
     }

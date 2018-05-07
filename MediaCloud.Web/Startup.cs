@@ -1,14 +1,17 @@
 using System.IO;
+using MediaCloud.Common;
 using MediaCloud.Domain;
 using MediaCloud.Domain.Entities;
 using MediaCloud.Domain.Repositories;
 using MediaCloud.Domain.Repositories.Movie;
+using MediaCloud.Domain.Repositories.Series;
 using MediaCloud.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TMDbLib.Client;
 
 namespace MediaCloud.Web {
 
@@ -23,11 +26,15 @@ namespace MediaCloud.Web {
 
       services.AddDbContext<MediaCloudContext>();
 
+      services.AddTransient(s => new TMDbClient(Settings.TmdbApiKey));
       services.AddTransient<IMovieApiRepository, TmdbMovieApiRepository>();
+      services.AddTransient<ISeriesApiRepository, TmdbSeriesApiRepository>();
 
       services.AddTransient<IUnitOfWork, UnitOfWork>();
 
+      services.AddTransient<ILibraryService<Library>, LibraryService>();
       services.AddTransient<ILibraryService<MovieLibrary>, MovieLibraryService>();
+      services.AddTransient<ILibraryService<SeriesLibrary>, SeriesLibraryService>();
       services.AddTransient<IItemService<Movie>, MovieService>();
     }
 

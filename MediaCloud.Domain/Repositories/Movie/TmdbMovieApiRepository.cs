@@ -8,12 +8,16 @@ using TMDbLib.Objects.Search;
 
 namespace MediaCloud.Domain.Repositories.Movie {
 
+    public interface IMovieApiRepository {
+        Task<IEnumerable<Entities.Movie>> SearchMovie(string query);
+    }
+
     public class TmdbMovieApiRepository : IMovieApiRepository {
 
         private readonly TMDbClient _tmbdClient;
 
-        public TmdbMovieApiRepository() {
-            _tmbdClient = new TMDbClient(Settings.TmdbApiKey);
+        public TmdbMovieApiRepository(TMDbClient tmDbClient) {
+            _tmbdClient = tmDbClient;
         }
 
         public async Task<IEnumerable<Entities.Movie>> SearchMovie(string query) {
