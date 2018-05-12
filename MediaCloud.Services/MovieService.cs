@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using MediaCloud.Domain.Entities;
 using MediaCloud.Domain.Repositories;
-using MediaCloud.Domain.Repositories.Library;
 using MediaCloud.Domain.Repositories.Movie;
 
 namespace MediaCloud.Services {

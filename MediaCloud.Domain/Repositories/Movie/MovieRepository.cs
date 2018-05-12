@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 
-namespace MediaCloud.Domain.Repositories.Library {
+namespace MediaCloud.Domain.Repositories.Movie {
 
     public interface IMovieRepository : IRepository<Entities.Movie> {
 

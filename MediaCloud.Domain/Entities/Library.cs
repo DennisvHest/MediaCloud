@@ -7,5 +7,6 @@ namespace MediaCloud.Domain.Entities {
         public int Id { get; set; }
         public string Name { get; set; }
         public virtual ICollection<ItemLibrary> ItemLibraries { get; set; }
+        public virtual ICollection<Media> Media { get; set; }
     }
 }

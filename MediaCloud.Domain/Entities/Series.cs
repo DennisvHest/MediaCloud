@@ -9,8 +9,7 @@ namespace MediaCloud.Domain.Entities {
 
         public Series() { }
 
-	    public Series(SearchTv apiSeries) {
-	        Id = apiSeries.Id;
+	    public Series(SearchTv apiSeries) : base(apiSeries) {
 	        Title = apiSeries.Name;
 	        PosterPath = apiSeries.PosterPath;
 	    }

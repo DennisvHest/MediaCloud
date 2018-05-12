@@ -84,6 +84,30 @@ namespace MediaCloud.Domain.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Library");
                 });
 
+            modelBuilder.Entity("MediaCloud.Domain.Entities.Media", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int?>("EpisodeId");
+
+                    b.Property<string>("FileLocation");
+
+                    b.Property<int?>("LibraryId");
+
+                    b.Property<int?>("MovieId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EpisodeId");
+
+                    b.HasIndex("LibraryId");
+
+                    b.HasIndex("MovieId");
+
+                    b.ToTable("Media");
+                });
+
             modelBuilder.Entity("MediaCloud.Domain.Entities.Season", b =>
                 {
                     b.Property<int>("Id")
@@ -158,6 +182,21 @@ namespace MediaCloud.Domain.Migrations
                         .WithMany("ItemLibraries")
                         .HasForeignKey("LibraryId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("MediaCloud.Domain.Entities.Media", b =>
+                {
+                    b.HasOne("MediaCloud.Domain.Entities.Episode", "Episode")
+                        .WithMany("Media")
+                        .HasForeignKey("EpisodeId");
+
+                    b.HasOne("MediaCloud.Domain.Entities.Library", "Library")
+                        .WithMany("Media")
+                        .HasForeignKey("LibraryId");
+
+                    b.HasOne("MediaCloud.Domain.Entities.Movie", "Movie")
+                        .WithMany("Media")
+                        .HasForeignKey("MovieId");
                 });
 
             modelBuilder.Entity("MediaCloud.Domain.Entities.Season", b =>

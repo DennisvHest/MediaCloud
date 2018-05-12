@@ -22,11 +22,14 @@ namespace MediaCloud.Services {
         }
 
         public async Task<MovieLibrary> Create(string name, string folderPath) {
+            MovieLibrary library = new MovieLibrary { Name = name };
+
             List<Movie> movies = new List<Movie>();
+            List<Media> media = new List<Media>();
 
             //Find video files
             List<string> itemFiles = Directory.GetFileSystemEntries(folderPath, "*.mkv", SearchOption.AllDirectories).ToList();
-			itemFiles.AddRange(Directory.GetFileSystemEntries(folderPath, "*.mp4", SearchOption.AllDirectories));
+            itemFiles.AddRange(Directory.GetFileSystemEntries(folderPath, "*.mp4", SearchOption.AllDirectories));
 
             foreach (string movieFile in itemFiles) {
                 FileInfo file = new FileInfo(movieFile);
@@ -34,11 +37,16 @@ namespace MediaCloud.Services {
                 //Search movie in API
                 IEnumerable<Movie> foundMovies = await _movieApiRepository.SearchMovie(Path.GetFileNameWithoutExtension(file.Name));
 
-                movies.Add(foundMovies.FirstOrDefault());
+                if (!foundMovies.Any()) continue;
+
+                Movie foundMovie = foundMovies.FirstOrDefault();
+
+                movies.Add(foundMovie);
+                media.Add(new Media { Movie = foundMovie, FileLocation = file.FullName, Library = library });
             }
 
-            MovieLibrary library = new MovieLibrary { Name = name };
-            library.ItemLibraries = movies.Select(m => new ItemLibrary {Item = m, Library = library}).ToList();
+            library.ItemLibraries = movies.Select(m => new ItemLibrary { Item = m, Library = library }).ToList();
+            library.Media = media;
 
             await _unitOfWork.MovieLibraries.AddOrUpdateInclusive(library);
             await _unitOfWork.Complete();

@@ -1,7 +1,10 @@
-﻿using TMDbLib.Objects.Search;
+﻿using System.Collections.Generic;
+using TMDbLib.Objects.Search;
 
 namespace MediaCloud.Domain.Entities {
     public class Movie : Item {
+
+        public virtual ICollection<Media> Media { get; set; }
 
         public Movie() { }
 

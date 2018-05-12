@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
-using MediaCloud.Domain.Entities;
 using MediaCloud.Domain.Repositories.Library;
+using MediaCloud.Domain.Repositories.Media;
+using MediaCloud.Domain.Repositories.Movie;
 
 namespace MediaCloud.Domain.Repositories {
 
@@ -12,6 +13,7 @@ namespace MediaCloud.Domain.Repositories {
         public IMovieLibraryRepository MovieLibraries { get; }
         public ISeriesLibraryRepository SeriesLibraries { get; }
         public IMovieRepository Movies { get; }
+        public IMediaRepository Media { get; }
 
         public UnitOfWork(MediaCloudContext context) {
             _context = context;
@@ -19,6 +21,7 @@ namespace MediaCloud.Domain.Repositories {
             MovieLibraries = new MovieLibraryRepository(context);
             SeriesLibraries = new SeriesLibraryRepository(context);
             Movies = new MovieRepository(context);
+            Media = new MediaRepository(context);
         }
 
         public async Task<int> Complete() {

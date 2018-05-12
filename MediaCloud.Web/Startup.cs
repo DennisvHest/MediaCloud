@@ -36,6 +36,7 @@ namespace MediaCloud.Web {
       services.AddTransient<ILibraryService<MovieLibrary>, MovieLibraryService>();
       services.AddTransient<ILibraryService<SeriesLibrary>, SeriesLibraryService>();
       services.AddTransient<IItemService<Movie>, MovieService>();
+      services.AddTransient<IMediaService, MediaService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
