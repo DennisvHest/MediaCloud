@@ -9,6 +9,7 @@ namespace MediaCloud.Domain {
 
         public virtual DbSet<Item> Items { get; set; }
         public virtual DbSet<Movie> Movies { get; set; }
+        public virtual DbSet<Series> Series { get; set; }
         public virtual DbSet<Season> Season { get; set; }
         public virtual DbSet<Episode> Episodes { get; set; }
         public virtual DbSet<Media> Media { get; set; }

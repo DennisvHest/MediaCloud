@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using MediaCloud.Common.Models;
 using MediaCloud.Domain.Entities;
 using MediaCloud.Domain.Repositories;
 using MediaCloud.Domain.Repositories.Series;
@@ -25,6 +26,8 @@ namespace MediaCloud.Services {
             List<Series> series = new List<Series>();
             List<Media> media = new List<Media>();
 
+            SeriesLibrary library = new SeriesLibrary { Name = name };
+
             //Find video files
             List<string> itemFiles = Directory.GetFileSystemEntries(folderPath, "*.mkv", SearchOption.AllDirectories).ToList();
             itemFiles.AddRange(Directory.GetFileSystemEntries(folderPath, "*.mp4", SearchOption.AllDirectories));
@@ -32,28 +35,50 @@ namespace MediaCloud.Services {
             //Group series by title
             Regex regex = new Regex(@"(.+)\s+?(S[0-9]{1,2}E[0-9]{1,2})");
 
-            IEnumerable<Match> fileNameMatches = itemFiles.Select(f => regex.Match(Path.GetFileNameWithoutExtension(new FileInfo(f).Name)));
+            IList<TvMediaSearchModel> searchModels = new List<TvMediaSearchModel>();
 
-            IEnumerable<IGrouping<string, IEnumerable<string>>> groupedSeries = fileNameMatches.GroupBy(m => 
-                m.Groups[1].Value, 
-                m => fileNameMatches.Where(ma => ma.Groups[1].Value == m.Groups[1].Value)
-                    .Select(mat => mat.Groups[2].Value));
+            foreach (string itemFile in itemFiles) {
+                FileInfo fileInfo = new FileInfo(itemFile);
+                Match match = regex.Match(Path.GetFileNameWithoutExtension(fileInfo.Name));
 
-            foreach (IGrouping<string, IEnumerable<string>> seriesFile in groupedSeries) {
-                //Search series in API
-                IEnumerable<Series> foundSeries = await _seriesApiRepository.SearchSeries(seriesFile.Key);
-
-                if (foundSeries.Any()) {
-                    series.Add(foundSeries.FirstOrDefault());
+                if (match.Success) {
+                    searchModels.Add(new TvMediaSearchModel {
+                        Title = match.Groups[1].Value,
+                        FileInfo = fileInfo,
+                        SeasonEpisodePair = new SeasonEpisodePair(match.Groups[2].Value)
+                    });
                 }
             }
 
+            IEnumerable<IGrouping<string, TvMediaSearchModel>> groupedSeries = searchModels.GroupBy(m => m.Title);
+
+            foreach (IGrouping<string, TvMediaSearchModel> seriesSearchModel in groupedSeries) {
+                //Search series in API
+                Series foundSeries = await _seriesApiRepository.SearchSingleSeriesInclusive(seriesSearchModel.Key, seriesSearchModel.Select(m => m.SeasonEpisodePair));
+
+                if (foundSeries == null) continue;
+
+                foreach (Season season in foundSeries.Seasons) {
+                    foreach (Episode episode in season.Episodes) {
+                        TvMediaSearchModel episodeFile = seriesSearchModel.FirstOrDefault(m =>
+                            m.SeasonEpisodePair.Season == season.SeasonNumber &&
+                            m.SeasonEpisodePair.Episode == episode.EpisodeNumber);
+
+                        if (episodeFile == null) continue;
+
+                        media.Add(new Media { Episode = episode, FileLocation = episodeFile.FileInfo.FullName, Library = library });
+                    }
+                }
+
+                series.Add(foundSeries);
+            }
+
             series = series.DistinctBy(s => s.Id).ToList();
-
-            SeriesLibrary library = new SeriesLibrary { Name = name };
+            
             library.ItemLibraries = series.Select(m => new ItemLibrary { Item = m, Library = library }).ToList();
+            library.Media = media;
 
-            _unitOfWork.SeriesLibraries.AddOrUpdateInclusive(library);
+            await _unitOfWork.SeriesLibraries.AddOrUpdateInclusive(library);
             await _unitOfWork.Complete();
 
             return library;

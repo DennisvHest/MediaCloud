@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using MediaCloud.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediaCloud.Domain.Repositories.Library {
 
@@ -22,8 +23,22 @@ namespace MediaCloud.Domain.Repositories.Library {
             throw new System.NotImplementedException();
         }
 
-        public override Task AddOrUpdateInclusive(SeriesLibrary entity) {
-            throw new System.NotImplementedException();
+        public override async Task AddOrUpdateInclusive(SeriesLibrary library) {
+            IList<ItemLibrary> existingItemLibraries = MediaCloudContext.ItemLibraries.ToList();
+
+            foreach (ItemLibrary itemLibrary in library.ItemLibraries) {
+                ItemLibrary existingItemLibrary = existingItemLibraries.FirstOrDefault(x => x.ItemId == itemLibrary.Item.Id);
+
+                if (existingItemLibrary != null) {
+                    MediaCloudContext.Entry(itemLibrary.Item).State = EntityState.Unchanged;
+                    itemLibrary.ItemId = existingItemLibrary.ItemId;
+                } else {
+                    existingItemLibraries.Add(itemLibrary);
+                }
+            }
+
+            await MediaCloudContext.SeriesLibraries.AddAsync(library);
+            await MediaCloudContext.SaveChangesAsync();
         }
 
         private MediaCloudContext MediaCloudContext => Context as MediaCloudContext;

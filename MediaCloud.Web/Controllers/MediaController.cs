@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using MediaCloud.Common;
 using MediaCloud.Common.Helpers;
+using MediaCloud.Common.Models;
 using MediaCloud.Domain.Entities;
 using MediaCloud.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -26,76 +27,74 @@ namespace MediaCloud.Web.Controllers {
     public async Task<HttpResponseMessage> Stream(int id) {
       Media media = await _mediaService.Get(id);
 
-      FileInfo fileInfo = new FileInfo(media.FileLocation);
-
       HttpResponseMessage response = new HttpResponseMessage();
+
+      //Check if media exists
+      if (media == null) {
+        response.StatusCode = HttpStatusCode.NotFound;
+        return response;
+      }
+
+      FileInfo fileInfo = new FileInfo(media.FileLocation);
 
       if (!FileHelper.FileExists(fileInfo)) {
         response.StatusCode = HttpStatusCode.NotFound;
         return response;
       }
 
-      string rangeHeader = Request.Headers["range"];
+      string rangeHeaderString = Request.Headers["range"];
 
       response.Headers.AcceptRanges.Add("bytes");
 
       // The request will be treated as normal request if there is no Range header.
-      if (rangeHeader == null) {
-        response.StatusCode = HttpStatusCode.OK;
-        response.Content = new PushStreamContent((outputStream, httpContent, transpContext) => {
-          using (outputStream) // Copy the file to output stream straightforward. 
-          using (Stream inputStream = fileInfo.OpenRead()) {
-            try {
-              inputStream.CopyTo(outputStream, Settings.ReadStreamBufferSize);
-            } catch (Exception error) {
-              Debug.WriteLine(error);
-            }
-          }
-        }, "video/mp4");
-
-        response.Content.Headers.ContentLength = fileInfo.Length;
+      if (rangeHeaderString == null) {
+        CreateNoRangeResponse(response, fileInfo);
         return response;
       }
 
-      string[] range = rangeHeader.Split('=')[1].Split("-");
-      long? from = null;
-      long? to = null;
+      RangeHeader rangeHeader = StreamHelper.ParseRangeHeader(rangeHeaderString);
 
-      try {
-        from = long.Parse(range[0]);
-      } catch (Exception e) {}
-
-      try {
-        to = long.Parse(range[1]);
-      } catch (Exception e) { }
-
-      RangeItemHeaderValue rangeItemHeader = new RangeItemHeaderValue(from, to);
-
-      long start = 0, end = 0;
-
-      // 1. If the unit is not 'bytes'.
-      // 2. If there are multiple ranges in header value.
-      // 3. If start or end position is greater than file length.
-//      if (rangeHeader.Unit != "bytes" || rangeHeader.Ranges.Count > 1 ||
-//          !TryReadRangeItem(rangeHeader.Ranges.First(), totalLength, out start, out end)) {
-//        response.StatusCode = HttpStatusCode.RequestedRangeNotSatisfiable;
-//        response.Content = new StreamContent(Stream.Null);  // No content for this status.
-//        response.Content.Headers.ContentRange = new ContentRangeHeaderValue(totalLength);
-//        response.Content.Headers.ContentType = GetMimeNameFromExt(fileInfo.Extension);
-//
-//        return response;
-//      }
-
-      if (!FileHelper.TryReadRangeItem(rangeItemHeader, fileInfo.Length, out start, out end)) {
-
+      //If the range is not satisfiable, return a RequestedRangeNotSatisfiable response
+      if (rangeHeader.Unit != "bytes" || /*rangeHeader.Ranges.Count > 1 ||*/
+          !FileHelper.TryReadRangeItem(rangeHeader.Value, fileInfo.Length, out long start, out long end)) {
+        CreateRangeNotSatisfiableResponse(response, fileInfo);
+        return response;
       }
 
+      //The range header is fine, return partial content
+      CreatePartialContentResponse(response, fileInfo, start, end);
+      return response;
+    }
+
+    private void CreateNoRangeResponse(HttpResponseMessage response, FileInfo fileInfo) {
+      response.StatusCode = HttpStatusCode.OK;
+      response.Content = new PushStreamContent((outputStream, httpContent, transpContext) => {
+        using (outputStream) // Copy the file to output stream straightforward. 
+        using (Stream inputStream = fileInfo.OpenRead()) {
+          try {
+            inputStream.CopyTo(outputStream, Settings.ReadStreamBufferSize);
+          } catch (Exception error) {
+            Debug.WriteLine(error);
+          }
+        }
+      }, "video/mp4");
+
+      response.Content.Headers.ContentLength = fileInfo.Length;
+    }
+
+    private void CreateRangeNotSatisfiableResponse(HttpResponseMessage response, FileInfo fileInfo) {
+      response.StatusCode = HttpStatusCode.RequestedRangeNotSatisfiable;
+      response.Content = new StreamContent(System.IO.Stream.Null);
+      response.Content.Headers.ContentRange = new ContentRangeHeaderValue(fileInfo.Length);
+      response.Content.Headers.ContentType = new MediaTypeHeaderValue("video/mp4");
+    }
+
+    private void CreatePartialContentResponse(HttpResponseMessage response, FileInfo fileInfo, long start, long end) {
       ContentRangeHeaderValue contentRange = new ContentRangeHeaderValue(start, end, fileInfo.Length);
 
-      // We are now ready to produce partial content.
       response.StatusCode = HttpStatusCode.PartialContent;
       response.Content = new PushStreamContent((outputStream, httpContent, transpContext) => {
-        using (outputStream) // Copy the file to output stream in indicated range.
+        using (outputStream)
         using (Stream inputStream = fileInfo.OpenRead())
           FileHelper.CreatePartialContent(inputStream, outputStream, start, end);
 
@@ -103,8 +102,6 @@ namespace MediaCloud.Web.Controllers {
 
       response.Content.Headers.ContentLength = end - start + 1;
       response.Content.Headers.ContentRange = contentRange;
-
-      return response;
     }
   }
 }
