@@ -13,10 +13,6 @@ namespace MediaCloud.Domain.Repositories.Library {
 
 		public LibraryRepository(DbContext context) : base(context) { }
 
-		public override Task AddOrUpdateInclusive(Entities.Library entity) {
-			throw new System.NotImplementedException();
-		}
-
 	    public async Task<IEnumerable<Entities.Library>> GetAllIncludingItems() {
 	        return await MediaCloudContext.Libraries
 	            .Include(l => l.ItemLibraries)
@@ -31,6 +27,10 @@ namespace MediaCloud.Domain.Repositories.Library {
 				.SingleOrDefaultAsync(l => l.Id == id);
 		}
 
-		private MediaCloudContext MediaCloudContext => Context as MediaCloudContext;
+	    public override Task AddOrUpdateInclusive(Entities.Library entity) {
+	        throw new System.NotImplementedException();
+	    }
+
+        private MediaCloudContext MediaCloudContext => Context as MediaCloudContext;
 	}
 }

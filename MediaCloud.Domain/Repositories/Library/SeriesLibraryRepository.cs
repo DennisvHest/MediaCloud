@@ -22,22 +22,8 @@ namespace MediaCloud.Domain.Repositories.Library {
             throw new System.NotImplementedException();
         }
 
-        public override async Task AddOrUpdateInclusive(SeriesLibrary library) {
-            IList<ItemLibrary> existingItemLibraries = MediaCloudContext.ItemLibraries.ToList();
-
-            foreach (ItemLibrary itemLibrary in library.ItemLibraries) {
-                ItemLibrary existingItemLibrary = existingItemLibraries.FirstOrDefault(x => x.ItemId == itemLibrary.Item.Id);
-
-                if (existingItemLibrary != null) {
-                    itemLibrary.Item = null;
-                    itemLibrary.ItemId = existingItemLibrary.ItemId;
-                } else {
-                    existingItemLibraries.Add(itemLibrary);
-                }
-            }
-
-            await MediaCloudContext.SeriesLibraries.AddAsync(library);
-            await MediaCloudContext.SaveChangesAsync();
+        public override Task AddOrUpdateInclusive(SeriesLibrary entity) {
+            throw new System.NotImplementedException();
         }
 
         private MediaCloudContext MediaCloudContext => Context as MediaCloudContext;

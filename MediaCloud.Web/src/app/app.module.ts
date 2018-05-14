@@ -11,6 +11,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { LibraryDetailComponent } from './libraries/library-detail/library-detail.component';
 import { LibrariesModule } from './libraries/libraries.module';
 import { ItemCardComponent } from './items/item-card/item-card.component';
+import { PlayerComponent } from './media/player/player.component';
+import { MediaModule } from './media/media.module';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent }
@@ -30,7 +32,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
     ),
-    LibrariesModule
+    LibrariesModule,
+    MediaModule
   ],
   providers: [
     LibraryService

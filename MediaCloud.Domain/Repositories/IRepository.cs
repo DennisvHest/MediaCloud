@@ -13,7 +13,7 @@ namespace MediaCloud.Domain.Repositories {
 
         Task Add(TEntity entity);
         Task AddRange(IEnumerable<TEntity> entities);
-	    Task AddOrUpdateInclusive(TEntity entity);
+        Task AddOrUpdateInclusive(TEntity entity);
 
         void Remove(TEntity entity);
         void RemoveRange(IEnumerable<TEntity> entities);

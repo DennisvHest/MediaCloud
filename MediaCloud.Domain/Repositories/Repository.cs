@@ -43,9 +43,9 @@ namespace MediaCloud.Domain.Repositories {
             await Context.Set<TEntity>().AddRangeAsync(entities);
         }
 
-	    public abstract Task AddOrUpdateInclusive(TEntity entity);
+        public abstract Task AddOrUpdateInclusive(TEntity entity);
 
-	    public void Remove(TEntity entity) {
+        public void Remove(TEntity entity) {
             Context.Set<TEntity>().Remove(entity);
         }
 

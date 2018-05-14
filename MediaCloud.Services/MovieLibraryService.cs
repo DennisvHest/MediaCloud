@@ -48,7 +48,7 @@ namespace MediaCloud.Services {
             library.ItemLibraries = movies.Select(m => new ItemLibrary { Item = m, Library = library }).ToList();
             library.Media = media;
 
-            await _unitOfWork.MovieLibraries.AddOrUpdateInclusive(library);
+            _unitOfWork.MovieLibraries.AddOrUpdateInclusive(library);
             await _unitOfWork.Complete();
 
             return library;

@@ -6,7 +6,8 @@ using MediaCloud.Domain.Repositories;
 namespace MediaCloud.Services {
 
     public interface IMediaService {
-        Task<Stream> GetStream(int mediaId);
+        Task<Media> Get(int id);
+        Task<Stream> GetStream(Media media);
     }
 
     public class MediaService : IMediaService {
@@ -17,9 +18,11 @@ namespace MediaCloud.Services {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<Stream> GetStream(int mediaId) {
-            Media media = await _unitOfWork.Media.Get(mediaId);
+        public async Task<Media> Get(int id) {
+            return await _unitOfWork.Media.Get(id);
+        }
 
+        public async Task<Stream> GetStream(Media media) {
             return File.OpenRead(media.FileLocation);
         }
     }

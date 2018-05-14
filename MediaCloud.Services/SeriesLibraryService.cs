@@ -23,6 +23,7 @@ namespace MediaCloud.Services {
 
         public async Task<SeriesLibrary> Create(string name, string folderPath) {
             List<Series> series = new List<Series>();
+            List<Media> media = new List<Media>();
 
             //Find video files
             List<string> itemFiles = Directory.GetFileSystemEntries(folderPath, "*.mkv", SearchOption.AllDirectories).ToList();
@@ -52,7 +53,7 @@ namespace MediaCloud.Services {
             SeriesLibrary library = new SeriesLibrary { Name = name };
             library.ItemLibraries = series.Select(m => new ItemLibrary { Item = m, Library = library }).ToList();
 
-            await _unitOfWork.SeriesLibraries.AddOrUpdateInclusive(library);
+            _unitOfWork.SeriesLibraries.AddOrUpdateInclusive(library);
             await _unitOfWork.Complete();
 
             return library;

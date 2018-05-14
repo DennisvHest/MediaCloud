@@ -11,7 +11,6 @@ namespace MediaCloud.Domain.Repositories.Media {
     public class MediaRepository : Repository<Entities.Media>, IMediaRepository {
 
         public MediaRepository(DbContext context) : base(context) { }
-
         public override Task AddOrUpdateInclusive(Entities.Media entity) {
             throw new System.NotImplementedException();
         }
