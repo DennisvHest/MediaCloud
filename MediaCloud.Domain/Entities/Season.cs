@@ -20,7 +20,7 @@ namespace MediaCloud.Domain.Entities {
             Episodes = apiSeason.Episodes.Select(e => new Episode(e)).ToList();
         }
 
-        public ICollection<Episode> Episodes { get; set; }
+        public virtual ICollection<Episode> Episodes { get; set; }
 
         public virtual Series Series { get; set; }
     }

@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using MediaCloud.Common;
 using TMDbLib.Client;
 using TMDbLib.Objects.General;
 using TMDbLib.Objects.Search;
@@ -9,6 +8,12 @@ using TMDbLib.Objects.Search;
 namespace MediaCloud.Domain.Repositories.Movie {
 
     public interface IMovieApiRepository {
+
+        /// <summary>
+        /// Searches the API for the movies with the given query.
+        /// </summary>
+        /// <param name="query">Title of the movie.</param>
+        /// <returns>A list of movies matching the query.</returns>
         Task<IEnumerable<Entities.Movie>> SearchMovie(string query);
     }
 

@@ -7,21 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace MediaCloud.Domain.Repositories.Library {
 
     public interface ISeriesLibraryRepository : IRepository<SeriesLibrary> {
-        Task<IEnumerable<SeriesLibrary>> GetAllIncludingSeries();
-        Task<SeriesLibrary> GetIncludingSeries(int id);
+
     }
 
     public class SeriesLibraryRepository : Repository<SeriesLibrary>, ISeriesLibraryRepository {
 
         public SeriesLibraryRepository(MediaCloudContext context) : base(context) { }
-
-        public Task<IEnumerable<SeriesLibrary>> GetAllIncludingSeries() {
-            throw new System.NotImplementedException();
-        }
-
-        public Task<SeriesLibrary> GetIncludingSeries(int id) {
-            throw new System.NotImplementedException();
-        }
 
         public override async Task AddOrUpdateInclusive(SeriesLibrary library) {
             IList<ItemLibrary> existingItemLibraries = MediaCloudContext.ItemLibraries.ToList();

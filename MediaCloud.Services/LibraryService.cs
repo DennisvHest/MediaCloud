@@ -32,11 +32,11 @@ namespace MediaCloud.Services {
         }
 
         public async Task<IEnumerable<Library>> Get() {
-            return await _unitOfWork.Libraries.GetAllIncludingItems();
+            return await _unitOfWork.Libraries.GetAll();
         }
 
         public async Task<Library> Get(int id) {
-            return await _unitOfWork.Libraries.GetIncludingItems(id);
+            return await _unitOfWork.Libraries.Get(id);
         }
     }
 }

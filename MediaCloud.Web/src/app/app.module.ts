@@ -3,8 +3,6 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-import { MaterializeModule } from 'angular2-materialize';
-import { SideNavComponent } from './side-nav/side-nav.component';
 import { LibraryService } from './libraries/library.service';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -13,6 +11,10 @@ import { LibrariesModule } from './libraries/libraries.module';
 import { ItemCardComponent } from './items/item-card/item-card.component';
 import { PlayerComponent } from './media/player/player.component';
 import { MediaModule } from './media/media.module';
+import { LibraryRoutingModule } from './libraries/libraries-routing.module';
+import { SideNavComponent } from './layout/side-nav/side-nav.component';
+import { SideNavService } from './layout/side-nav/side-nav.service';
+import { LayoutModule } from './layout/layout.module';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent }
@@ -20,18 +22,18 @@ const appRoutes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SideNavComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     HttpClientModule,
-    MaterializeModule,
     RouterModule.forRoot(
       appRoutes,
     ),
+    LibraryRoutingModule,
+    LayoutModule,
     LibrariesModule,
     MediaModule
   ],

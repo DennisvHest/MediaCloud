@@ -20,7 +20,9 @@ namespace MediaCloud.Domain {
         public virtual DbSet<SeriesLibrary> SeriesLibraries { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-            optionsBuilder.UseSqlite("Data Source=" + Path.Combine(
+            optionsBuilder
+                .UseLazyLoadingProxies()
+                .UseSqlite("Data Source=" + Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 @"MediaCloud\mediacloud.db"));
         }

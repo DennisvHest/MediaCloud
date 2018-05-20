@@ -10,7 +10,20 @@ using TMDbLib.Objects.TvShows;
 namespace MediaCloud.Domain.Repositories.Series {
 
     public interface ISeriesApiRepository {
+        /// <summary>
+        /// Searches the API for the series with the given query.
+        /// </summary>
+        /// <param name="query">Title of the series.</param>
+        /// <returns>A list of series matching the query.</returns>
         Task<IEnumerable<Entities.Series>> SearchSeries(string query);
+
+        /// <summary>
+        /// Searches the API for the series with the given query and will only include the seasons/episodes
+        /// that are given with the seasonEpisodePairs.
+        /// </summary>
+        /// <param name="query">Title of the series.</param>
+        /// <param name="seasonEpisodePairs">Season/episode pairs that will be included.</param>
+        /// <returns>The found series. Returns null if the series is not found.</returns>
         Task<Entities.Series> SearchSingleSeriesInclusive(string query,
             IEnumerable<SeasonEpisodePair> seasonEpisodePairs);
     }

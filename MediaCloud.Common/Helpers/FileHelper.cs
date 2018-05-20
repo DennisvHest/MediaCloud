@@ -7,6 +7,11 @@ namespace MediaCloud.Common.Helpers {
 
     public static class FileHelper {
 
+        /// <summary>
+        /// Checks if a file exists in the file system.
+        /// </summary>
+        /// <param name="fileInfo">FileInfo of the file</param>
+        /// <returns>A boolean value of whether or not the file exists.</returns>
         public static bool FileExists(FileInfo fileInfo) {
             if (string.IsNullOrEmpty(fileInfo.FullName))
                 return false;
@@ -17,6 +22,14 @@ namespace MediaCloud.Common.Helpers {
             return true;
         }
 
+        /// <summary>
+        /// Reads the range header value to create a start- and end value to read from a file.
+        /// </summary>
+        /// <param name="range">The range header value.</param>
+        /// <param name="contentLength">The total lenght of the content.</param>
+        /// <param name="start">The calculated start value.</param>
+        /// <param name="end">The calculated end value.</param>
+        /// <returns>A boolean if the reading was successful.</returns>
         public static bool TryReadRangeItem(RangeItemHeaderValue range, long contentLength, out long start, out long end) {
             if (range.From != null) {
                 start = range.From.Value;
@@ -36,6 +49,14 @@ namespace MediaCloud.Common.Helpers {
             return (start < contentLength && end < contentLength);
         }
 
+        /// <summary>
+        /// Creates partial content of the inputStream using the start- and end value. The resulting partial content
+        /// will be written to the given outputStream.
+        /// </summary>
+        /// <param name="inputStream">Input stream to read from.</param>
+        /// <param name="outputStream">Output stream to write the partial content to.</param>
+        /// <param name="start">The start byte position for the partial content.</param>
+        /// <param name="end">The end byte position for the partial content.</param>
         public static void CreatePartialContent(Stream inputStream, Stream outputStream, long start, long end) {
             int count = 0;
             long remainingBytes = end - start + 1;

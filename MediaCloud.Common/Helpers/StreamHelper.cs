@@ -6,6 +6,11 @@ namespace MediaCloud.Common.Helpers {
 
     public static class StreamHelper {
 
+        /// <summary>
+        /// Parses the range header value from an incoming request to a RangeHeader object.
+        /// </summary>
+        /// <param name="header">The range header value of the request.</param>
+        /// <returns>A RangeHeader object created using the header value.</returns>
         public static RangeHeader ParseRangeHeader(string header) {
             string[] rangeHeader = header.Split('=');
             string[] rangeHeaderValues = rangeHeader[1].Split('-');

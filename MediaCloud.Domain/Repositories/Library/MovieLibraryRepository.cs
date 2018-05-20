@@ -16,17 +16,11 @@ namespace MediaCloud.Domain.Repositories.Library {
 		public MovieLibraryRepository(MediaCloudContext context) : base(context) { }
 
 		public async Task<IEnumerable<MovieLibrary>> GetAllIncludingMovies() {
-			return await MediaCloudContext.MovieLibraries
-					.Include(l => l.ItemLibraries)
-					.ThenInclude(il => il.Item)
-					.ToListAsync();
+			return await MediaCloudContext.MovieLibraries.ToListAsync();
 		}
 
 		public async Task<MovieLibrary> GetIncludingMovies(int id) {
-			return await MediaCloudContext.MovieLibraries
-				.Include(l => l.ItemLibraries)
-				.ThenInclude(il => il.Item)
-				.SingleOrDefaultAsync(l => l.Id == id);
+			return await MediaCloudContext.MovieLibraries.SingleOrDefaultAsync(l => l.Id == id);
 		}
 
 	    public override async Task AddOrUpdateInclusive(MovieLibrary library) {

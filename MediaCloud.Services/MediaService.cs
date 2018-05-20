@@ -7,7 +7,6 @@ namespace MediaCloud.Services {
 
     public interface IMediaService {
         Task<Media> Get(int id);
-        Task<Stream> GetStream(Media media);
     }
 
     public class MediaService : IMediaService {
@@ -20,10 +19,6 @@ namespace MediaCloud.Services {
 
         public async Task<Media> Get(int id) {
             return await _unitOfWork.Media.Get(id);
-        }
-
-        public async Task<Stream> GetStream(Media media) {
-            return File.OpenRead(media.FileLocation);
         }
     }
 }

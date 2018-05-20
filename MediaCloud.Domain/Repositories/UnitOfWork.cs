@@ -17,9 +17,9 @@ namespace MediaCloud.Domain.Repositories {
 
         public UnitOfWork(MediaCloudContext context) {
             _context = context;
-            Libraries = new LibraryRepository(context);
             MovieLibraries = new MovieLibraryRepository(context);
             SeriesLibraries = new SeriesLibraryRepository(context);
+            Libraries = new LibraryRepository(context);
             Movies = new MovieRepository(context);
             Media = new MediaRepository(context);
         }
