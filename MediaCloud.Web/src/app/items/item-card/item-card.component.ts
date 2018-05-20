@@ -19,5 +19,4 @@ export class ItemCardComponent implements OnInit {
   get posterUrl(): string {
     return AppSettings.imageUrl(this.item.posterPath, "w342");
   }
-
 }

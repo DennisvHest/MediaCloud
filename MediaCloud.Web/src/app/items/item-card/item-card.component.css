@@ -1,3 +1,7 @@
+:host {
+    margin-bottom: 10px;
+}
+
 .item-card {
     background-color: transparent;
     -webkit-box-shadow: none;
@@ -7,12 +11,20 @@
 .item-card .card-content {
     padding: 5px;
     color: white;
-    text-align: center;
-    border-top: 3px solid #f47a42;
+    border-top: 3px solid #3f7ad2;
 }
 
 .item-card .card-content .card-title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     line-height: normal;
+    margin: 0;
+}
+
+p {
+    color: #a9adb5;
+}
+
+span.badge.new {
+    background-color: #90909085;
 }

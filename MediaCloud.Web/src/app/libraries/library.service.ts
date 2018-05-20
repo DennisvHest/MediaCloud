@@ -11,8 +11,8 @@ export class LibraryService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<Library<Item>[]> {
-    return this.http.get<Library<Item>[]>(LibraryService.librariesUrl);
+  getAll(): Observable<any> {
+    return this.http.get(LibraryService.librariesUrl);
   }
 
   get(id: number): Observable<Library<Item>> {

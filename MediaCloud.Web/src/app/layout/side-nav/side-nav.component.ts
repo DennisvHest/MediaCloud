@@ -15,11 +15,6 @@ export class SideNavComponent implements OnInit {
   libraries: Library<Item>[];
 
   sideNavActions = new EventEmitter<string | MaterializeAction>();
-  sideNavParams = [
-    {
-      
-    }
-  ];
 
   isOpen = true;
 
@@ -32,12 +27,12 @@ export class SideNavComponent implements OnInit {
 
     this.sideNavService.change.subscribe(isOpen => {
       this.isOpen = isOpen;
-      
+
       if (isOpen) {
-        this.sideNavActions.emit({action: "sideNav", params: ["show"]});
+        this.sideNavActions.emit({ action: "sideNav", params: ["show"] });
       } else {
-        this.sideNavActions.emit({action: "sideNav", params: ["hide"]});
-      }      
+        this.sideNavActions.emit({ action: "sideNav", params: ["hide"] });
+      }
     });
   }
 
@@ -48,4 +43,16 @@ export class SideNavComponent implements OnInit {
       });
   }
 
+  faClass(libraryId: number): string {
+    let foundLibrary = this.libraries.find(l => l.id == libraryId);
+
+    switch (foundLibrary.libraryType) {
+      case "MovieLibrary":
+        return "film";
+      case "SeriesLibrary":
+        return "tv";
+      default:
+        return "folder";
+    }
+  }
 }

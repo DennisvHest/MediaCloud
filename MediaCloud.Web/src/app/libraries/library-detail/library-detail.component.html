@@ -1,4 +1,6 @@
 <app-side-nav></app-side-nav>
-<div class="row p-a-xxl">
-    <app-item-card *ngFor="let item of library?.items" [item]="item" class="col s12 m4 l3 xl2 p-x-md"></app-item-card>
+<div id="main-content">
+    <div class="row p-a-xxl">
+        <app-item-card *ngFor="let item of library?.items" [item]="item" class="col s12 m4 l3 xl2 p-x-md"></app-item-card>
+    </div>
 </div>

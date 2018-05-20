@@ -1,8 +1,8 @@
-<ul materialize="sideNav" [materializeParams]="sideNavParams" [materializeActions]="sideNavActions" id="side-bar" class="side-nav fixed">
+<ul materialize="sideNav" [materializeActions]="sideNavActions" id="side-bar" class="side-nav fixed">
   <li>
     <a class="subheader">Libraries</a>
   </li>
   <li *ngFor="let library of libraries">
-    <a class="waves-effect waves-light" [routerLink]="['/libraries', library.id]">{{library.name}}</a>
+    <a class="waves-effect waves-light" [routerLink]="['/libraries', library.id]"><i class="fa fa-{{faClass(library.id)}}"></i>{{library.name}}</a>
   </li>
 </ul>

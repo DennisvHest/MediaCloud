@@ -9,8 +9,11 @@ namespace MediaCloud.Web.Models {
     public int Id { get; set; }
     public string Name { get; set; }
     public IEnumerable<ApiItem> Items { get; set; }
+    public string LibraryType { get; }
 
     public ApiLibrary(Library library) {
+      LibraryType = library is MovieLibrary ? typeof(MovieLibrary).Name : typeof(SeriesLibrary).Name;
+
       Id = library.Id;
       Name = library.Name;
       Items = library.ItemLibraries.Select<ItemLibrary, ApiItem>(il => {

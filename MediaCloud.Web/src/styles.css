@@ -2,16 +2,12 @@ body {
     background-color: #31343a;
 }
 
-.side-nav {
-    background-color: #24262b;
+#main-content {
+    margin-left: 300px;
 }
 
-.side-nav li a {
-    color: white;
-}
-
-.side-nav li .subheader {
-    color: #ffffff96;
+#sidenav-overlay {
+    opacity: 0 !important;
 }
 
 /* Spacing */
