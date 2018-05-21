@@ -3,7 +3,7 @@
         <img src="{{posterUrl}}">
     </div>
     <div class="card-content">
-        <span class="card-title">{{item.title}}</span>
+        <a [routerLink]="['/items', item.id]"><span class="card-title">{{item.title}}</span></a>
         <p *ngIf="item.itemType == 'Series'">
             <span class="new badge left m-t-xs m-l-0" data-badge-caption="Seasons">{{item.seasons.length}}</span> 
         </p>

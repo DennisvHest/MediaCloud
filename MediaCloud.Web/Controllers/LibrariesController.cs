@@ -23,15 +23,20 @@ namespace MediaCloud.Web.Controllers {
     }
 
     [HttpGet]
-    public async Task<IEnumerable<ApiLibrary>> Get() {
+    public async Task<IActionResult> Get() {
       IEnumerable<Library> libraries = await _libraryService.Get();
 
-      return libraries.Select(l => new ApiLibrary(l));
+      return Ok(libraries.Select(l => new ApiLibrary(l)));
     }
 
     [HttpGet("{id}")]
-    public async Task<ApiLibrary> Get(int id) {
-      return new ApiLibrary(await _libraryService.Get(id));
+    public async Task<IActionResult> Get(int id) {
+      Library library = await _libraryService.Get(id);
+
+      if (library == null)
+        return NotFound();
+
+      return Ok(new ApiLibrary(library));
     }
 
     [HttpPost]

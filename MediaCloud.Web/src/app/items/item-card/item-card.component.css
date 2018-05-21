@@ -21,6 +21,14 @@
     margin: 0;
 }
 
+a {
+    color: white;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 p {
     color: #a9adb5;
 }

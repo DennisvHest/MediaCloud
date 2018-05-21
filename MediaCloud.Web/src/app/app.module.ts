@@ -15,6 +15,8 @@ import { LibraryRoutingModule } from './libraries/libraries-routing.module';
 import { SideNavComponent } from './layout/side-nav/side-nav.component';
 import { SideNavService } from './layout/side-nav/side-nav.service';
 import { LayoutModule } from './layout/layout.module';
+import { ItemRoutingModule } from './items/items-routing.module';
+import { ItemsModule } from './items/items.module';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent }
@@ -33,8 +35,10 @@ const appRoutes: Routes = [
       appRoutes,
     ),
     LibraryRoutingModule,
+    ItemRoutingModule,
     LayoutModule,
     LibrariesModule,
+    ItemsModule,
     MediaModule
   ],
   providers: [

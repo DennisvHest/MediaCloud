@@ -34,6 +34,7 @@ namespace MediaCloud.Web {
       services.AddTransient<ILibraryService<Library>, LibraryService>();
       services.AddTransient<ILibraryService<MovieLibrary>, MovieLibraryService>();
       services.AddTransient<ILibraryService<SeriesLibrary>, SeriesLibraryService>();
+      services.AddTransient<IItemService<Item>, ItemServiceConcrete>();
       services.AddTransient<IItemService<Movie>, MovieService>();
       services.AddTransient<IMediaService, MediaService>();
     }

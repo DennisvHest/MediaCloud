@@ -55,11 +55,11 @@ namespace MediaCloud.Services {
         }
 
         public async Task<IEnumerable<MovieLibrary>> Get() {
-            return await _unitOfWork.MovieLibraries.GetAllIncludingMovies();
+            return await _unitOfWork.MovieLibraries.GetAll();
         }
 
         public async Task<MovieLibrary> Get(int id) {
-            return await _unitOfWork.MovieLibraries.GetIncludingMovies(id);
+            return await _unitOfWork.MovieLibraries.Get(id);
         }
     }
 }

@@ -18,6 +18,10 @@ namespace MediaCloud.Services {
             _unitOfWork = unitOfWork;
         }
 
+        public override async Task<Movie> Get(int id) {
+            return await _unitOfWork.Movies.Get(id);
+        }
+
         public override async Task<IEnumerable<Movie>> Search(string query) {
             return await _movieApiRepository.SearchMovie(query);
         }

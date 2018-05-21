@@ -19,6 +19,7 @@ namespace MediaCloud.Domain.Entities {
 	    public Series(SearchTv apiSeries, IEnumerable<TvSeason> apiSeasons) : base(apiSeries) {
 	        Title = apiSeries.Name;
 	        PosterPath = apiSeries.PosterPath;
+	        BackdropPath = apiSeries.BackdropPath;
 
 	        Seasons = apiSeasons.Select(s => new Season(s)).ToList();
 	    }
