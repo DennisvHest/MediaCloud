@@ -2,12 +2,20 @@ body {
     background-color: #31343a;
 }
 
+h1, h2, h3, h4, h5, h6, p, b, i {
+    color: white;
+}
+
 #main-content {
-    margin-left: 300px;
+    padding-left: 300px;
 }
 
 #sidenav-overlay {
     opacity: 0 !important;
+}
+
+.full-width {
+    width: 100%;
 }
 
 /* Spacing */

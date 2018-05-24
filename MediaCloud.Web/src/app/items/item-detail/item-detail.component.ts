@@ -32,4 +32,12 @@ export class ItemDetailComponent implements OnInit {
       return "";
     }
   }
+
+  get posterUrl(): string {
+    if (this.item !== undefined) {
+      return AppSettings.imageUrl(this.item.posterPath, "w342");
+    } else {
+      return "";
+    }
+  }
 }
