@@ -1,6 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MediaCloud.Domain.Migrations
 {
@@ -9,14 +8,30 @@ namespace MediaCloud.Domain.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Genres",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Genres", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Items",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Discriminator = table.Column<string>(nullable: false),
+                    ReleaseDate = table.Column<DateTime>(nullable: true),
+                    Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     PosterPath = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    BackdropPath = table.Column<string>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -29,12 +44,36 @@ namespace MediaCloud.Domain.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Discriminator = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Libraries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ItemGenres",
+                columns: table => new
+                {
+                    ItemId = table.Column<int>(nullable: false),
+                    GenreId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItemGenres", x => new { x.ItemId, x.GenreId });
+                    table.ForeignKey(
+                        name: "FK_ItemGenres_Genres_GenreId",
+                        column: x => x.GenreId,
+                        principalTable: "Genres",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ItemGenres_Items_ItemId",
+                        column: x => x.ItemId,
+                        principalTable: "Items",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,8 +82,9 @@ namespace MediaCloud.Domain.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    SeriesId = table.Column<int>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    SeasonNumber = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    SeriesId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -87,8 +127,9 @@ namespace MediaCloud.Domain.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    SeasonId = table.Column<int>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    EpisodeNumber = table.Column<int>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    SeasonId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -107,10 +148,10 @@ namespace MediaCloud.Domain.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    EpisodeId = table.Column<int>(nullable: true),
                     FileLocation = table.Column<string>(nullable: true),
-                    LibraryId = table.Column<int>(nullable: true),
-                    MovieId = table.Column<int>(nullable: true)
+                    EpisodeId = table.Column<int>(nullable: true),
+                    MovieId = table.Column<int>(nullable: true),
+                    LibraryId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -141,6 +182,11 @@ namespace MediaCloud.Domain.Migrations
                 column: "SeasonId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ItemGenres_GenreId",
+                table: "ItemGenres",
+                column: "GenreId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ItemLibraries_LibraryId",
                 table: "ItemLibraries",
                 column: "LibraryId");
@@ -169,10 +215,16 @@ namespace MediaCloud.Domain.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ItemGenres");
+
+            migrationBuilder.DropTable(
                 name: "ItemLibraries");
 
             migrationBuilder.DropTable(
                 name: "Media");
+
+            migrationBuilder.DropTable(
+                name: "Genres");
 
             migrationBuilder.DropTable(
                 name: "Episodes");

@@ -34,6 +34,18 @@ namespace MediaCloud.Domain.Migrations
                     b.ToTable("Episodes");
                 });
 
+            modelBuilder.Entity("MediaCloud.Domain.Entities.Genre", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Genres");
+                });
+
             modelBuilder.Entity("MediaCloud.Domain.Entities.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -41,10 +53,14 @@ namespace MediaCloud.Domain.Migrations
 
                     b.Property<string>("BackdropPath");
 
+                    b.Property<string>("Description");
+
                     b.Property<string>("Discriminator")
                         .IsRequired();
 
                     b.Property<string>("PosterPath");
+
+                    b.Property<DateTime?>("ReleaseDate");
 
                     b.Property<string>("Title");
 
@@ -53,6 +69,19 @@ namespace MediaCloud.Domain.Migrations
                     b.ToTable("Items");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Item");
+                });
+
+            modelBuilder.Entity("MediaCloud.Domain.Entities.ItemGenre", b =>
+                {
+                    b.Property<int>("ItemId");
+
+                    b.Property<int>("GenreId");
+
+                    b.HasKey("ItemId", "GenreId");
+
+                    b.HasIndex("GenreId");
+
+                    b.ToTable("ItemGenres");
                 });
 
             modelBuilder.Entity("MediaCloud.Domain.Entities.ItemLibrary", b =>
@@ -172,6 +201,19 @@ namespace MediaCloud.Domain.Migrations
                     b.HasOne("MediaCloud.Domain.Entities.Season", "Season")
                         .WithMany("Episodes")
                         .HasForeignKey("SeasonId");
+                });
+
+            modelBuilder.Entity("MediaCloud.Domain.Entities.ItemGenre", b =>
+                {
+                    b.HasOne("MediaCloud.Domain.Entities.Genre", "Genre")
+                        .WithMany("ItemGenres")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("MediaCloud.Domain.Entities.Item", "Item")
+                        .WithMany("ItemGenres")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MediaCloud.Domain.Entities.ItemLibrary", b =>

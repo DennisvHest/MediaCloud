@@ -16,7 +16,9 @@ namespace MediaCloud.Domain.Repositories.Library {
 
         public override async Task AddOrUpdateInclusive(SeriesLibrary library) {
             IList<ItemLibrary> existingItemLibraries = MediaCloudContext.ItemLibraries.ToList();
+            IList<ItemGenre> existingItemGenres = MediaCloudContext.ItemGenres.ToList();
 
+            //Don't re-add existing items
             foreach (ItemLibrary itemLibrary in library.ItemLibraries) {
                 ItemLibrary existingItemLibrary = existingItemLibraries.FirstOrDefault(x => x.ItemId == itemLibrary.Item.Id);
 
@@ -25,6 +27,25 @@ namespace MediaCloud.Domain.Repositories.Library {
                     itemLibrary.ItemId = existingItemLibrary.ItemId;
                 } else {
                     existingItemLibraries.Add(itemLibrary);
+                }
+
+                //Don't re-add existing genres
+                foreach (ItemGenre itemGenre in itemLibrary.Item.ItemGenres) {
+                    ItemGenre existingItemGenre =
+                        existingItemGenres.FirstOrDefault(x => x.GenreId == itemGenre.Genre.Id);
+
+                    if (existingItemGenre != null) {
+                        Genre localEntry = MediaCloudContext.Set<Genre>().Local.FirstOrDefault(entry => entry.Id == itemGenre.Genre.Id);
+
+                        //Make sure an already attached genre isn't attached again
+                        if (localEntry != null)
+                            MediaCloudContext.Entry(localEntry).State = EntityState.Detached;
+
+                        MediaCloudContext.Entry(itemGenre.Genre).State = EntityState.Unchanged;
+                        itemGenre.GenreId = existingItemGenre.GenreId;
+                    } else {
+                        existingItemGenres.Add(itemGenre);
+                    }
                 }
             }
 

@@ -22,22 +22,17 @@ export class ItemDetailComponent implements OnInit {
   ngOnInit() {
     this.route.paramMap.switchMap((params: ParamMap) =>
       this.itemService.get(+params.get('id')))
-      .subscribe(r => this.item = r);
+      .subscribe(r => {
+        r.releaseDate = new Date(r.releaseDate);
+        this.item = r
+      });
   }
 
   get backDropUrl(): string {
-    if (this.item !== undefined) {
-      return AppSettings.imageUrl(this.item.backdropPath, "original");
-    } else {
-      return "";
-    }
+    return AppSettings.imageUrl(this.item.backdropPath, "w300");
   }
 
   get posterUrl(): string {
-    if (this.item !== undefined) {
-      return AppSettings.imageUrl(this.item.posterPath, "w342");
-    } else {
-      return "";
-    }
+    return AppSettings.imageUrl(this.item.posterPath, "w342");
   }
 }

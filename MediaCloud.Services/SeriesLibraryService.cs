@@ -23,7 +23,7 @@ namespace MediaCloud.Services {
         }
 
         public async Task<SeriesLibrary> Create(string name, string folderPath) {
-            List<Series> series = new List<Series>();
+            IEnumerable<Series> series = new List<Series>();
             List<Media> media = new List<Media>();
 
             SeriesLibrary library = new SeriesLibrary { Name = name };
@@ -52,12 +52,7 @@ namespace MediaCloud.Services {
 
             IEnumerable<IGrouping<string, TvMediaSearchModel>> groupedSeries = searchModels.GroupBy(m => m.Title);
 
-            foreach (IGrouping<string, TvMediaSearchModel> seriesSearchModel in groupedSeries) {
-                //Search series in API
-                Series foundSeries = await _seriesApiRepository.SearchSingleSeriesInclusive(seriesSearchModel.Key, seriesSearchModel.Select(m => m.SeasonEpisodePair));
-
-                if (foundSeries == null) continue;
-
+            series = await _seriesApiRepository.SearchSeries(groupedSeries, (foundSeries, seriesSearchModel) => {
                 foreach (Season season in foundSeries.Seasons) {
                     foreach (Episode episode in season.Episodes) {
                         TvMediaSearchModel episodeFile = seriesSearchModel.FirstOrDefault(m =>
@@ -69,9 +64,28 @@ namespace MediaCloud.Services {
                         media.Add(new Media { Episode = episode, FileLocation = episodeFile.FileInfo.FullName, Library = library });
                     }
                 }
+            });
 
-                series.Add(foundSeries);
-            }
+//            foreach (IGrouping<string, TvMediaSearchModel> seriesSearchModel in groupedSeries) {
+//                //Search series in API
+//                Series foundSeries = await _seriesApiRepository.SearchSingleSeriesInclusive(seriesSearchModel.Key, seriesSearchModel.Select(m => m.SeasonEpisodePair));
+//
+//                if (foundSeries == null) continue;
+//
+//                foreach (Season season in foundSeries.Seasons) {
+//                    foreach (Episode episode in season.Episodes) {
+//                        TvMediaSearchModel episodeFile = seriesSearchModel.FirstOrDefault(m =>
+//                            m.SeasonEpisodePair.Season == season.SeasonNumber &&
+//                            m.SeasonEpisodePair.Episode == episode.EpisodeNumber);
+//
+//                        if (episodeFile == null) continue;
+//
+//                        media.Add(new Media { Episode = episode, FileLocation = episodeFile.FileInfo.FullName, Library = library });
+//                    }
+//                }
+//
+//                series.Add(foundSeries);
+//            }
 
             series = series.DistinctBy(s => s.Id).ToList();
             
