@@ -17,6 +17,8 @@ import { SideNavService } from './layout/side-nav/side-nav.service';
 import { LayoutModule } from './layout/layout.module';
 import { ItemRoutingModule } from './items/items-routing.module';
 import { ItemsModule } from './items/items.module';
+import { NgProgressModule } from '@ngx-progressbar/core';
+import { NgProgressHttpModule } from '@ngx-progressbar/http';
 
 const appRoutes: Routes = [
   { path: '', component: AppComponent }
@@ -34,6 +36,12 @@ const appRoutes: Routes = [
     RouterModule.forRoot(
       appRoutes,
     ),
+    NgProgressModule.forRoot({
+      spinner: false,
+      color: '#3f7ad2',
+      thick: true
+    }),
+    NgProgressHttpModule,
     LibraryRoutingModule,
     ItemRoutingModule,
     LayoutModule,

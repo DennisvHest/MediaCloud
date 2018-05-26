@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,31 +41,34 @@ namespace MediaCloud.Domain.Repositories.Movie {
         }
 
         public async Task<IEnumerable<Entities.Movie>> SearchMovies(IEnumerable<FileInfo> files, Action<Entities.Movie, FileInfo> callback) {
-            List<Entities.Movie> foundMovies = new List<Entities.Movie>();
-
             //Retrieve all movie genres in one request to assign them fully later
             List<Genre> movieGenres = await _tmdbClient.GetMovieGenresAsync();
 
-            foreach (FileInfo file in files) {
-                SearchContainer<SearchMovie> searchResult = await _tmdbClient.SearchMovieAsync(Path.GetFileNameWithoutExtension(file.Name), includeAdult: true);
-                SearchMovie foundMovie = searchResult.Results.FirstOrDefault();
-
-                if (foundMovie == null) continue;
-
-                Entities.Movie movie = new Entities.Movie(foundMovie);
-                movie.ItemGenres = movieGenres
-                    .Where(g => foundMovie.GenreIds.Contains(g.Id))
-                    .Select(g => new ItemGenre {
-                        Item = movie,
-                        Genre = new Entities.Genre(g)
-                    }).ToList();
-
-                callback(movie, file);
-
-                foundMovies.Add(movie);
-            }
+            //Create tasks to fetch search results from the API and wait until all of them are complete and add them to the found movies
+            IEnumerable<Task<Entities.Movie>> movieSearchTasks = files.Select(f => SearchMovie(f, movieGenres, callback));
+            IEnumerable<Entities.Movie> foundMovies = await Task.WhenAll(movieSearchTasks);
+            foundMovies = foundMovies.Where(m => m != null);
 
             return foundMovies;
+        }
+
+        private async Task<Entities.Movie> SearchMovie(FileInfo file, IEnumerable<Genre> movieGenres, Action<Entities.Movie, FileInfo> callback) {
+            SearchContainer<SearchMovie> searchResult = await _tmdbClient.SearchMovieAsync(Path.GetFileNameWithoutExtension(file.Name), includeAdult: true);
+            SearchMovie foundMovie = searchResult.Results.FirstOrDefault();
+
+            if (foundMovie == null) return null;
+
+            Entities.Movie movie = new Entities.Movie(foundMovie);
+            movie.ItemGenres = movieGenres
+                .Where(g => foundMovie.GenreIds.Contains(g.Id))
+                .Select(g => new ItemGenre {
+                    Item = movie,
+                    Genre = new Entities.Genre(g)
+                }).ToList();
+
+            callback(movie, file);
+
+            return movie;
         }
 
         public async Task<IEnumerable<Entities.Movie>> SearchMovie(string query) {

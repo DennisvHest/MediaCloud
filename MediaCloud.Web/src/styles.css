@@ -2,6 +2,11 @@ body {
     background-color: #31343a;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+}
+
 h1, h2, h3, h4, h5, h6, p, b, i {
     color: white;
 }
@@ -16,6 +21,14 @@ h1, h2, h3, h4, h5, h6, p, b, i {
 
 .full-width {
     width: 100%;
+}
+
+span.badge.new {
+    background-color: #90909085;
+}
+
+hr {
+    border-color: #ffffff8c;
 }
 
 /* Spacing */

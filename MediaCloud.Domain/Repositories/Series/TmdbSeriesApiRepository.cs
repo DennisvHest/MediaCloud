@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using MediaCloud.Common.Models;
@@ -45,53 +45,56 @@ namespace MediaCloud.Domain.Repositories.Series {
         }
 
         public async Task<IEnumerable<Entities.Series>> SearchSeries(IEnumerable<IGrouping<string, TvMediaSearchModel>> seriesSearchModels, Action<Entities.Series, IGrouping<string, TvMediaSearchModel>> callback) {
-            List<Entities.Series> foundSeriesAll = new List<Entities.Series>();
-
             //Retrieve all movie genres in one request to assign them fully later
             List<Genre> tvGenres = await _tmdbClient.GetTvGenresAsync();
 
-            foreach (IGrouping<string, TvMediaSearchModel> seriesSearchModel in seriesSearchModels) {
-                SearchContainer<SearchTv> searchResult = await _tmdbClient.SearchTvShowAsync(seriesSearchModel.Key);
+            //Create tasks to fetch search results from the API and wait until all of them are complete and add them to the found series
+            IEnumerable<Task<Entities.Series>> seriesSearchTasks = seriesSearchModels.Select(m => SearchSeries(m, tvGenres, callback));
+            IEnumerable<Entities.Series> foundSeries = await Task.WhenAll(seriesSearchTasks);
+            foundSeries = foundSeries.Where(s => s != null);
 
-                IEnumerable<SeasonEpisodePair> seasonEpisodePairs = seriesSearchModel.Select(m => m.SeasonEpisodePair);
+            return foundSeries;
+        }
 
-                if (searchResult.Results != null) {
-                    SearchTv foundSeries = searchResult.Results[0];
-                    IEnumerable<int> seasons = seasonEpisodePairs.Select(se => se.Season).Distinct();
+        private async Task<Entities.Series> SearchSeries(IGrouping<string, TvMediaSearchModel> seriesSearchModel, IEnumerable<Genre> tvGenres, Action<Entities.Series, IGrouping<string, TvMediaSearchModel>> callback) {
+            SearchContainer<SearchTv> searchResult = await _tmdbClient.SearchTvShowAsync(seriesSearchModel.Key);
 
-                    IList<TvSeason> foundSeasons = new List<TvSeason>();
+            IEnumerable<SeasonEpisodePair> seasonEpisodePairs = seriesSearchModel.Select(m => m.SeasonEpisodePair);
 
-                    //Retrieve required seasons
-                    foreach (int season in seasons) {
-                        TvSeason foundSeason = await _tmdbClient.GetTvSeasonAsync(foundSeries.Id, season);
+            if (searchResult.Results == null) return null;
 
-                        if (foundSeason == null) continue;
+            SearchTv foundSeries = searchResult.Results[0];
+            IEnumerable<int> seasons = seasonEpisodePairs.Select(se => se.Season).Distinct();
 
-                        //Remove unwanted episodes
-                        IEnumerable<int> episodes = seasonEpisodePairs
-                            .Where(se => se.Season == season).Select(se => se.Episode);
+            IList<TvSeason> foundSeasons = new List<TvSeason>();
 
-                        foundSeason.Episodes = foundSeason.Episodes.Where(e => episodes.Contains(e.EpisodeNumber)).ToList();
+            //Retrieve required seasons
+            foreach (int season in seasons) {
+                TvSeason foundSeason = await _tmdbClient.GetTvSeasonAsync(foundSeries.Id, season);
 
-                        foundSeasons.Add(foundSeason);
-                    }
+                if (foundSeason == null) continue;
 
-                    Entities.Series series = new Entities.Series(foundSeries, foundSeasons);
+                //Remove unwanted episodes
+                IEnumerable<int> episodes = seasonEpisodePairs
+                    .Where(se => se.Season == season).Select(se => se.Episode);
 
-                    series.ItemGenres = tvGenres
-                        .Where(g => foundSeries.GenreIds.Contains(g.Id))
-                        .Select(g => new ItemGenre {
-                            Item = series,
-                            Genre = new Entities.Genre(g)
-                        }).ToList();
+                foundSeason.Episodes = foundSeason.Episodes.Where(e => episodes.Contains(e.EpisodeNumber)).ToList();
 
-                    callback(series, seriesSearchModel);
-
-                    foundSeriesAll.Add(series);
-                }
+                foundSeasons.Add(foundSeason);
             }
 
-            return foundSeriesAll;
+            Entities.Series series = new Entities.Series(foundSeries, foundSeasons);
+
+            series.ItemGenres = tvGenres
+                .Where(g => foundSeries.GenreIds.Contains(g.Id))
+                .Select(g => new ItemGenre {
+                    Item = series,
+                    Genre = new Entities.Genre(g)
+                }).ToList();
+
+            callback(series, seriesSearchModel);
+
+            return series;
         }
 
         private async Task<Entities.Series> SearchSingleSeriesInclusive(string query, IEnumerable<SeasonEpisodePair> seasonEpisodePairs) {
