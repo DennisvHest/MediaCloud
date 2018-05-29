@@ -1,6 +1,5 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize';
-import { SideNavService } from '../../layout/side-nav/side-nav.service';
 
 @Component({
   selector: 'app-player',
@@ -9,11 +8,9 @@ import { SideNavService } from '../../layout/side-nav/side-nav.service';
 })
 export class PlayerComponent implements OnInit {
 
-  constructor(private sideNavService: SideNavService) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.sideNavService.close();
-  }
+  ngOnInit() {}
 
   onLoad() {
     let mediaPlayer: HTMLVideoElement = <HTMLVideoElement>document.getElementById("media-player");

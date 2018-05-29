@@ -3,7 +3,7 @@ import { NgModule } from "@angular/core";
 import { LibraryDetailComponent } from "./library-detail/library-detail.component";
 
 const librariesRoutes: Routes = [
-    { path: 'libraries/:id', component: LibraryDetailComponent },
+    { path: ':id', component: LibraryDetailComponent },
 ];
 
 @NgModule({

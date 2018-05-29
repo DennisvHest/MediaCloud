@@ -6,22 +6,23 @@ import { HttpModule } from '@angular/http';
 import { LibraryService } from './libraries/library.service';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
-import { LibraryDetailComponent } from './libraries/library-detail/library-detail.component';
-import { LibrariesModule } from './libraries/libraries.module';
-import { ItemCardComponent } from './items/item-card/item-card.component';
 import { PlayerComponent } from './media/player/player.component';
 import { MediaModule } from './media/media.module';
-import { LibraryRoutingModule } from './libraries/libraries-routing.module';
 import { SideNavComponent } from './layout/side-nav/side-nav.component';
-import { SideNavService } from './layout/side-nav/side-nav.service';
 import { LayoutModule } from './layout/layout.module';
-import { ItemRoutingModule } from './items/items-routing.module';
-import { ItemsModule } from './items/items.module';
 import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
+import { LayoutComponent } from './layout/layout/layout.component';
+import { ItemService } from './items/item.service';
 
 const appRoutes: Routes = [
-  { path: '', component: AppComponent }
+  { 
+    path: '', component: LayoutComponent,
+    children: [
+      { path: 'libraries', loadChildren: './libraries/libraries.module#LibrariesModule' },
+      { path: 'items', loadChildren: './items/items.module#ItemsModule' }
+    ] 
+  }
 ];
 
 @NgModule({
@@ -42,15 +43,12 @@ const appRoutes: Routes = [
       thick: true
     }),
     NgProgressHttpModule,
-    LibraryRoutingModule,
-    ItemRoutingModule,
     LayoutModule,
-    LibrariesModule,
-    ItemsModule,
     MediaModule
   ],
   providers: [
-    LibraryService
+    LibraryService,
+    ItemService
   ],
   bootstrap: [AppComponent]
 })

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MediaCloud.Domain.Entities;
 using MediaCloud.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace MediaCloud.Services {
 
@@ -36,8 +37,8 @@ namespace MediaCloud.Services {
             return await _unitOfWork.Items.Get(id);
         }
 
-        public override Task<IEnumerable<Item>> Search(string query) {
-            throw new System.NotImplementedException();
+        public override async Task<IEnumerable<Item>> Search(string query) {
+            return await Task.FromResult(_unitOfWork.Items.Find(i => EF.Functions.Like(i.Title, $"%{query}%")));
         }
 
         public override Task<Item> Add(Item movie) {

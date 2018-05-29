@@ -611,3 +611,4 @@ jspm_packages/
 # By default, sensitive information, such as encrypted password
 # should be stored in the .pubxml.user file.
 *.db
+/MediaCloud.Web/wwwroot

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MediaCloud.Domain.Entities;
 using MediaCloud.Services;
@@ -10,9 +12,11 @@ namespace MediaCloud.Web.Controllers {
   public class ItemController : Controller {
 
     private readonly IItemService<Item> _itemService;
+    private readonly IEpisodeService _episodeService;
 
-    public ItemController(IItemService<Item> itemService) {
+    public ItemController(IItemService<Item> itemService, IEpisodeService episodeService) {
       _itemService = itemService;
+      _episodeService = episodeService;
     }
 
     [HttpGet("{id}")]
@@ -27,6 +31,19 @@ namespace MediaCloud.Web.Controllers {
       }
 
       return Ok(new ApiSeries((Series)item));
+    }
+
+    [HttpGet("autocomplete")]
+    public IEnumerable<AutocompleteItem> Autocomplete(string query) {
+      Task<IEnumerable<Item>> foundItems = _itemService.Search(query);
+      Task<IEnumerable<Episode>> foundEpisodes = _episodeService.Search(query);
+
+      Task.WaitAll(foundItems, foundEpisodes);
+
+      List<AutocompleteItem> autocompleteItems = new List<AutocompleteItem>(foundItems.Result.Select(i => new AutocompleteItem(i)));
+      autocompleteItems.AddRange(foundEpisodes.Result.Select(e => new AutocompleteItem(e)));
+
+      return autocompleteItems;
     }
   }
 }

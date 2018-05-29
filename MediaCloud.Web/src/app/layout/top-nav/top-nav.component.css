@@ -1,0 +1,12 @@
+nav {
+    background-color: rgb(36,38,43);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    position: fixed;
+    z-index: 10;
+}
+
+select2 {
+    display: inline-block;
+    padding: 12px
+}

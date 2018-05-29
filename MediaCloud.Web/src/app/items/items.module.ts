@@ -5,6 +5,8 @@ import { ItemRoutingModule } from './items-routing.module';
 import { LayoutModule } from '../layout/layout.module';
 import { MaterializeModule } from 'angular2-materialize';
 import { ItemService } from './item.service';
+import { ItemCardComponent } from './item-card/item-card.component';
+import { SeasonCardComponent } from './season-card/season-card.component';
 
 @NgModule({
   imports: [
@@ -13,8 +15,15 @@ import { ItemService } from './item.service';
     LayoutModule,
     MaterializeModule
   ],
-  declarations: [ItemDetailComponent],
-  providers: [ItemService],
-  exports: [ItemDetailComponent]
+  declarations: [
+    ItemDetailComponent,
+    ItemCardComponent, 
+    SeasonCardComponent
+  ],
+  exports: [
+    ItemDetailComponent,
+    ItemCardComponent,
+    SeasonCardComponent
+  ]
 })
 export class ItemsModule { }

@@ -1,5 +1,6 @@
 #side-bar {
-    background-color: #24262b7d;
+    background-color: rgba(36,38,43,0.49);
+    margin-top: 64px;
 }
 
 #side-bar li > a:hover {
@@ -11,5 +12,5 @@ li a, li i {
 }
 
 li .subheader {
-    color: #ffffff96;
+    color: rgba(255,255,255,0.588);
 }

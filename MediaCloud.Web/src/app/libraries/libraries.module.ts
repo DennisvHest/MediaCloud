@@ -6,21 +6,21 @@ import { LibraryRoutingModule } from "./libraries-routing.module";
 import { ItemCardComponent } from "../items/item-card/item-card.component";
 import { AppModule } from "../app.module";
 import { LayoutModule } from "../layout/layout.module";
+import { ItemsModule } from "../items/items.module";
 
 @NgModule({
     imports: [
       CommonModule,
       LibraryRoutingModule,
-      LayoutModule
+      LayoutModule,
+      ItemsModule
     ],
     declarations: [
-      LibraryDetailComponent,
-      ItemCardComponent
+      LibraryDetailComponent
     ],
     providers: [ LibraryService ],
     exports: [
-      LibraryDetailComponent,
-      ItemCardComponent
+      LibraryDetailComponent
     ]
   })
   export class LibrariesModule {}

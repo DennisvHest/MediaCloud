@@ -1,22 +1,25 @@
 <div *ngIf="item !== undefined" class="background-image-blur" [ngStyle]="{'background-image': 'url(\'' + posterUrl + '\')'}"></div>
-<div id="main-content">
-    <div *ngIf="item !== undefined" class="row">
-        <div class="col s3 p-a-lg">
-            <img src="{{posterUrl}}" class="full-width" />
-        </div>
-        <div class="col s9 p-a-lg">
-            <div id="top-description">
-                <div class="col s8">
-                    <h2 class="m-t-xs">{{item.title}}</h2>
-                    <h5>{{item.releaseDate | date: 'yyyy'}}</h5>
-                    <h6 *ngIf="item.itemType == 'Series'">{{episodeCount}} Episodes</h6>
-                    <span *ngFor="let genre of item.genres" class="new badge genre left m-t-xs m-l-0 m-r-xs" data-badge-caption=""><i class="fa fa-tag m-r-xxs"></i>  {{genre.name}}</span>
-                </div>
-            </div>
-            <hr class="m-y-md m-x-xs" />
+<div *ngIf="item !== undefined" class="row">
+    <div class="col s3 p-a-lg">
+        <img src="{{posterUrl}}" class="full-width" />
+    </div>
+    <div class="col s9 p-a-lg">
+        <div id="top-description" class="full-width">
             <div class="col s8">
-                <p class="m-t-0">{{item.description}}</p>
+                <h2 class="m-t-xs">{{item.title}}</h2>
+                <h5>{{item.releaseDate | date: 'yyyy'}}</h5>
+                <h6 *ngIf="item.itemType == 'Series'">{{episodeCount}} Episodes</h6>
+                <span *ngFor="let genre of item.genres" class="new badge genre left m-t-xs m-l-0 m-r-xs" data-badge-caption="">
+                    <i class="fa fa-tag m-r-xxs"></i> {{genre.name}}</span>
             </div>
+        </div>
+        <hr class="m-y-md m-x-xs" />
+        <div class="col s8">
+            <p class="m-t-0">{{item.description}}</p>
+        </div>
+        <div *ngIf="item.itemType == 'Series'" class="col s12">
+            <h5>Seasons</h5>
+            <app-season-card *ngFor="let season of item.seasons" [season]="season" [parentItem]="item" class="col s12 m4 l3 xl2 p-l-0 p-r-md"></app-season-card>
         </div>
     </div>
 </div>

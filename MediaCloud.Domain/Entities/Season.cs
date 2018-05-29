@@ -9,6 +9,7 @@ namespace MediaCloud.Domain.Entities {
         public int Id { get; set; }
         public int SeasonNumber { get; set; }
         public string Title { get; set; }
+        public string PosterPath { get; set; }
 
         public Season() { }
 
@@ -16,6 +17,7 @@ namespace MediaCloud.Domain.Entities {
             Id = apiSeason.Id.Value;
             SeasonNumber = apiSeason.SeasonNumber;
             Title = apiSeason.Name;
+            PosterPath = apiSeason.PosterPath;
 
             Episodes = apiSeason.Episodes.Select(e => new Episode(e)).ToList();
         }

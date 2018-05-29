@@ -9,6 +9,7 @@ namespace MediaCloud.Web.Models {
     public int Id { get; set; }
     public int SeasonNumber { get; set; }
     public string Title { get; set; }
+    public string PosterPath { get; set; }
 
     public IEnumerable<ApiEpisode> Episodes { get; set; }
 
@@ -16,6 +17,8 @@ namespace MediaCloud.Web.Models {
       Id = season.Id;
       SeasonNumber = season.SeasonNumber;
       Title = season.Title;
+      PosterPath = season.PosterPath;
+
       Episodes = season.Episodes.Select(e => new ApiEpisode(e));
     }
   }
