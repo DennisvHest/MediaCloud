@@ -2,7 +2,7 @@ import { Component, OnInit, EventEmitter } from '@angular/core';
 import { MaterializeAction } from 'angular2-materialize';
 
 @Component({
-  selector: 'app-player',
+  selector: 'player',
   templateUrl: './player.component.html',
   styleUrls: ['./player.component.css']
 })

@@ -9,7 +9,3 @@ h6 {
 hr {
     clear: both;
 }
-
-.badge.genre i {
-    color: rgba(255,255,255,0.549);
-}

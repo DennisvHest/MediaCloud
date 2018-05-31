@@ -1,5 +1,7 @@
 body {
     background-color: #31343a;
+    overflow: initial !important;
+    width: initial !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -16,55 +18,67 @@ h1, h2, h3, h4, h5, h6, p, b, i {
     padding-top: 64px;
 }
 
-span.select2-selection, .input-field {
-    line-height: 32px;
-}
-
-.select2-container--default .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
-    border-radius: 0px;
-    background-color: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: white;
-}
-
-.input-field input[type=search]:focus {
-    background-color: transparent;
-    color: white;
-}
-
-.nav-wrapper .input-field input[type=search] {
-    padding: 0;
-    margin: 0;
-    line-height: 16px;
-    padding-top: 14px !important;
-    padding-bottom: 2px !important;
-}
-
-.nav-wrapper input[type=search]:not(.browser-default):focus:not([readonly]) {
-    border-bottom: none;
-}
-
 .select2-dropdown {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(29, 31, 35, 0.8);
     border: none;
     color: white;
 }
 
-.select2-container.select2-container--default.select2-container--open {
-    padding: 0px;
+.background-image-blur {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    z-index: -10;
+    -webkit-filter: blur(80px);
+    -moz-filter: blur(80px);
+    -o-filter: blur(80px);
+    -ms-filter: blur(80px);
+    filter: blur(80px);
+    animation: fadein 0.5s;
 }
 
-.select2-container--default .select2-selection--multiple .select2-selection__choice {
+.background-image-blur::after {
+    content: '';
+    background-color: rgba(49,52,58,0.847);
+    width: 100%;
+    height: 100%;
+    position: fixed;
+}
+
+@keyframes fadein {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+.card {
     background-color: transparent;
-    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
 }
 
-.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-    display: none;
+.card .card-content {
+    padding: 5px;
+    color: white;
+    border-top: 3px solid #3f7ad2;
 }
 
-li.select2-results__option.select2-results__message {
-    display: none;
+.card .card-content .card-title {
+    font-size: 14px;
+    font-weight: bold;
+    line-height: normal;
+    margin: 0;
+}
+
+a {
+    color: white;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 #sidenav-overlay {
@@ -73,6 +87,10 @@ li.select2-results__option.select2-results__message {
 
 .full-width {
     width: 100%;
+}
+
+.fixed {
+    position: fixed;
 }
 
 span.badge.new {

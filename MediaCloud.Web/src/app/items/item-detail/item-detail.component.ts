@@ -6,7 +6,7 @@ import { AppSettings } from '../../../AppSettings';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  selector: 'app-item-detail',
+  selector: 'item-detail',
   templateUrl: './item-detail.component.html',
   styleUrls: ['./item-detail.component.css']
 })
@@ -27,10 +27,6 @@ export class ItemDetailComponent implements OnInit {
         r.releaseDate = new Date(r.releaseDate);
         this.item = r
       });
-  }
-
-  get backDropUrl(): string {
-    return AppSettings.imageUrl(this.item.backdropPath, "w300");
   }
 
   get posterUrl(): string {

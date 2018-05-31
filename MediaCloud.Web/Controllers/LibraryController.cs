@@ -9,14 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MediaCloud.Web.Controllers {
 
-  [Route("api/[controller]")]
-  public class LibrariesController : Controller {
+  [Route("api/libraries")]
+  public class LibraryController : Controller {
 
     private readonly ILibraryService<Library> _libraryService;
     private readonly ILibraryService<MovieLibrary> _movieLibraryService;
     private readonly ILibraryService<SeriesLibrary> _seriesLibraryService;
 
-    public LibrariesController(ILibraryService<Library> libraryService, ILibraryService<MovieLibrary> movieLibraryService, ILibraryService<SeriesLibrary> seriesLibraryService) {
+    public LibraryController(ILibraryService<Library> libraryService, ILibraryService<MovieLibrary> movieLibraryService, ILibraryService<SeriesLibrary> seriesLibraryService) {
       _libraryService = libraryService;
       _movieLibraryService = movieLibraryService;
       _seriesLibraryService = seriesLibraryService;

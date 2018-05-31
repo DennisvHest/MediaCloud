@@ -2,33 +2,6 @@
     margin-bottom: 10px;
 }
 
-.season-card {
-    background-color: transparent;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-
-.season-card .card-content {
-    padding: 5px;
-    color: white;
-    border-top: 3px solid #3f7ad2;
-}
-
-.season-card .card-content .card-title {
-    font-size: 14px;
-    font-weight: bold;
-    line-height: normal;
-    margin: 0;
-}
-
-a {
-    color: white;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
 p {
     color: #a9adb5;
 }

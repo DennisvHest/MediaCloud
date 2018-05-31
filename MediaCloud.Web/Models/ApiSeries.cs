@@ -8,8 +8,9 @@ namespace MediaCloud.Web.Models {
 
     public IEnumerable<ApiSeason> Seasons { get; set; }
 
-    public ApiSeries(Series series) : base(series) {
-      Seasons = series.Seasons.Select(s => new ApiSeason(s));
+    public ApiSeries(Series series, bool inclusive = true) : base(series) {
+      if (inclusive)
+        Seasons = series.Seasons.Select(s => new ApiSeason(s));
     }
   }
 }

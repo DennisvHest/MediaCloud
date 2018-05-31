@@ -5,7 +5,7 @@ import { Item } from '../../models/item';
 import { LibraryService } from '../../libraries/library.service';
 
 @Component({
-  selector: 'app-side-nav',
+  selector: 'side-nav',
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.css']
 })

@@ -7,6 +7,8 @@ import { MaterializeModule } from 'angular2-materialize';
 import { ItemService } from './item.service';
 import { ItemCardComponent } from './item-card/item-card.component';
 import { SeasonCardComponent } from './season-card/season-card.component';
+import { SeasonDetailComponent } from './season-detail/season-detail.component';
+import { EpisodeCardComponent } from './episode-card/episode-card.component';
 
 @NgModule({
   imports: [
@@ -18,12 +20,15 @@ import { SeasonCardComponent } from './season-card/season-card.component';
   declarations: [
     ItemDetailComponent,
     ItemCardComponent, 
-    SeasonCardComponent
+    SeasonCardComponent, 
+    SeasonDetailComponent, 
+    EpisodeCardComponent
   ],
   exports: [
     ItemDetailComponent,
     ItemCardComponent,
-    SeasonCardComponent
+    SeasonCardComponent,
+    EpisodeCardComponent
   ]
 })
 export class ItemsModule { }

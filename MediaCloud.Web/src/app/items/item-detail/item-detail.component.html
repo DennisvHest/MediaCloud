@@ -1,7 +1,7 @@
 <div *ngIf="item !== undefined" class="background-image-blur" [ngStyle]="{'background-image': 'url(\'' + posterUrl + '\')'}"></div>
 <div *ngIf="item !== undefined" class="row">
     <div class="col s3 p-a-lg">
-        <img src="{{posterUrl}}" class="full-width" />
+        <img src="{{posterUrl}}" class="fixed" />
     </div>
     <div class="col s9 p-a-lg">
         <div id="top-description" class="full-width">
@@ -19,7 +19,7 @@
         </div>
         <div *ngIf="item.itemType == 'Series'" class="col s12">
             <h5>Seasons</h5>
-            <app-season-card *ngFor="let season of item.seasons" [season]="season" [parentItem]="item" class="col s12 m4 l3 xl2 p-l-0 p-r-md"></app-season-card>
+            <season-card *ngFor="let season of item.seasons" [season]="season" [parentItem]="item" class="col s12 m4 l3 xl2 p-l-0 p-r-md"></season-card>
         </div>
     </div>
 </div>

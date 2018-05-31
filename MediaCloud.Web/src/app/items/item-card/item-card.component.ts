@@ -3,7 +3,7 @@ import { Item } from '../../models/item';
 import { AppSettings } from '../../../AppSettings';
 
 @Component({
-  selector: 'app-item-card',
+  selector: 'item-card',
   templateUrl: './item-card.component.html',
   styleUrls: ['./item-card.component.css']
 })

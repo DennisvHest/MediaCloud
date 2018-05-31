@@ -7,7 +7,7 @@ import { Library } from '../../models/library';
 import { Item } from '../../models/item';
 
 @Component({
-  selector: 'app-library-detail',
+  selector: 'library-detail',
   templateUrl: './library-detail.component.html',
   styleUrls: ['./library-detail.component.css']
 })

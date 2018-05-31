@@ -1,5 +1,6 @@
 import { Season } from "./season";
 import { Genre } from "./Genre";
+import { AppSettings } from "../../AppSettings";
 
 export abstract class Item {
     id: number;
@@ -11,4 +12,8 @@ export abstract class Item {
     genres: Genre[];
     seasons: Season[];
     itemType: string;
+
+    posterUrl(size: string): string {
+        return AppSettings.imageUrl(this.posterPath, size);
+    }
 }

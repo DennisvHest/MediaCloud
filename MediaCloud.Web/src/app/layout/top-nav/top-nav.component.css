@@ -10,3 +10,48 @@ select2 {
     display: inline-block;
     padding: 12px
 }
+
+:host ::ng-deep .nav-wrapper span.select2-selection, .input-field {
+    line-height: 32px;
+}
+
+:host ::ng-deep .nav-wrapper .select2-container--default .select2-selection--multiple, .select2-container--default.select2-container--focus .select2-selection--multiple {
+    border-radius: 0px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: white;
+}
+
+:host ::ng-deep .input-field input[type=search]:focus {
+    background-color: transparent;
+    color: white;
+}
+
+:host ::ng-deep .nav-wrapper .input-field input[type=search] {
+    padding: 0;
+    margin: 0;
+    line-height: 16px;
+    padding-top: 14px !important;
+    padding-bottom: 2px !important;
+}
+
+:host ::ng-deep .nav-wrapper input[type=search]:not(.browser-default):focus:not([readonly]) {
+    border-bottom: none;
+}
+
+:host ::ng-deep .select2-container.select2-container--default.select2-container--open {
+    padding: 0px;
+}
+
+:host ::ng-deep .select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: transparent;
+    border: none;
+}
+
+:host ::ng-deep .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    display: none;
+}
+
+:host ::ng-deep li.select2-results__option.select2-results__message {
+    display: none;
+}

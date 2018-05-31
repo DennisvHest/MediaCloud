@@ -5,7 +5,7 @@ import { ItemService } from '../../items/item.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-top-nav',
+  selector: 'top-nav',
   templateUrl: './top-nav.component.html',
   styleUrls: ['./top-nav.component.css']
 })
@@ -40,6 +40,7 @@ export class TopNavComponent implements OnInit {
         },
         delay: 250
       },
+      placeholder: 'Search for items in your libraries...'
     }
   }
 

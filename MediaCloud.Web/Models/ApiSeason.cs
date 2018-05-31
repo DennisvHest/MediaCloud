@@ -11,13 +11,17 @@ namespace MediaCloud.Web.Models {
     public string Title { get; set; }
     public string PosterPath { get; set; }
 
+    public ApiSeries Series { get; set; }
     public IEnumerable<ApiEpisode> Episodes { get; set; }
 
-    public ApiSeason(Season season) {
+    public ApiSeason(Season season, bool backInclusive = false) {
       Id = season.Id;
       SeasonNumber = season.SeasonNumber;
       Title = season.Title;
       PosterPath = season.PosterPath;
+
+      if (backInclusive)
+        Series = new ApiSeries(season.Series, false);
 
       Episodes = season.Episodes.Select(e => new ApiEpisode(e));
     }

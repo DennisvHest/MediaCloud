@@ -4,7 +4,7 @@ import { AppSettings } from '../../../AppSettings';
 import { Item } from '../../models/item';
 
 @Component({
-  selector: 'app-season-card',
+  selector: 'season-card',
   templateUrl: './season-card.component.html',
   styleUrls: ['./season-card.component.css']
 })

@@ -14,13 +14,15 @@ import { NgProgressModule } from '@ngx-progressbar/core';
 import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { LayoutComponent } from './layout/layout/layout.component';
 import { ItemService } from './items/item.service';
+import { SeasonDetailComponent } from './items/season-detail/season-detail.component';
 
 const appRoutes: Routes = [
   { 
     path: '', component: LayoutComponent,
     children: [
       { path: 'libraries', loadChildren: './libraries/libraries.module#LibrariesModule' },
-      { path: 'items', loadChildren: './items/items.module#ItemsModule' }
+      { path: 'items', loadChildren: './items/items.module#ItemsModule' },
+      { path: 'media', loadChildren: './media/media.module#MediaModule' },
     ] 
   }
 ];

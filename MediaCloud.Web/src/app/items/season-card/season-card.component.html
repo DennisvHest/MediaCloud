@@ -3,7 +3,7 @@
     <img src="{{posterUrl}}">
   </div>
   <div class="card-content p-t-xs">
-    <a [routerLink]="['/seasons', season.id]">
+    <a [routerLink]="['/items/seasons', season.id]">
       <span class="card-title">{{season.title}}</span>
     </a>
     <span class="new badge left m-t-xs m-l-0" data-badge-caption="Episodes">{{season.episodes.length}}</span>

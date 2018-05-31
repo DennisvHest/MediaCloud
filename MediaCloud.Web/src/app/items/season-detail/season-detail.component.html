@@ -1,0 +1,19 @@
+<div *ngIf="season !== undefined" class="background-image-blur" [ngStyle]="{'background-image': 'url(\'' + posterUrl + '\')'}"></div>
+<div *ngIf="season !== undefined" class="row">
+    <div class="col s3 p-a-lg">
+        <img src="{{posterUrl}}" class="fixed" />
+    </div>
+    <div class="col s9 p-a-lg">
+        <div id="top-description" class="full-width">
+            <div class="col s8">
+                <h2 class="m-t-xs">{{season.series.title}}</h2>
+                <h5>{{season.title}}</h5>
+                <h6>{{episodeCount}} Episodes</h6>
+            </div>
+            <hr class="m-y-md m-x-xs" />
+            <div class="col s12">
+                <episode-card *ngFor="let episode of season.episodes" [episode]="episode" [parentSeries]="season.series" class="col s12 m5 l4 xl4 p-l-0 p-r-md"></episode-card>
+            </div>
+        </div>
+    </div>
+</div>
