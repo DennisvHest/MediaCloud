@@ -2,10 +2,6 @@ h6 {
     color: rgba(255,255,255,0.549);
 }
 
-#top-description {
-    display: inline-block;
-}
-
 hr {
     clear: both;
 }

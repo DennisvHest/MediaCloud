@@ -9,6 +9,7 @@ import { ItemCardComponent } from './item-card/item-card.component';
 import { SeasonCardComponent } from './season-card/season-card.component';
 import { SeasonDetailComponent } from './season-detail/season-detail.component';
 import { EpisodeCardComponent } from './episode-card/episode-card.component';
+import { EpisodeDetailComponent } from './episode-detail/episode-detail.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,7 @@ import { EpisodeCardComponent } from './episode-card/episode-card.component';
     ItemCardComponent, 
     SeasonCardComponent, 
     SeasonDetailComponent, 
-    EpisodeCardComponent
+    EpisodeCardComponent, EpisodeDetailComponent
   ],
   exports: [
     ItemDetailComponent,

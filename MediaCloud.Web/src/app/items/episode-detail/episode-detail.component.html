@@ -1,0 +1,18 @@
+<div *ngIf="episode !== undefined" class="background-image-blur" [ngStyle]="{'background-image': 'url(\'' + stillUrl + '\')'}"></div>
+<div *ngIf="episode !== undefined" class="row">
+    <div class="col s3 p-a-lg">
+        <img src="{{stillUrl}}" class="fixed" />
+    </div>
+    <div class="col s9 p-a-lg">
+        <div id="top-description" class="full-width">
+            <div class="col s8">
+                <h2 class="m-t-xs">{{episode.season.series.title}}</h2>
+                <h5>S{{episode.season.seasonNumber}} | E{{episode.episodeNumber}} - {{episode.title}}</h5>
+            </div>
+        </div>
+        <hr class="m-y-md m-x-xs" />
+        <div class="col s8">
+            <p class="m-t-0">{{episode.description}}</p>
+        </div>
+    </div>
+</div>

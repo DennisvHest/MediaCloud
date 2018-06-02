@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace MediaCloud.Services {
 
     public interface IEpisodeService {
+        Task<Episode> Get(int id);
         Task<IEnumerable<Episode>> Search(string query);
     }
 
@@ -16,6 +17,10 @@ namespace MediaCloud.Services {
 
         public EpisodeService(IUnitOfWork unitOfWork) {
             _unitOfWork = unitOfWork;
+        }
+
+        public Task<Episode> Get(int id) {
+            return _unitOfWork.Episodes.Get(id);
         }
 
         public Task<IEnumerable<Episode>> Search(string query) {

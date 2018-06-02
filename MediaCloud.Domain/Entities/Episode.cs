@@ -8,6 +8,7 @@ namespace MediaCloud.Domain.Entities {
         public int Id { get; set; }
         public int EpisodeNumber { get; set; }
         public string Title { get; set; }
+        public string Description { get; set; }
         public string StillPath { get; set; }
 
         public Episode() { }
@@ -16,6 +17,7 @@ namespace MediaCloud.Domain.Entities {
             Id = apiEpisode.Id;
             EpisodeNumber = apiEpisode.EpisodeNumber;
             Title = apiEpisode.Name;
+            Description = apiEpisode.Overview;
             StillPath = apiEpisode.StillPath;
         }
 

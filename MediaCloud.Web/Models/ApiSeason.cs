@@ -14,7 +14,7 @@ namespace MediaCloud.Web.Models {
     public ApiSeries Series { get; set; }
     public IEnumerable<ApiEpisode> Episodes { get; set; }
 
-    public ApiSeason(Season season, bool backInclusive = false) {
+    public ApiSeason(Season season, bool backInclusive = false, bool inclusive = true) {
       Id = season.Id;
       SeasonNumber = season.SeasonNumber;
       Title = season.Title;
@@ -23,7 +23,8 @@ namespace MediaCloud.Web.Models {
       if (backInclusive)
         Series = new ApiSeries(season.Series, false);
 
-      Episodes = season.Episodes.Select(e => new ApiEpisode(e));
+      if (inclusive)
+        Episodes = season.Episodes.Select(e => new ApiEpisode(e));
     }
   }
 }

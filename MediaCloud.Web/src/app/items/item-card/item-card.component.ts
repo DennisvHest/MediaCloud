@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Item } from '../../models/item';
 import { AppSettings } from '../../../AppSettings';
+import { Library } from '../../models/library';
 
 @Component({
   selector: 'item-card',

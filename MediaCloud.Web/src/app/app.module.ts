@@ -22,7 +22,7 @@ const appRoutes: Routes = [
     children: [
       { path: 'libraries', loadChildren: './libraries/libraries.module#LibrariesModule' },
       { path: 'items', loadChildren: './items/items.module#ItemsModule' },
-      { path: 'media', loadChildren: './media/media.module#MediaModule' },
+      { path: 'media', loadChildren: './media/media.module#MediaModule' }
     ] 
   }
 ];

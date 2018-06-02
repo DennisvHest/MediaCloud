@@ -1,5 +1,5 @@
 import { Season } from "./season";
-import { Genre } from "./Genre";
+import { Genre } from "./genre";
 import { AppSettings } from "../../AppSettings";
 
 export abstract class Item {
