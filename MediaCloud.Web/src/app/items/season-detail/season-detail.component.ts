@@ -3,6 +3,7 @@ import { Season } from '../../models/season';
 import { ItemService } from '../item.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { AppSettings } from '../../../AppSettings';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'season-detail',

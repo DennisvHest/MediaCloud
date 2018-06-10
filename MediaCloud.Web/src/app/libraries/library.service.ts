@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { Library } from '../models/library';
 import { Item } from '../models/item';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class LibraryService {

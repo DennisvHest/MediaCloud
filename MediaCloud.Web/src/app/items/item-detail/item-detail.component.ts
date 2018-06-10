@@ -3,7 +3,6 @@ import { ItemService } from '../item.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { Item } from '../../models/item';
 import { AppSettings } from '../../../AppSettings';
-import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'item-detail',

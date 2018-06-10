@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LibraryService } from '../library.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import 'rxjs/add/operator/switchMap';
+
 
 import { Library } from '../../models/library';
 import { Item } from '../../models/item';

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Episode } from '../../models/episode';
 import { AppSettings } from '../../../AppSettings';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { ItemService } from '../item.service';
+import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'episode-detail',

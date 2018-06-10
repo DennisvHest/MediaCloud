@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Item } from '../models/item';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { AutocompleteItem } from '../models/autocompleteItem';
 import { Season } from '../models/season';
 import { Episode } from '../models/episode';
