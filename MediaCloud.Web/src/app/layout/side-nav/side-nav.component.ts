@@ -5,7 +5,7 @@ import { Item } from '../../models/item';
 import { LibraryService } from '../../libraries/library.service';
 
 @Component({
-  selector: 'side-nav',
+  selector: 'mc-side-nav',
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.css']
 })
@@ -31,15 +31,15 @@ export class SideNavComponent implements OnInit {
   }
 
   faClass(libraryId: number): string {
-    let foundLibrary = this.libraries.find(l => l.id == libraryId);
+    const foundLibrary = this.libraries.find(l => l.id === libraryId);
 
     switch (foundLibrary.libraryType) {
-      case "MovieLibrary":
-        return "film";
-      case "SeriesLibrary":
-        return "tv";
+      case 'MovieLibrary':
+        return 'film';
+      case 'SeriesLibrary':
+        return 'tv';
       default:
-        return "folder";
+        return 'folder';
     }
   }
 }

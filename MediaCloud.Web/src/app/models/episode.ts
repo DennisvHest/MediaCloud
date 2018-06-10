@@ -1,4 +1,4 @@
-import { Season } from "./season";
+import { Season } from './season';
 
 export class Episode {
     id: number;

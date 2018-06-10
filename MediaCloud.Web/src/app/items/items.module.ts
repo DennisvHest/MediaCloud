@@ -20,9 +20,9 @@ import { EpisodeDetailComponent } from './episode-detail/episode-detail.componen
   ],
   declarations: [
     ItemDetailComponent,
-    ItemCardComponent, 
-    SeasonCardComponent, 
-    SeasonDetailComponent, 
+    ItemCardComponent,
+    SeasonCardComponent,
+    SeasonDetailComponent,
     EpisodeCardComponent, EpisodeDetailComponent
   ],
   exports: [

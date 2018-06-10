@@ -5,7 +5,7 @@ import { Item } from '../../models/item';
 import { AppSettings } from '../../../AppSettings';
 
 @Component({
-  selector: 'item-detail',
+  selector: 'mc-item-detail',
   templateUrl: './item-detail.component.html',
   styleUrls: ['./item-detail.component.css']
 })
@@ -24,12 +24,12 @@ export class ItemDetailComponent implements OnInit {
       this.itemService.get(+params.get('id')))
       .subscribe(r => {
         r.releaseDate = new Date(r.releaseDate);
-        this.item = r
+        this.item = r;
       });
   }
 
   get posterUrl(): string {
-    return AppSettings.imageUrl(this.item.posterPath, "w342");
+    return AppSettings.imageUrl(this.item.posterPath, 'w342');
   }
 
   get episodeCount(): number {

@@ -4,7 +4,7 @@ import { AppSettings } from '../../../AppSettings';
 import { Library } from '../../models/library';
 
 @Component({
-  selector: 'item-card',
+  selector: 'mc-item-card',
   templateUrl: './item-card.component.html',
   styleUrls: ['./item-card.component.css']
 })
@@ -18,6 +18,6 @@ export class ItemCardComponent implements OnInit {
   }
 
   get posterUrl(): string {
-    return AppSettings.imageUrl(this.item.posterPath, "w342");
+    return AppSettings.imageUrl(this.item.posterPath, 'w342');
   }
 }

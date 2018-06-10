@@ -5,7 +5,7 @@ import { ItemService } from '../../items/item.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'top-nav',
+  selector: 'mc-top-nav',
   templateUrl: './top-nav.component.html',
   styleUrls: ['./top-nav.component.css']
 })
@@ -20,7 +20,7 @@ export class TopNavComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    //Initialize the select2 autocomplete box
+    // Initialize the select2 autocomplete box
     this.autocompleteOptions = {
       multiple: true,
       maximumSelectionLength: 1,
@@ -41,15 +41,15 @@ export class TopNavComponent implements OnInit {
         delay: 250
       },
       placeholder: 'Search for items in your libraries...'
-    }
+    };
   }
 
   onAutocompleteSelect(input: any) {
-    //Navigate to item detail page
-    let itemId: number = input.value[0];
+    // Navigate to item detail page
+    const itemId: number = input.value[0];
     this.router.navigate(['items', itemId]);
 
-    //Remove selection from select box
-    let element = input.data[0].element.remove();
+    // Remove selection from select box
+    const element = input.data[0].element.remove();
   }
 }

@@ -1,6 +1,6 @@
-import { Season } from "./season";
-import { Genre } from "./genre";
-import { AppSettings } from "../../AppSettings";
+import { Season } from './season';
+import { Genre } from './genre';
+import { AppSettings } from '../../AppSettings';
 
 export abstract class Item {
     id: number;

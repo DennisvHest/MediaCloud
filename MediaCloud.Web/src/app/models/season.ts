@@ -1,6 +1,6 @@
-import { Episode } from "./episode";
-import { Item } from "./item";
-import { AppSettings } from "../../AppSettings";
+import { Episode } from './episode';
+import { Item } from './item';
+import { AppSettings } from '../../AppSettings';
 
 export class Season {
     id: number;
@@ -10,7 +10,7 @@ export class Season {
 
     series: Item;
     episodes: Episode[];
-    
+
     posterUrl(size: string): string {
         return AppSettings.imageUrl(this.posterPath != null ? this.posterPath : this.posterPath, size);
     }

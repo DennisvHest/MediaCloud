@@ -138,11 +138,11 @@
   "defaultProject": "media-cloud-web",
   "schematics": {
     "@schematics/angular:component": {
-      "prefix": "app",
+      "prefix": "mc",
       "styleext": "css"
     },
     "@schematics/angular:directive": {
-      "prefix": "app"
+      "prefix": "mc"
     }
   }
 }

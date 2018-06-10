@@ -28,6 +28,6 @@ export class ItemService {
   }
 
   autocomplete(query: string): Observable<AutocompleteItem[]> {
-    return this.http.get<AutocompleteItem[]>(`${ItemService.itemsUrl}/autocomplete/${query}`)
+    return this.http.get<AutocompleteItem[]>(`${ItemService.itemsUrl}/autocomplete/${query}`);
   }
 }

@@ -6,7 +6,7 @@ import { AppSettings } from '../../../AppSettings';
 import 'rxjs/add/operator/switchMap';
 
 @Component({
-  selector: 'season-detail',
+  selector: 'mc-season-detail',
   templateUrl: './season-detail.component.html',
   styleUrls: ['./season-detail.component.css']
 })
@@ -24,7 +24,7 @@ export class SeasonDetailComponent implements OnInit {
     this.route.paramMap.switchMap((params: ParamMap) =>
       this.itemService.getSeason(+params.get('id')))
       .subscribe(r => {
-        this.season = r
+        this.season = r;
       });
   }
 
@@ -33,6 +33,6 @@ export class SeasonDetailComponent implements OnInit {
   }
 
   get posterUrl(): string {
-    return AppSettings.imageUrl(this.season.posterPath != null ? this.season.posterPath : this.season.series.posterPath, "w342");
+    return AppSettings.imageUrl(this.season.posterPath != null ? this.season.posterPath : this.season.series.posterPath, 'w342');
   }
 }

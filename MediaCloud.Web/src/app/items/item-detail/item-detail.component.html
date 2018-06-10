@@ -19,7 +19,7 @@
         </div>
         <div *ngIf="item.itemType == 'Series'" class="col s12">
             <h5>Seasons</h5>
-            <season-card *ngFor="let season of item.seasons" [season]="season" [parentItem]="item" class="col s12 m4 l3 xl2 p-l-0 p-r-md"></season-card>
+            <mc-season-card *ngFor="let season of item.seasons" [season]="season" [parentItem]="item" class="col s12 m4 l3 xl2 p-l-0 p-r-md"></mc-season-card>
         </div>
     </div>
 </div>

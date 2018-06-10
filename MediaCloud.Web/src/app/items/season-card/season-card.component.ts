@@ -4,7 +4,7 @@ import { AppSettings } from '../../../AppSettings';
 import { Item } from '../../models/item';
 
 @Component({
-  selector: 'season-card',
+  selector: 'mc-season-card',
   templateUrl: './season-card.component.html',
   styleUrls: ['./season-card.component.css']
 })
@@ -19,6 +19,6 @@ export class SeasonCardComponent implements OnInit {
   }
 
   get posterUrl(): string {
-    return AppSettings.imageUrl(this.season.posterPath != null ? this.season.posterPath : this.parentItem.posterPath, "w342");
+    return AppSettings.imageUrl(this.season.posterPath != null ? this.season.posterPath : this.parentItem.posterPath, 'w342');
   }
 }

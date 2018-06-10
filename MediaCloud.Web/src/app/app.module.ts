@@ -2,7 +2,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
 import { LibraryService } from './libraries/library.service';
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
@@ -17,13 +16,13 @@ import { ItemService } from './items/item.service';
 import { SeasonDetailComponent } from './items/season-detail/season-detail.component';
 
 const appRoutes: Routes = [
-  { 
+  {
     path: '', component: LayoutComponent,
     children: [
       { path: 'libraries', loadChildren: './libraries/libraries.module#LibrariesModule' },
       { path: 'items', loadChildren: './items/items.module#ItemsModule' },
       { path: 'media', loadChildren: './media/media.module#MediaModule' }
-    ] 
+    ]
   }
 ];
 
@@ -34,7 +33,6 @@ const appRoutes: Routes = [
   imports: [
     BrowserModule,
     FormsModule,
-    HttpModule,
     HttpClientModule,
     RouterModule.forRoot(
       appRoutes,
