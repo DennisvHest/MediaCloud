@@ -24,7 +24,7 @@ export class SideNavComponent implements OnInit {
   }
 
   getAllLibraries() {
-    this.libraryService.getAll()
+    this.libraryService.getList()
       .subscribe(libraries => {
         this.libraries = libraries;
       });

@@ -29,6 +29,13 @@ namespace MediaCloud.Web.Controllers {
       return Ok(libraries.Select(l => new ApiLibrary(l)));
     }
 
+    [HttpGet("list")]
+    public async Task<IActionResult> List() {
+      IEnumerable<Library> libraries = await _libraryService.Get();
+
+      return Ok(libraries.Select(l => new ApiLibrary(l, false)));
+    }
+
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(int id) {
       Library library = await _libraryService.Get(id);
@@ -37,6 +44,16 @@ namespace MediaCloud.Web.Controllers {
         return NotFound();
 
       return Ok(new ApiLibrary(library));
+    }
+
+    [HttpGet("{id}/items")]
+    public async Task<IActionResult> GetItems(int id) {
+      Library library = await _libraryService.Get(id);
+
+      if (library == null)
+        return NotFound();
+
+      return Ok(new ApiLibrary(library, itemsOnly: true));
     }
 
     [HttpPost]

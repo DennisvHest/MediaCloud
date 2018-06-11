@@ -11,7 +11,7 @@ namespace MediaCloud.Web.Models {
     public IEnumerable<ApiItem> Items { get; set; }
     public string LibraryType { get; }
 
-    public ApiLibrary(Library library, bool inclusive = true) {
+    public ApiLibrary(Library library, bool inclusive = true, bool itemsOnly = false) {
       LibraryType = library is MovieLibrary ? typeof(MovieLibrary).Name : typeof(SeriesLibrary).Name;
 
       Id = library.Id;
@@ -23,7 +23,7 @@ namespace MediaCloud.Web.Models {
             return new ApiMovie(movie);
           }
 
-          return new ApiSeries((Series)il.Item);
+          return new ApiSeries((Series)il.Item, !itemsOnly);
         });
       }
     }

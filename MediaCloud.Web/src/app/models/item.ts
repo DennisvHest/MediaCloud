@@ -10,6 +10,7 @@ export abstract class Item {
     posterPath: string;
     backdropPath: string;
     genres: Genre[];
+    seasonCount: number;
     seasons: Season[];
     itemType: string;
 

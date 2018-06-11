@@ -11,11 +11,11 @@ export class LibraryService {
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<any> {
-    return this.http.get(LibraryService.librariesUrl);
+  getList(): Observable<any> {
+    return this.http.get(LibraryService.librariesUrl + '/list');
   }
 
-  get(id: number): Observable<Library<Item>> {
-    return this.http.get<Library<Item>>(`${LibraryService.librariesUrl}/${id}`);
+  getItems(id: number): Observable<Library<Item>> {
+    return this.http.get<Library<Item>>(`${LibraryService.librariesUrl}/${id}/items`);
   }
 }

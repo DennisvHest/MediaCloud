@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using TMDbLib.Client;
 
 namespace MediaCloud.Web {
@@ -21,7 +22,9 @@ namespace MediaCloud.Web {
     // This method gets called by the runtime. Use this method to add services to the container.
     // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
     public void ConfigureServices(IServiceCollection services) {
-      services.AddMvc().AddWebApiConventions();
+      services.AddMvc().AddWebApiConventions()
+        // Don't add values null values to JSON responses
+        .AddJsonOptions(options => options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore);
 
       services.AddDbContext<MediaCloudContext>();
 
