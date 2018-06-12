@@ -1,6 +1,6 @@
 <div class="card">
   <div class="card-image">
-    <img src="{{stillUrl}}">
+    <img mcImagePlaceholder [hiResImageUrl]="stillUrl" src="{{stillPlaceHolder}}">
   </div>
   <div class="card-content p-t-xs">
     <a [routerLink]="['/items/episodes', episode.id]">

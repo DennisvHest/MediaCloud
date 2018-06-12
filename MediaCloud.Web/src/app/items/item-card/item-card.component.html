@@ -1,6 +1,6 @@
 <div class="card item-card">
-    <div class="card-image">
-        <img src="{{posterUrl}}">
+    <div class="card-image placeholder">
+        <img mcImagePlaceholder [hiResImageUrl]="posterUrl" src="{{posterPlaceHolder}}">
     </div>
     <div class="card-content p-t-xs">
         <a [routerLink]="['/items', item.id]">

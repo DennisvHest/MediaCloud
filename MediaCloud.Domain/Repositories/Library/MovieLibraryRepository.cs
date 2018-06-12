@@ -8,8 +8,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 namespace MediaCloud.Domain.Repositories.Library {
 
     public interface IMovieLibraryRepository : IRepository<MovieLibrary> {
-        Task<IEnumerable<MovieLibrary>> GetAll();
-        Task<MovieLibrary> Get(int id);
+
     }
 
     public class MovieLibraryRepository : Repository<MovieLibrary>, IMovieLibraryRepository {

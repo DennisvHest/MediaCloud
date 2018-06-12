@@ -20,11 +20,11 @@ namespace MediaCloud.Common.Helpers {
 
             try {
                 from = long.Parse(rangeHeaderValues[0]);
-            } catch (Exception e) { }
+            } catch (Exception) { }
 
             try {
                 to = long.Parse(rangeHeaderValues[1]);
-            } catch (Exception e) { }
+            } catch (Exception) { }
 
             return new RangeHeader {
                 Unit = rangeHeader[0],

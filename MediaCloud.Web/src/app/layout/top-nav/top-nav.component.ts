@@ -45,9 +45,18 @@ export class TopNavComponent implements OnInit {
   }
 
   onAutocompleteSelect(input: any) {
-    // Navigate to item detail page
-    const itemId: number = input.value[0];
-    this.router.navigate(['items', itemId]);
+    // Navigate to the detail
+    const value: string = input.value[0];
+    const valueSplit = value.split('_');
+    const itemId = valueSplit[0];
+    const episodeId = valueSplit[1];
+
+    // If there is an episode, navigate to the episode. Otherwise, navigate to the item.
+    if (episodeId) {
+      this.router.navigate(['items', 'episodes', episodeId]);
+    } else {
+      this.router.navigate(['items', itemId]);
+    }
 
     // Remove selection from select box
     const element = input.data[0].element.remove();

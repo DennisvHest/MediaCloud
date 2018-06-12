@@ -7,13 +7,15 @@ import { ItemCardComponent } from '../items/item-card/item-card.component';
 import { AppModule } from '../app.module';
 import { LayoutModule } from '../layout/layout.module';
 import { ItemsModule } from '../items/items.module';
+import { McCommonModule } from '../common/mc-common.module';
 
 @NgModule({
     imports: [
       CommonModule,
       LibraryRoutingModule,
       LayoutModule,
-      ItemsModule
+      ItemsModule,
+      McCommonModule
     ],
     declarations: [
       LibraryDetailComponent

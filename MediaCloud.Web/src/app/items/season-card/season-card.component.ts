@@ -21,4 +21,8 @@ export class SeasonCardComponent implements OnInit {
   get posterUrl(): string {
     return AppSettings.imageUrl(this.season.posterPath != null ? this.season.posterPath : this.parentItem.posterPath, 'w342');
   }
+
+  get posterPlaceHolder(): string {
+    return AppSettings.posterPlaceHolder;
+  }
 }

@@ -10,13 +10,15 @@ import { SeasonCardComponent } from './season-card/season-card.component';
 import { SeasonDetailComponent } from './season-detail/season-detail.component';
 import { EpisodeCardComponent } from './episode-card/episode-card.component';
 import { EpisodeDetailComponent } from './episode-detail/episode-detail.component';
+import { McCommonModule } from '../common/mc-common.module';
 
 @NgModule({
   imports: [
     CommonModule,
     ItemRoutingModule,
     LayoutModule,
-    MaterializeModule
+    MaterializeModule,
+    McCommonModule
   ],
   declarations: [
     ItemDetailComponent,

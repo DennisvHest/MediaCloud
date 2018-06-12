@@ -21,4 +21,8 @@ export class EpisodeCardComponent implements OnInit {
   get stillUrl(): string {
     return AppSettings.imageUrl(this.episode.stillPath !== undefined ? this.episode.stillPath : this.parentSeries.backdropPath, 'w300');
   }
+
+  get stillPlaceHolder(): string {
+    return AppSettings.stillPlaceHolder;
+  }
 }

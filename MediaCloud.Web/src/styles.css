@@ -63,7 +63,6 @@ h1, h2, h3, h4, h5, h6, p, b, i {
 .card .card-content {
     padding: 5px;
     color: white;
-    border-top: 3px solid #3f7ad2;
 }
 
 .card .card-content .card-title {
