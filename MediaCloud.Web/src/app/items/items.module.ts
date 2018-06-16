@@ -4,7 +4,6 @@ import { ItemDetailComponent } from './item-detail/item-detail.component';
 import { ItemRoutingModule } from './items-routing.module';
 import { LayoutModule } from '../layout/layout.module';
 import { MaterializeModule } from 'angular2-materialize';
-import { ItemService } from './item.service';
 import { ItemCardComponent } from './item-card/item-card.component';
 import { SeasonCardComponent } from './season-card/season-card.component';
 import { SeasonDetailComponent } from './season-detail/season-detail.component';

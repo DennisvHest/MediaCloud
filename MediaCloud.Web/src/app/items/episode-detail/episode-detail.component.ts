@@ -34,4 +34,5 @@ export class EpisodeDetailComponent implements OnInit {
       : this.episode.season.series.backdropPath, 'w300'
     );
   }
+
 }

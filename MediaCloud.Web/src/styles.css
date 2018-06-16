@@ -80,6 +80,26 @@ a:hover {
     text-decoration: underline;
 }
 
+.btn, .btn-floating, .btn:focus, .btn-floating:focus  {
+    background-color: #a62626;
+}
+
+.btn:hover, .btn-floating:hover {
+    background: #bb2b2b;
+}
+
+.progress .determinate {
+    background-color: #a62626;
+}
+
+.progress {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#side-bar li a:hover, a.btn:hover {
+    text-decoration: none;
+}
+
 #sidenav-overlay {
     display: none;
 }
@@ -90,6 +110,10 @@ a:hover {
 
 .fixed {
     position: fixed;
+}
+
+.d-inline-block {
+    display: inline-block;
 }
 
 span.badge.new {

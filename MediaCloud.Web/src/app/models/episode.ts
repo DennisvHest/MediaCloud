@@ -1,4 +1,5 @@
 import { Season } from './season';
+import { Media } from './media';
 
 export class Episode {
     id: number;
@@ -7,4 +8,5 @@ export class Episode {
     description: string;
     stillPath: string;
     season: Season;
+    media: Media[];
 }

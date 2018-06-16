@@ -39,7 +39,7 @@ const appRoutes: Routes = [
     ),
     NgProgressModule.forRoot({
       spinner: false,
-      color: '#3f7ad2',
+      color: '#a62626',
       thick: true
     }),
     NgProgressHttpModule,

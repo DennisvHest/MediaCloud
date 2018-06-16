@@ -5,3 +5,8 @@ h6 {
 hr {
     clear: both;
 }
+
+a.btn i {
+    font-size: 15px;
+    padding-right: 5px;
+}

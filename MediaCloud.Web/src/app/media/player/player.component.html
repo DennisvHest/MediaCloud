@@ -1,3 +1,19 @@
-<video id="media-player" width="640" height="360" controls="controls" (onloadeddata)="onLoad()" type="video/mp4">
-  <source src="/api/media/185/stream" />
-</video>
+<div *ngIf="media">
+  <video id="media-player" #mediaPlayer type="video/mp4" autoplay="autoplay" (loadedmetadata)="onLoadedMetadata()" (timeupdate)="updateProgress()">
+    <source src="/api/media/{{media.id}}/stream" />
+  </video>
+  <div id="media-player-overlay">
+    <!-- <div id="overlay-top" class="p-a-xs">
+      <h5>{{media.episode.season.series.title}}</h5>
+      <h6>S{{media.episode.season.seasonNumber}} | E{{media.episode.episodeNumber}} - {{media.episode.title}}</h6>
+    </div> -->
+    <div id="overlay-bottom" class="d-inline-block">
+      <button id="btn-play" (click)="playPause()" class="btn-floating btn-large waves-effect waves-light">
+        <i class="material-icons">play_arrow</i>
+      </button>
+      <div class="progress d-inline-block">
+        <div class="determinate" [style.width.%]="progressPercentage"></div>
+      </div>
+    </div>
+  </div>
+</div>

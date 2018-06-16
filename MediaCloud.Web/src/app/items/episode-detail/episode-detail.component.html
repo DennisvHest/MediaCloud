@@ -13,6 +13,7 @@
         <hr class="m-y-md m-x-xs" />
         <div class="col s8">
             <p class="m-t-0">{{episode.description}}</p>
+            <a [routerLink]="['/media', episode.media[0].id, 'play']" class="waves-effect waves-light btn"><i class="fa fa-play"></i> Play</a>
         </div>
     </div>
 </div>

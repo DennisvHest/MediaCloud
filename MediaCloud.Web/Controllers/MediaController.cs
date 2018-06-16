@@ -10,6 +10,7 @@ using MediaCloud.Common.Helpers;
 using MediaCloud.Common.Models;
 using MediaCloud.Domain.Entities;
 using MediaCloud.Services;
+using MediaCloud.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MediaCloud.Web.Controllers {
@@ -21,6 +22,11 @@ namespace MediaCloud.Web.Controllers {
 
     public MediaController(IMediaService mediaService) {
       _mediaService = mediaService;
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ApiMedia> Get(int id) {
+      return new ApiMedia(await _mediaService.Get(id), true);
     }
 
     [HttpGet("{id}/stream")]
