@@ -1,19 +1,20 @@
-<div *ngIf="media">
+<div>
   <video id="media-player" #mediaPlayer type="video/mp4" autoplay="autoplay" (loadedmetadata)="onLoadedMetadata()" (timeupdate)="updateProgress()">
-    <source src="/api/media/{{media.id}}/stream" />
+    <source *ngIf="media" src="/api/media/{{media.id}}/stream" />
   </video>
-  <div id="media-player-overlay">
-    <!-- <div id="overlay-top" class="p-a-xs">
+  <div #overlay id="media-player-overlay">
+    <div *ngIf="media && !media.movie" id="overlay-top" class="p-a-xs">
       <h5>{{media.episode.season.series.title}}</h5>
       <h6>S{{media.episode.season.seasonNumber}} | E{{media.episode.episodeNumber}} - {{media.episode.title}}</h6>
-    </div> -->
+    </div>
+    <div *ngIf="media && media.movie" id="overlay-top" class="p-a-xs">
+      <h5>{{media.movie.title}}</h5>
+    </div>
     <div id="overlay-bottom" class="d-inline-block">
-      <button id="btn-play" (click)="playPause()" class="btn-floating btn-large waves-effect waves-light">
-        <i class="material-icons">play_arrow</i>
+      <button #playButton id="btn-play" (click)="playPause()" class="btn-large waves-effect waves-light">
+        <i class="material-icons">pause</i>
       </button>
-      <div class="progress d-inline-block">
-        <div class="determinate" [style.width.%]="progressPercentage"></div>
-      </div>
+      <div #mediaProgress id="media-progress"></div>
     </div>
   </div>
 </div>

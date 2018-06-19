@@ -1,6 +1,7 @@
 import { Season } from './season';
 import { Genre } from './genre';
 import { AppSettings } from '../../AppSettings';
+import { Media } from './media';
 
 export abstract class Item {
     id: number;
@@ -12,6 +13,7 @@ export abstract class Item {
     genres: Genre[];
     seasonCount: number;
     seasons: Season[];
+    media: Media[];
     itemType: string;
 
     posterUrl(size: string): string {

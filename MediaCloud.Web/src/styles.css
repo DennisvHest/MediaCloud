@@ -72,6 +72,14 @@ h1, h2, h3, h4, h5, h6, p, b, i {
     margin: 0;
 }
 
+.hidden {
+    display: none;
+}
+
+.transparent {
+    opacity: 0;
+}
+
 a {
     color: white;
 }
@@ -80,15 +88,15 @@ a:hover {
     text-decoration: underline;
 }
 
-.btn, .btn-floating, .btn:focus, .btn-floating:focus  {
+.btn, .btn-floating, .btn-large, .btn:focus, .btn-floating:focus, .btn-large:focus  {
     background-color: #a62626;
 }
 
-.btn:hover, .btn-floating:hover {
+.btn:hover, .btn-floating:hover, .btn-large:hover, .noUi-target.noUi-horizontal .noUi-tooltip {
     background: #bb2b2b;
 }
 
-.progress .determinate {
+.progress .determinate, .noUi-connect {
     background-color: #a62626;
 }
 
