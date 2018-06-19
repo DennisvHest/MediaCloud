@@ -8,7 +8,9 @@
     "build": "npm run-script lint && ng build --prod --aot",
     "test": "ng test",
     "lint": "ng lint media-cloud-web --fix",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "private": true,
   "dependencies": {
@@ -35,7 +37,8 @@
     "rxjs": "^6.2.1",
     "rxjs-compat": "^6.2.1",
     "select2": "^4.0.6-rc.1",
-    "zone.js": "^0.8.26"
+    "zone.js": "^0.8.26",
+    "snyk": "^1.83.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.6.8",
@@ -58,5 +61,6 @@
     "ts-node": "~6.1.1",
     "tslint": "~5.10.0",
     "typescript": "^2.7.2"
-  }
+  },
+  "snyk": true
 }
