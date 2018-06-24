@@ -1,6 +1,6 @@
 <ul materialize="sideNav" [materializeActions]="sideNavActions" [materializeParams]="[{ draggable: false }]" id="side-bar" class="side-nav fixed">
-  <li>
-    <a class="subheader">Libraries</a>
+  <li class="d-inline-flex">
+    <a class="subheader">Libraries</a><button class="action-btn waves-effect waves-light btn-flat m-t-xxs"><i class="material-icons">add</i></button>
   </li>
   <li *ngFor="let library of libraries">
     <a class="waves-effect waves-light" [routerLink]="['/libraries', library.id]"><i class="fa fa-{{faClass(library.id)}}"></i>{{library.name}}</a>

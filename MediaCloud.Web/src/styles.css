@@ -96,6 +96,13 @@ a:hover {
     background: #bb2b2b;
 }
 
+.action-btn {
+    border-radius: 100%;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+}
+
 .progress .determinate, .noUi-connect {
     background-color: #a62626;
 }
@@ -122,6 +129,10 @@ a:hover {
 
 .d-inline-block {
     display: inline-block;
+}
+
+.d-inline-flex {
+    display: inline-flex;
 }
 
 span.badge.new {

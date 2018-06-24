@@ -42,6 +42,7 @@ namespace MediaCloud.Web {
       services.AddTransient<ISeasonService, SeasonService>();
       services.AddTransient<IEpisodeService, EpisodeService>();
       services.AddTransient<IMediaService, MediaService>();
+      services.AddTransient<IFileExplorationService, FileExplorationService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
