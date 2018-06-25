@@ -1,0 +1,38 @@
+#directories {
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.collection-item:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+}
+
+.collection-item.selected {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left: 5px solid #a62626;
+}
+
+.library-type-btn {
+    height: 100px;
+    width: 100px;
+}
+
+.library-type-btn.selected {
+    border-bottom: 3px solid #a62626;
+}
+
+.library-type-btn.selected i {
+    color: #a62626;
+}
+
+.library-type-btn i {
+    font-size: 60px;
+    line-height: 60px;
+}
+
+#library-create-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 24px;;
+}

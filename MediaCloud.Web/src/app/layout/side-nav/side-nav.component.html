@@ -1,8 +1,18 @@
-<ul materialize="sideNav" [materializeActions]="sideNavActions" [materializeParams]="[{ draggable: false }]" id="side-bar" class="side-nav fixed">
+<div id="add-libary-modal" class="modal" materialize="modal" [materializeParams]="addLibraryModalParams" [materializeActions]="addLibraryModalActions">
+  <div class="modal-content">
+    <mc-library-add *ngIf="loadLibraryAddModal"></mc-library-add>
+  </div>
+</div>
+<ul materialize="sideNav" [materializeActions]="sideNavActions" [materializeParams]="[{ draggable: false }]" id="side-bar"
+  class="side-nav fixed">
   <li class="d-inline-flex">
-    <a class="subheader">Libraries</a><button class="action-btn waves-effect waves-light btn-flat m-t-xxs"><i class="material-icons">add</i></button>
+    <a class="subheader p-r-xs">Libraries</a>
+    <button (click)="openAddLibraryModal()" class="icon-btn waves-effect waves-light btn-flat m-t-xxs modal-trigger">
+      <i class="material-icons">add</i>
+    </button>
   </li>
   <li *ngFor="let library of libraries">
-    <a class="waves-effect waves-light" [routerLink]="['/libraries', library.id]"><i class="fa fa-{{faClass(library.id)}}"></i>{{library.name}}</a>
+    <a class="waves-effect waves-light" [routerLink]="['/libraries', library.id]">
+      <i class="fa fa-{{faClass(library.id)}}"></i>{{library.name}}</a>
   </li>
 </ul>

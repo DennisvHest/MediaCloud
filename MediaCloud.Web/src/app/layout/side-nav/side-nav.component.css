@@ -3,6 +3,11 @@
     margin-top: 64px;
 }
 
+#add-libary-modal {
+    height: 650px;
+    overflow: hidden;
+}
+
 #side-bar li > a:hover {
     background-color: rgba(0, 0, 0, 0.15);
 }

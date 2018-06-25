@@ -15,11 +15,20 @@ export class SideNavComponent implements OnInit {
 
   sideNavActions = new EventEmitter<string | MaterializeAction>();
 
+  addLibraryModalParams = [];
+  addLibraryModalActions = new EventEmitter<string | MaterializeAction>();
+  loadLibraryAddModal = false;
+
   isOpen = true;
 
   constructor(private libraryService: LibraryService) { }
 
   ngOnInit() {
+    this.libraryService.libraryUpdated.subscribe((libraryUpdated) => {
+      if (libraryUpdated) {
+        this.getAllLibraries();
+      }
+    });
     this.getAllLibraries();
   }
 
@@ -28,6 +37,11 @@ export class SideNavComponent implements OnInit {
       .subscribe(libraries => {
         this.libraries = libraries;
       });
+  }
+
+  openAddLibraryModal() {
+    this.loadLibraryAddModal = true;
+    this.addLibraryModalActions.emit({ action: 'modal', params: ['open'] });
   }
 
   faClass(libraryId: number): string {

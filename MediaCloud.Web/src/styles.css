@@ -1,3 +1,7 @@
+html {
+    color: white;
+}
+
 body {
     background-color: #31343a;
     overflow: initial !important;
@@ -96,11 +100,21 @@ a:hover {
     background: #bb2b2b;
 }
 
-.action-btn {
+.icon-btn {
     border-radius: 100%;
     padding: 0;
     width: 36px;
     height: 36px;
+}
+
+.icon-btn i {
+    font-size: 18px;
+    line-height: 38px;
+    color: rgba(255,255,255,0.8) !important;
+}
+
+.icon-btn:hover i {
+    color: white !important;
 }
 
 .progress .determinate, .noUi-connect {
@@ -117,6 +131,19 @@ a:hover {
 
 #sidenav-overlay {
     display: none;
+}
+
+.modal {
+    background-color: rgba(36,38,43);
+}
+
+.collection {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.collection .collection-item {
+    background-color: transparent;
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
 .full-width {

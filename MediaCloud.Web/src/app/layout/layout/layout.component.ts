@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
+import { MaterializeAction } from 'angular2-materialize';
 
 @Component({
   selector: 'mc-app-layout',
