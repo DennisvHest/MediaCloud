@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using MediaCloud.Common.Models;
 using MediaCloud.Domain.Entities;
@@ -30,6 +31,8 @@ namespace MediaCloud.Domain.Repositories.Series {
 
         private readonly TMDbClient _tmdbClient;
 
+        private static int _requestCount;
+
         public TmdbSeriesApiRepository(TMDbClient tmdbClient) {
             _tmdbClient = tmdbClient;
         }
@@ -51,6 +54,7 @@ namespace MediaCloud.Domain.Repositories.Series {
             //Create tasks to fetch search results from the API and wait until all of them are complete and add them to the found series
             IEnumerable<Task<Entities.Series>> seriesSearchTasks = seriesSearchModels.Select(m => SearchSeries(m, tvGenres, callback));
             IEnumerable<Entities.Series> foundSeries = await Task.WhenAll(seriesSearchTasks);
+            _requestCount = 0;
             foundSeries = foundSeries.Where(s => s != null);
 
             return foundSeries;
@@ -58,6 +62,7 @@ namespace MediaCloud.Domain.Repositories.Series {
 
         private async Task<Entities.Series> SearchSeries(IGrouping<string, TvMediaSearchModel> seriesSearchModel, IEnumerable<Genre> tvGenres, Action<Entities.Series, IGrouping<string, TvMediaSearchModel>> callback) {
             SearchContainer<SearchTv> searchResult = await _tmdbClient.SearchTvShowAsync(seriesSearchModel.Key);
+            IncrementRequestCount();
 
             IEnumerable<SeasonEpisodePair> seasonEpisodePairs = seriesSearchModel.Select(m => m.SeasonEpisodePair);
 
@@ -71,6 +76,7 @@ namespace MediaCloud.Domain.Repositories.Series {
             //Retrieve required seasons
             foreach (int season in seasons) {
                 TvSeason foundSeason = await _tmdbClient.GetTvSeasonAsync(foundSeries.Id, season);
+                IncrementRequestCount();
 
                 if (foundSeason == null) continue;
 
@@ -125,6 +131,13 @@ namespace MediaCloud.Domain.Repositories.Series {
             } else {
                 return null;
             }
+        }
+
+        private static void IncrementRequestCount() {
+            _requestCount++;
+
+            if (_requestCount % 30 == 0)
+                Thread.Sleep(new TimeSpan(0, 0, 10));
         }
     }
 }

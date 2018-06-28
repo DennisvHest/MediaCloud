@@ -3,6 +3,7 @@ import { MaterializeAction } from 'angular2-materialize';
 import { Library } from '../../models/library';
 import { Item } from '../../models/item';
 import { LibraryService } from '../../libraries/library.service';
+import { Router, NavigationStart } from '@angular/router';
 
 @Component({
   selector: 'mc-side-nav',
@@ -21,7 +22,16 @@ export class SideNavComponent implements OnInit {
 
   isOpen = true;
 
-  constructor(private libraryService: LibraryService) { }
+  constructor(
+    private libraryService: LibraryService,
+    private router: Router
+  ) {
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart)
+        this.addLibraryModalActions.emit({ action: 'modal', params: ['close'] });
+        this.loadLibraryAddModal = false;
+    });
+  }
 
   ngOnInit() {
     this.libraryService.libraryUpdated.subscribe((libraryUpdated) => {

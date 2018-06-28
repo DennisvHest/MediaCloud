@@ -1,42 +1,72 @@
 <div class="row">
-  <div class="col s12">
-    <input type="text" [value]="selectedDirectory ? selectedDirectory.path : selectedDrive?.name" />
-  </div>
-  <div class="col s3">
-    <div class="row">
-      <div class="input-field col s12">
-        <input [(ngModel)]="name" type="text" id="name">
-        <label for="name">Name</label>
-      </div>
-      <div class="col s12">
+  <form #form="ngForm" (ngSubmit)="createLibrary(form)" novalidate>
+    <div class="col s12">
+      <input type="text" name="selectedDirectoryPath" [class.ng-touched]="form.submitted" [(ngModel)]="selectedDirectoryPath" #selectedDirectoryPathInput="ngModel"
+        required />
+      <span class="validation-error" *ngIf="selectedDirectoryPathInput.touched && selectedDirectoryPathInput.invalid && selectedDirectoryPathInput.errors['required'] || form.submitted && selectedDirectoryPathInput.invalid">
+        Library folder path is required.
+      </span>
+    </div>
+    <div class="col s3">
+      <div class="row">
+        <div class="input-field col s12">
+          <input [(ngModel)]="name" #nameInput="ngModel" type="text" name="name" [class.ng-touched]="form.submitted" id="name" required>
+          <label for="name">Name</label>
+        </div>
+        <span class="validation-error" *ngIf="nameInput.touched && nameInput.invalid && nameInput.errors['required'] || form.submitted && nameInput.invalid">
+          Library name is required.
+        </span>
+        <div class="col s12">
           <label for="name">Library Type</label>
-      </div>
-      <div class="col s6">
-        <button class="library-type-btn waves-effect waves-light btn-flat m-y-md p-a-0" [class.selected]="selectedLibraryType === 0"
-          (click)="onLibraryTypeSelect(0)">
-          <i class="fa fa-film"></i>
-        </button>
-      </div>
-      <div class="col s6">
-        <button class="library-type-btn waves-effect waves-light btn-flat m-y-md p-a-0" [class.selected]="selectedLibraryType === 1"
-          (click)="onLibraryTypeSelect(1)">
-          <i class="fa fa-tv"></i>
-        </button>
+        </div>
+        <div class="col s6">
+          <button type="button" class="library-type-btn waves-effect waves-light btn-flat m-y-md p-a-0" [class.selected]="selectedLibraryType === 0"
+            (click)="onLibraryTypeSelect(0)">
+            <i class="fa fa-film"></i>
+          </button>
+        </div>
+        <div class="col s6">
+          <button type="button" class="library-type-btn waves-effect waves-light btn-flat m-y-md p-a-0" [class.selected]="selectedLibraryType === 1"
+            (click)="onLibraryTypeSelect(1)">
+            <i class="fa fa-tv"></i>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="col s4">
-    <ul class="collection">
-      <li *ngFor="let drive of drives" (click)="onDriveSelect(drive)" [class.selected]="drive === selectedDrive" class="collection-item">{{drive.name}}</li>
-    </ul>
-  </div>
-  <div class="col s5">
-    <ul class="collection">
-      <li *ngIf="selectedDirectory" class="collection-item selected">{{selectedDirectory.name}}</li>
-      <div id="directories">
-        <li *ngFor="let directory of directories" (click)="onDirectorySelect(directory)" class="collection-item">{{directory.name}}</li>
+    <div class="col s4">
+      <ul class="collection">
+        <li *ngFor="let drive of drives" (click)="onDriveSelect(drive)" [class.selected]="drive === selectedDrive" class="collection-item">{{drive.name}}</li>
+      </ul>
+    </div>
+    <div class="col s5">
+      <ul class="collection">
+        <li *ngIf="selectedDirectory" class="collection-item selected">{{selectedDirectory.name}}</li>
+        <div *ngIf="showDirectoriesLoader" class="progress m-a-0">
+          <div class="indeterminate"></div>
+        </div>
+        <div id="directories" *ngIf="!showDirectoriesLoader">
+          <li *ngFor="let directory of directories" (click)="onDirectorySelect(directory)" class="collection-item">{{directory.name}}</li>
+        </div>
+      </ul>
+    </div>
+    <button id="library-create-btn" class="waves-effect waves-light btn pull-right">
+      <div class="preloader-wrapper small active" *ngIf="submitting">
+        <div class="spinner-layer spinner-white-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
       </div>
-    </ul>
+      <span *ngIf="!submitting">Create</span>
+    </button>
+  </form>
+  <div *ngIf="submitting" id="library-create-progress" class="progress m-a-0">
+    <div class="indeterminate"></div>
   </div>
-  <button id="library-create-btn" (click)="createLibrary()" class="waves-effect waves-light btn pull-right">Create</button>
 </div>

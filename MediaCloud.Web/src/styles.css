@@ -117,7 +117,56 @@ a:hover {
     color: white !important;
 }
 
-.progress .determinate, .noUi-connect {
+input:not([type]):focus:not([readonly]), 
+input[type=text]:not(.browser-default):focus:not([readonly]), 
+input[type=password]:not(.browser-default):focus:not([readonly]), 
+input[type=email]:not(.browser-default):focus:not([readonly]), 
+input[type=url]:not(.browser-default):focus:not([readonly]), 
+input[type=time]:not(.browser-default):focus:not([readonly]), 
+input[type=date]:not(.browser-default):focus:not([readonly]), 
+input[type=datetime]:not(.browser-default):focus:not([readonly]), 
+input[type=datetime-local]:not(.browser-default):focus:not([readonly]), 
+input[type=tel]:not(.browser-default):focus:not([readonly]), 
+input[type=number]:not(.browser-default):focus:not([readonly]), 
+input[type=search]:not(.browser-default):focus:not([readonly]), 
+textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid white;
+    box-shadow: 0 1px 0 0 white;
+}
+
+input:not([type]):focus:not([readonly])+label, 
+input[type=text]:not(.browser-default):focus:not([readonly])+label, 
+input[type=password]:not(.browser-default):focus:not([readonly])+label, 
+input[type=email]:not(.browser-default):focus:not([readonly])+label, 
+input[type=url]:not(.browser-default):focus:not([readonly])+label, 
+input[type=time]:not(.browser-default):focus:not([readonly])+label, 
+input[type=date]:not(.browser-default):focus:not([readonly])+label, 
+input[type=datetime]:not(.browser-default):focus:not([readonly])+label, 
+input[type=datetime-local]:not(.browser-default):focus:not([readonly])+label, 
+input[type=tel]:not(.browser-default):focus:not([readonly])+label, 
+input[type=number]:not(.browser-default):focus:not([readonly])+label, 
+input[type=search]:not(.browser-default):focus:not([readonly])+label, 
+textarea.materialize-textarea:focus:not([readonly])+label {
+    color: white;
+}
+
+input:not([readonly]).ng-touched.ng-invalid+label, input:focus:not([readonly]).ng-touched.ng-invalid+label {
+    color: #de4545;
+}
+
+input:not([readonly]).ng-touched.ng-invalid, input:focus:not([readonly]).ng-touched.ng-invalid {
+    border-bottom: 1px solid #de4545;
+    box-shadow: 0 1px 0 0 #de4545;
+}
+
+.validation-error {
+    color: #de4545;
+    text-align: center;
+    display: block;
+    padding: 5px 0 5px 0;
+}
+
+.progress .determinate, .progress .indeterminate, .noUi-connect {
     background-color: #a62626;
 }
 
@@ -144,6 +193,19 @@ a:hover {
 .collection .collection-item {
     background-color: transparent;
     border-color: rgba(255, 255, 255, 0.3);
+}
+
+.preloader-wrapper.small {
+    width: 24px;
+    height: 24px;
+}
+
+.spinner-white-only {
+    border-color: white;
+}
+
+.btn .preloader-wrapper {
+    margin: 7px 0 7px 0;
 }
 
 .full-width {

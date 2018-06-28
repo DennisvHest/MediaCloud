@@ -35,4 +35,12 @@
     position: absolute;
     bottom: 20px;
     right: 24px;;
+    min-width: 120px;
+}
+
+#library-create-progress {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    left: 0;
 }
