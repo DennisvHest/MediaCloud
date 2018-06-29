@@ -1,6 +1,7 @@
 <div class="row">
   <form #form="ngForm" (ngSubmit)="createLibrary(form)" novalidate>
     <div class="col s12">
+      <label for="name">Library folder path</label>
       <input type="text" name="selectedDirectoryPath" [class.ng-touched]="form.submitted" [(ngModel)]="selectedDirectoryPath" #selectedDirectoryPathInput="ngModel"
         required />
       <span class="validation-error" *ngIf="selectedDirectoryPathInput.touched && selectedDirectoryPathInput.invalid && selectedDirectoryPathInput.errors['required'] || form.submitted && selectedDirectoryPathInput.invalid">
@@ -34,13 +35,18 @@
       </div>
     </div>
     <div class="col s4">
+      <label for="name">Drives</label>
       <ul class="collection">
         <li *ngFor="let drive of drives" (click)="onDriveSelect(drive)" [class.selected]="drive === selectedDrive" class="collection-item">{{drive.name}}</li>
       </ul>
     </div>
     <div class="col s5">
+      <label for="name">Directory</label>
       <ul class="collection">
-        <li *ngIf="selectedDirectory" class="collection-item selected">{{selectedDirectory.name}}</li>
+        <li *ngIf="selectedDirectory" class="collection-item selected p-a-xxs">
+          <button type="button" class="icon-btn waves-effect waves-light btn-flat" (click)="onBackDirectory()">
+            <i class="material-icons">keyboard_return</i>
+          </button>{{selectedDirectory.name}}</li>
         <div *ngIf="showDirectoriesLoader" class="progress m-a-0">
           <div class="indeterminate"></div>
         </div>

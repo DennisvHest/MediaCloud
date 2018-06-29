@@ -27,8 +27,9 @@ export class SideNavComponent implements OnInit {
     private router: Router
   ) {
     this.router.events.subscribe((event) => {
-      if (event instanceof NavigationStart)
+      if (event instanceof NavigationStart) {
         this.addLibraryModalActions.emit({ action: 'modal', params: ['close'] });
+      }
         this.loadLibraryAddModal = false;
     });
   }

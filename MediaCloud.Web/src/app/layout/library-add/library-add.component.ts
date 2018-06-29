@@ -17,16 +17,18 @@ export class LibraryAddComponent implements OnInit {
   directories: Directory[];
 
   name: string;
-  selectedLibraryType: number = 0;
+  selectedLibraryType = 0;
   selectedDrive: Directory;
   selectedDirectory: Directory;
   selectedDirectoryPath: string;
 
+  prevDirectories: Directory[];
+
   showDirectoriesLoader = true;
   submitting = false;
 
-  @ViewChild("selectedDirectoryPathInput") selectedDirectoryPathInput: NgModel;
-  @ViewChild("nameInput") nameInput: NgModel;
+  @ViewChild('selectedDirectoryPathInput') selectedDirectoryPathInput: NgModel;
+  @ViewChild('nameInput') nameInput: NgModel;
 
   constructor(
     private directoryService: DirectoryService,
@@ -37,6 +39,7 @@ export class LibraryAddComponent implements OnInit {
   ngOnInit() {
     this.drives = [];
     this.directories = [];
+    this.prevDirectories = [];
 
     this.directoryService.getDrives()
       .subscribe(drives => {
@@ -59,6 +62,8 @@ export class LibraryAddComponent implements OnInit {
   }
 
   onDriveSelect(drive: Directory) {
+    this.prevDirectories = [];
+
     this.selectedDrive = drive;
     this.selectedDirectory = null;
     this.selectedDirectoryPath = this.selectedDrive.name;
@@ -66,9 +71,25 @@ export class LibraryAddComponent implements OnInit {
   }
 
   onDirectorySelect(directory: Directory) {
+    this.prevDirectories.push(this.selectedDirectory ? this.selectedDirectory : this.selectedDrive);
+
     this.selectedDirectory = directory;
     this.selectedDirectoryPath = this.selectedDirectory.path;
     this.updateDirectoryView(directory.path);
+  }
+
+  onBackDirectory() {
+    let prevDirectory = this.prevDirectories.pop();
+
+    if (this.prevDirectories.length == 0) {
+      this.selectedDirectory = null;
+      this.selectedDirectoryPath = prevDirectory.name;
+    } else {
+      this.selectedDirectory = prevDirectory;
+      this.selectedDirectoryPath = prevDirectory.path;
+    }
+
+    this.updateDirectoryView(prevDirectory.path ? prevDirectory.path : prevDirectory.name);
   }
 
   createLibrary(form: NgForm) {
