@@ -3,8 +3,9 @@ import { Directory } from '../../models/directory';
 import { DirectoryService } from '../directory.service';
 import { LibraryService } from '../../libraries/library.service';
 import { NgModel, NgForm } from '@angular/forms';
-import { Router, NavigationStart } from '@angular/router';
-import { SideNavComponent } from '../side-nav/side-nav.component';
+import { Router } from '@angular/router';
+import { HubConnection } from '@aspnet/signalr';
+import * as signalR from '@aspnet/signalr';
 
 @Component({
   selector: 'mc-library-add',
@@ -26,9 +27,12 @@ export class LibraryAddComponent implements OnInit {
 
   showDirectoriesLoader = true;
   submitting = false;
+  progress: string;
 
   @ViewChild('selectedDirectoryPathInput') selectedDirectoryPathInput: NgModel;
   @ViewChild('nameInput') nameInput: NgModel;
+
+  private _hubConnection: HubConnection | undefined;
 
   constructor(
     private directoryService: DirectoryService,
@@ -40,6 +44,23 @@ export class LibraryAddComponent implements OnInit {
     this.drives = [];
     this.directories = [];
     this.prevDirectories = [];
+
+    this._hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl('http://localhost:5000/hubs/library')
+      .configureLogging(signalR.LogLevel.Information)
+      .build();
+
+    this._hubConnection.on('progressReport', (data: any) => {
+      console.log(data);
+      this.progress = data.progressPercentage + '%';
+    });
+
+    this._hubConnection.on('libraryCreated', (data: any) => {
+      console.log(data);
+      this.router.navigate(['libraries', data.libraryId]);
+    });
+
+    this._hubConnection.start();
 
     this.directoryService.getDrives()
       .subscribe(drives => {
@@ -79,9 +100,9 @@ export class LibraryAddComponent implements OnInit {
   }
 
   onBackDirectory() {
-    let prevDirectory = this.prevDirectories.pop();
+    const prevDirectory = this.prevDirectories.pop();
 
-    if (this.prevDirectories.length == 0) {
+    if (this.prevDirectories.length === 0) {
       this.selectedDirectory = null;
       this.selectedDirectoryPath = prevDirectory.name;
     } else {
@@ -95,12 +116,7 @@ export class LibraryAddComponent implements OnInit {
   createLibrary(form: NgForm) {
     if (form.valid) {
       this.submitting = true;
-      this.libraryService.create(this.name, this.selectedLibraryType, this.selectedDirectory.path)
-        .subscribe((createdResponse) => {
-          this.libraryService.libraryUpdated.next(true);
-          this.submitting = false;
-          this.router.navigate(['libraries', createdResponse.id]);
-        });
+      this._hubConnection.invoke('Create', this.selectedLibraryType, this.name, this.selectedDirectory.path);
     }
   }
 

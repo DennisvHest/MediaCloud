@@ -14,7 +14,7 @@ namespace MediaCloud.Services {
 		/// <param name="name">Name of the new library.</param>
 		/// <param name="folderPath">Path to the folder with files to include in the new library.</param>
 		/// <returns></returns>
-        Task<T> Create(string name, string folderPath);
+        Task<T> Create(string name, string folderPath, Action<int> progressReportCallback);
         Task<IEnumerable<T>> Get();
         Task<T> Get(int id);
     }
@@ -27,7 +27,7 @@ namespace MediaCloud.Services {
             _unitOfWork = unitOfWork;
         }
 
-        public Task<Library> Create(string name, string folderPath) {
+        public Task<Library> Create(string name, string folderPath, Action<int> progressReportCallback) {
             throw new NotImplementedException("Not implemented yet.");
         }
 

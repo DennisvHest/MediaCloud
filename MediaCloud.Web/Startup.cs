@@ -6,6 +6,7 @@ using MediaCloud.Domain.Repositories;
 using MediaCloud.Domain.Repositories.Movie;
 using MediaCloud.Domain.Repositories.Series;
 using MediaCloud.Services;
+using MediaCloud.Web.Hubs;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -43,6 +44,15 @@ namespace MediaCloud.Web {
       services.AddTransient<IEpisodeService, EpisodeService>();
       services.AddTransient<IMediaService, MediaService>();
       services.AddTransient<IFileExplorationService, FileExplorationService>();
+
+      services.AddCors(options => options.AddPolicy("CorsPolicy",
+        builder => {
+          builder.AllowAnyMethod().AllowAnyHeader()
+            .WithOrigins("http://localhost:5000", "http://localhost:4200")
+            .AllowCredentials();
+        }));
+
+      services.AddSignalR();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -65,6 +75,11 @@ namespace MediaCloud.Web {
       app.UseMvcWithDefaultRoute();
       app.UseDefaultFiles();
       app.UseStaticFiles();
+      app.UseCors("CorsPolicy");
+
+      app.UseSignalR(routes => {
+        routes.MapHub<LibraryHub>("/hubs/library");
+      });
     }
   }
 }

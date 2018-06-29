@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using MediaCloud.Domain.Entities;
 using MediaCloud.Domain.Repositories;
-using MediaCloud.Domain.Repositories.Library;
 using MediaCloud.Domain.Repositories.Movie;
 
 namespace MediaCloud.Services {
@@ -21,7 +21,7 @@ namespace MediaCloud.Services {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<MovieLibrary> Create(string name, string folderPath) {
+        public async Task<MovieLibrary> Create(string name, string folderPath, Action<int> progressReportCallback) {
             MovieLibrary library = new MovieLibrary { Name = name };
 
             IEnumerable<Movie> movies = new List<Movie>();

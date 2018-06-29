@@ -73,6 +73,6 @@
     </button>
   </form>
   <div *ngIf="submitting" id="library-create-progress" class="progress m-a-0">
-    <div class="indeterminate"></div>
+    <div class="determinate" [style.width]="progress"></div>
   </div>
 </div>

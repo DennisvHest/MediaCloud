@@ -22,9 +22,7 @@ namespace MediaCloud.Domain.Repositories.Series {
         /// <returns>A list of series matching the query.</returns>
         Task<IEnumerable<Entities.Series>> SearchSeries(string query);
 
-        Task<IEnumerable<Entities.Series>> SearchSeries(
-            IEnumerable<IGrouping<string, TvMediaSearchModel>> seriesSearchModels,
-            Action<Entities.Series, IGrouping<string, TvMediaSearchModel>> callback);
+        Task<IEnumerable<Entities.Series>> SearchSeries(IEnumerable<IGrouping<string, TvMediaSearchModel>> seriesSearchModels, Action<Entities.Series, IGrouping<string, TvMediaSearchModel>> callback, Action<int> progressReportCallback);
     }
 
     public class TmdbSeriesApiRepository : ISeriesApiRepository {
@@ -32,6 +30,9 @@ namespace MediaCloud.Domain.Repositories.Series {
         private readonly TMDbClient _tmdbClient;
 
         private static int _requestCount;
+        private static int _seriesTaskCount;
+        private static double _progress;
+        private static Action<int> _progressReportCallback;
 
         public TmdbSeriesApiRepository(TMDbClient tmdbClient) {
             _tmdbClient = tmdbClient;
@@ -47,14 +48,20 @@ namespace MediaCloud.Domain.Repositories.Series {
             }
         }
 
-        public async Task<IEnumerable<Entities.Series>> SearchSeries(IEnumerable<IGrouping<string, TvMediaSearchModel>> seriesSearchModels, Action<Entities.Series, IGrouping<string, TvMediaSearchModel>> callback) {
+        public async Task<IEnumerable<Entities.Series>> SearchSeries(IEnumerable<IGrouping<string, TvMediaSearchModel>> seriesSearchModels, Action<Entities.Series, IGrouping<string, TvMediaSearchModel>> callback, Action<int> progressReportCallback) {
+            _progressReportCallback = progressReportCallback;
+
             //Retrieve all movie genres in one request to assign them fully later
             List<Genre> tvGenres = await _tmdbClient.GetTvGenresAsync();
 
             //Create tasks to fetch search results from the API and wait until all of them are complete and add them to the found series
+            _seriesTaskCount = seriesSearchModels.Count();
+
             IEnumerable<Task<Entities.Series>> seriesSearchTasks = seriesSearchModels.Select(m => SearchSeries(m, tvGenres, callback));
             IEnumerable<Entities.Series> foundSeries = await Task.WhenAll(seriesSearchTasks);
-            _requestCount = 0;
+
+            ResetProgress();
+
             foundSeries = foundSeries.Where(s => s != null);
 
             return foundSeries;
@@ -71,10 +78,16 @@ namespace MediaCloud.Domain.Repositories.Series {
             SearchTv foundSeries = searchResult.Results[0];
             IEnumerable<int> seasons = seasonEpisodePairs.Select(se => se.Season).Distinct();
 
+            int totalRequestCount = 1 + seasons.Count();
+
+            AddProgress((double)1 / totalRequestCount);
+
             IList<TvSeason> foundSeasons = new List<TvSeason>();
 
             //Retrieve required seasons
-            foreach (int season in seasons) {
+            for (int seasonIndex = 0; seasonIndex < seasons.Count(); seasonIndex++) {
+                int season = seasons.ElementAt(seasonIndex);
+
                 TvSeason foundSeason = await _tmdbClient.GetTvSeasonAsync(foundSeries.Id, season);
                 IncrementRequestCount();
 
@@ -87,6 +100,8 @@ namespace MediaCloud.Domain.Repositories.Series {
                 foundSeason.Episodes = foundSeason.Episodes.Where(e => episodes.Contains(e.EpisodeNumber)).ToList();
 
                 foundSeasons.Add(foundSeason);
+
+                AddProgress((double)1 / totalRequestCount);
             }
 
             Entities.Series series = new Entities.Series(foundSeries, foundSeasons);
@@ -138,6 +153,19 @@ namespace MediaCloud.Domain.Repositories.Series {
 
             if (_requestCount % 30 == 0)
                 Thread.Sleep(new TimeSpan(0, 0, 10));
+        }
+
+        private static void AddProgress(double singleSeriesProgress) {
+            _progress += (1 / (double)_seriesTaskCount) * singleSeriesProgress;
+
+            _progressReportCallback((int)(_progress * 100));
+        }
+
+        private static void ResetProgress() {
+            _requestCount = 0;
+            _seriesTaskCount = 0;
+            _progress = 0;
+            _progressReportCallback = null;
         }
     }
 }

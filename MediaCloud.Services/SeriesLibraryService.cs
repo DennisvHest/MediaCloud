@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -22,7 +23,7 @@ namespace MediaCloud.Services {
             _seriesApiRepository = seriesApiRepository;
         }
 
-        public async Task<SeriesLibrary> Create(string name, string folderPath) {
+        public async Task<SeriesLibrary> Create(string name, string folderPath, Action<int> progressReportCallback) {
             IEnumerable<Series> series = new List<Series>();
             List<Media> media = new List<Media>();
 
@@ -64,7 +65,7 @@ namespace MediaCloud.Services {
                         media.Add(new Media { Episode = episode, FileLocation = episodeFile.FileInfo.FullName, Library = library });
                     }
                 }
-            });
+            }, progressReportCallback);
 
 //            foreach (IGrouping<string, TvMediaSearchModel> seriesSearchModel in groupedSeries) {
 //                //Search series in API
