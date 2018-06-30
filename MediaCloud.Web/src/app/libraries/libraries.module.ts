@@ -3,8 +3,6 @@ import { CommonModule } from '@angular/common';
 import { LibraryDetailComponent } from './library-detail/library-detail.component';
 import { LibraryService } from './library.service';
 import { LibraryRoutingModule } from './libraries-routing.module';
-import { ItemCardComponent } from '../items/item-card/item-card.component';
-import { AppModule } from '../app.module';
 import { LayoutModule } from '../layout/layout.module';
 import { ItemsModule } from '../items/items.module';
 import { McCommonModule } from '../common/mc-common.module';

@@ -1,11 +1,9 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { Directory } from '../../models/directory';
 import { DirectoryService } from '../directory.service';
 import { LibraryService } from '../../libraries/library.service';
 import { NgModel, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HubConnection } from '@aspnet/signalr';
-import * as signalR from '@aspnet/signalr';
 
 @Component({
   selector: 'mc-library-add',
@@ -27,12 +25,10 @@ export class LibraryAddComponent implements OnInit {
 
   showDirectoriesLoader = true;
   submitting = false;
-  progress: string;
+  progress: any;
 
   @ViewChild('selectedDirectoryPathInput') selectedDirectoryPathInput: NgModel;
   @ViewChild('nameInput') nameInput: NgModel;
-
-  private _hubConnection: HubConnection | undefined;
 
   constructor(
     private directoryService: DirectoryService,
@@ -44,23 +40,6 @@ export class LibraryAddComponent implements OnInit {
     this.drives = [];
     this.directories = [];
     this.prevDirectories = [];
-
-    this._hubConnection = new signalR.HubConnectionBuilder()
-      .withUrl('http://localhost:5000/hubs/library')
-      .configureLogging(signalR.LogLevel.Information)
-      .build();
-
-    this._hubConnection.on('progressReport', (data: any) => {
-      console.log(data);
-      this.progress = data.progressPercentage + '%';
-    });
-
-    this._hubConnection.on('libraryCreated', (data: any) => {
-      console.log(data);
-      this.router.navigate(['libraries', data.libraryId]);
-    });
-
-    this._hubConnection.start();
 
     this.directoryService.getDrives()
       .subscribe(drives => {
@@ -113,10 +92,22 @@ export class LibraryAddComponent implements OnInit {
     this.updateDirectoryView(prevDirectory.path ? prevDirectory.path : prevDirectory.name);
   }
 
-  createLibrary(form: NgForm) {
+  async createLibrary(form: NgForm) {
     if (form.valid) {
       this.submitting = true;
-      this._hubConnection.invoke('Create', this.selectedLibraryType, this.name, this.selectedDirectory.path);
+
+      const libraryId = await this.libraryService.create(this.name, this.selectedLibraryType, this.selectedDirectoryPath, (progress) => {
+        // Update progress bar
+        progress.percentage = progress.percentage + '%';
+
+        if (!progress.message) {
+          progress.message = this.progress.message;
+        }
+
+        this.progress = progress;
+      });
+
+      this.router.navigate(['libraries', libraryId]);
     }
   }
 

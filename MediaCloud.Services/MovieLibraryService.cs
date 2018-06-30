@@ -21,7 +21,7 @@ namespace MediaCloud.Services {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<MovieLibrary> Create(string name, string folderPath, Action<int> progressReportCallback) {
+        public async Task<MovieLibrary> Create(string name, string folderPath, Action<int, string> progressReportCallback) {
             MovieLibrary library = new MovieLibrary { Name = name };
 
             IEnumerable<Movie> movies = new List<Movie>();
@@ -35,7 +35,7 @@ namespace MediaCloud.Services {
                 itemFiles.Select(f => new FileInfo(f)),
                 (movie, file) => {
                     media.Add(new Media { Movie = movie, FileLocation = file.FullName, Library = library });
-                });
+                }, progressReportCallback);
 
             library.ItemLibraries = movies.Select(m => new ItemLibrary { Item = m, Library = library }).ToList();
             library.Media = media;

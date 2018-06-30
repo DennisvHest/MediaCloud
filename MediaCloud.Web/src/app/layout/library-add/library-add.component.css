@@ -44,3 +44,10 @@
     width: 100%;
     left: 0;
 }
+
+#library-create-progress span {
+    left: 50%;
+    position: absolute;
+    bottom: 10px;
+    transform: translateX(-50%);
+}

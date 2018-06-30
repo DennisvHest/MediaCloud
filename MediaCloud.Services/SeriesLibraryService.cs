@@ -23,7 +23,7 @@ namespace MediaCloud.Services {
             _seriesApiRepository = seriesApiRepository;
         }
 
-        public async Task<SeriesLibrary> Create(string name, string folderPath, Action<int> progressReportCallback) {
+        public async Task<SeriesLibrary> Create(string name, string folderPath, Action<int, string> progressReportCallback) {
             IEnumerable<Series> series = new List<Series>();
             List<Media> media = new List<Media>();
 

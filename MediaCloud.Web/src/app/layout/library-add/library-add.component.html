@@ -72,7 +72,10 @@
       <span *ngIf="!submitting">Create</span>
     </button>
   </form>
-  <div *ngIf="submitting" id="library-create-progress" class="progress m-a-0">
-    <div class="determinate" [style.width]="progress"></div>
+  <div *ngIf="submitting && progress" id="library-create-progress">
+    <span>{{progress.message}}</span>
+    <div class="progress m-a-0">
+      <div class="determinate" [style.width]="progress.percentage"></div>
+    </div>
   </div>
 </div>

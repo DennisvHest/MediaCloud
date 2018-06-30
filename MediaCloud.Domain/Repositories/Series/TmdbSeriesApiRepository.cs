@@ -22,7 +22,7 @@ namespace MediaCloud.Domain.Repositories.Series {
         /// <returns>A list of series matching the query.</returns>
         Task<IEnumerable<Entities.Series>> SearchSeries(string query);
 
-        Task<IEnumerable<Entities.Series>> SearchSeries(IEnumerable<IGrouping<string, TvMediaSearchModel>> seriesSearchModels, Action<Entities.Series, IGrouping<string, TvMediaSearchModel>> callback, Action<int> progressReportCallback);
+        Task<IEnumerable<Entities.Series>> SearchSeries(IEnumerable<IGrouping<string, TvMediaSearchModel>> seriesSearchModels, Action<Entities.Series, IGrouping<string, TvMediaSearchModel>> callback, Action<int, string> progressReportCallback);
     }
 
     public class TmdbSeriesApiRepository : ISeriesApiRepository {
@@ -32,7 +32,7 @@ namespace MediaCloud.Domain.Repositories.Series {
         private static int _requestCount;
         private static int _seriesTaskCount;
         private static double _progress;
-        private static Action<int> _progressReportCallback;
+        private static Action<int, string> _progressReportCallback;
 
         public TmdbSeriesApiRepository(TMDbClient tmdbClient) {
             _tmdbClient = tmdbClient;
@@ -48,7 +48,7 @@ namespace MediaCloud.Domain.Repositories.Series {
             }
         }
 
-        public async Task<IEnumerable<Entities.Series>> SearchSeries(IEnumerable<IGrouping<string, TvMediaSearchModel>> seriesSearchModels, Action<Entities.Series, IGrouping<string, TvMediaSearchModel>> callback, Action<int> progressReportCallback) {
+        public async Task<IEnumerable<Entities.Series>> SearchSeries(IEnumerable<IGrouping<string, TvMediaSearchModel>> seriesSearchModels, Action<Entities.Series, IGrouping<string, TvMediaSearchModel>> callback, Action<int, string> progressReportCallback) {
             _progressReportCallback = progressReportCallback;
 
             //Retrieve all movie genres in one request to assign them fully later
@@ -80,7 +80,7 @@ namespace MediaCloud.Domain.Repositories.Series {
 
             int totalRequestCount = 1 + seasons.Count();
 
-            AddProgress((double)1 / totalRequestCount);
+            AddProgress((double)1 / totalRequestCount, $"Retrieving info for '{foundSeries.Name}'");
 
             IList<TvSeason> foundSeasons = new List<TvSeason>();
 
@@ -155,10 +155,10 @@ namespace MediaCloud.Domain.Repositories.Series {
                 Thread.Sleep(new TimeSpan(0, 0, 10));
         }
 
-        private static void AddProgress(double singleSeriesProgress) {
+        private static void AddProgress(double singleSeriesProgress, string message = null) {
             _progress += (1 / (double)_seriesTaskCount) * singleSeriesProgress;
 
-            _progressReportCallback((int)(_progress * 100));
+            _progressReportCallback((int)(_progress * 100), message);
         }
 
         private static void ResetProgress() {

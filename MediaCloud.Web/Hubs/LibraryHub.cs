@@ -1,4 +1,3 @@
-using System;
 using System.Threading.Tasks;
 using MediaCloud.Common.Enums;
 using MediaCloud.Domain.Entities;
@@ -17,25 +16,23 @@ namespace MediaCloud.Web.Hubs {
       _seriesLibraryService = seriesLibraryService;
     }
 
-    public async Task Create(LibraryType type, string name, string folderPath) {
-      void ProgressReportCallback(int progressPercentage) {
-        Clients.Caller.SendAsync("progressReport", new { progressPercentage });
+    public async Task<int?> Create(LibraryType type, string name, string folderPath) {
+      void ProgressReportCallback(int percentage, string message) {
+        Clients.Caller.SendAsync("progressReport", new { percentage, message });
       }
 
       Library newLibrary = null;
 
       switch (type) {
-        //        case LibraryType.Movies:
-        //        Task.Run(() => {
-        //          newLibrary = _movieLibraryService.Create(name, folderPath, progressReportCallback);
-        //        });
-        //        break;
+        case LibraryType.Movies:
+        newLibrary = await _movieLibraryService.Create(name, folderPath, ProgressReportCallback);
+        break;
         case LibraryType.Series:
         newLibrary = await _seriesLibraryService.Create(name, folderPath, ProgressReportCallback);
         break;
       }
 
-      await Clients.Caller.SendAsync("libraryCreated", new { libraryId = newLibrary?.Id });
+      return newLibrary?.Id;
     }
   }
 }
