@@ -206,7 +206,8 @@ namespace MediaCloud.Domain.Migrations
                 {
                     b.HasOne("MediaCloud.Domain.Entities.Season", "Season")
                         .WithMany("Episodes")
-                        .HasForeignKey("SeasonId");
+                        .HasForeignKey("SeasonId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MediaCloud.Domain.Entities.ItemGenre", b =>
@@ -239,22 +240,26 @@ namespace MediaCloud.Domain.Migrations
                 {
                     b.HasOne("MediaCloud.Domain.Entities.Episode", "Episode")
                         .WithMany("Media")
-                        .HasForeignKey("EpisodeId");
+                        .HasForeignKey("EpisodeId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MediaCloud.Domain.Entities.Library", "Library")
                         .WithMany("Media")
-                        .HasForeignKey("LibraryId");
+                        .HasForeignKey("LibraryId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("MediaCloud.Domain.Entities.Movie", "Movie")
                         .WithMany("Media")
-                        .HasForeignKey("MovieId");
+                        .HasForeignKey("MovieId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("MediaCloud.Domain.Entities.Season", b =>
                 {
                     b.HasOne("MediaCloud.Domain.Entities.Series", "Series")
                         .WithMany("Seasons")
-                        .HasForeignKey("SeriesId");
+                        .HasForeignKey("SeriesId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

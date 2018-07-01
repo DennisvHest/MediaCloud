@@ -55,6 +55,10 @@ export class SideNavComponent implements OnInit {
     this.addLibraryModalActions.emit({ action: 'modal', params: ['open'] });
   }
 
+  deleteLibrary(id: number) {
+    this.libraryService.delete(id);
+  }
+
   faClass(libraryId: number): string {
     const foundLibrary = this.libraries.find(l => l.id === libraryId);
 

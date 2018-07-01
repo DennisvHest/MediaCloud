@@ -11,8 +11,15 @@
       <i class="material-icons">add</i>
     </button>
   </li>
-  <li *ngFor="let library of libraries">
+  <li *ngFor="let library of libraries" >
     <a class="waves-effect waves-light" [routerLink]="['/libraries', library.id]">
-      <i class="fa fa-{{faClass(library.id)}}"></i>{{library.name}}</a>
+      <i class="fa fa-{{faClass(library.id)}}"></i>{{library.name}}
+    </a>
+    <a materialize="dropdown" [materializeParams]="[{alignment:'left', closeOnClick:true, coverTrigger:false}]" class='dropdown-trigger icon-btn waves-effect waves-light btn-flat' href="#" [attr.data-activates]="'library-' + library.id + '-menu'"><i class="material-icons">more_horiz</i></a>
+      <ul id='library-{{library.id}}-menu' class='dropdown-content'>
+        <li>
+          <a href="#!" (click)="deleteLibrary(library.id)">Delete</a>
+        </li>
+      </ul>
   </li>
 </ul>

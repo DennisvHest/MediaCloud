@@ -53,5 +53,10 @@ namespace MediaCloud.Services {
         public async Task<MovieLibrary> Get(int id) {
             return await _unitOfWork.MovieLibraries.Get(id);
         }
+
+        public async Task Delete(Library library) {
+            _unitOfWork.MovieLibraries.Remove((MovieLibrary)library);
+            await _unitOfWork.Complete();
+        }
     }
 }

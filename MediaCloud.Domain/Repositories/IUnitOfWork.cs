@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using MediaCloud.Domain.Repositories.Episode;
+using MediaCloud.Domain.Repositories.Genre;
 using MediaCloud.Domain.Repositories.Item;
 using MediaCloud.Domain.Repositories.Library;
 using MediaCloud.Domain.Repositories.Media;
@@ -14,6 +15,7 @@ namespace MediaCloud.Domain.Repositories {
         IMovieLibraryRepository MovieLibraries { get; }
         ISeriesLibraryRepository SeriesLibraries { get; }
         IItemRepository Items { get; }
+        IGenreRepository Genres { get; }
         IMovieRepository Movies { get; }
         ISeasonRepository Seasons { get; }
         IEpisodeRepository Episodes { get; }

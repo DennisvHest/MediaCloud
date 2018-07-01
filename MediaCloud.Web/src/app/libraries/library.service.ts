@@ -50,4 +50,10 @@ export class LibraryService implements OnDestroy {
   ngOnDestroy(): void {
     this._hubConnection.stop();
   }
+
+  delete(id: number) {
+    this.http.delete(`${LibraryService.librariesUrl}/${id}`).subscribe(() => {
+      this.libraryUpdated.next(true);
+    });
+  }
 }

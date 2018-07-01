@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using MediaCloud.Domain.Entities;
 using MediaCloud.Domain.Repositories;
@@ -17,6 +18,7 @@ namespace MediaCloud.Services {
         Task<T> Create(string name, string folderPath, Action<int, string> progressReportCallback);
         Task<IEnumerable<T>> Get();
         Task<T> Get(int id);
+        Task Delete(Library library);
     }
 
     public class LibraryService : ILibraryService<Library> {
@@ -37,6 +39,13 @@ namespace MediaCloud.Services {
 
         public async Task<Library> Get(int id) {
             return await _unitOfWork.Libraries.Get(id);
+        }
+
+        public async Task Delete(Library library) {
+            _unitOfWork.Genres.RemoveRange(_unitOfWork.Genres.Find(g => g.ItemGenres.Any(ig => !ig.Item.ItemLibraries.Any(il => il.LibraryId != library.Id))));
+            _unitOfWork.Items.RemoveRange(library.ItemLibraries.Where(il => !il.Item.ItemLibraries.Any(l => l.LibraryId != library.Id)).Select(il => il.Item));
+            _unitOfWork.Libraries.Remove(library);
+            await _unitOfWork.Complete();
         }
     }
 }

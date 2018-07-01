@@ -36,7 +36,7 @@ namespace MediaCloud.Domain.Repositories.Library {
                         existingItemGenres.FirstOrDefault(x => x.GenreId == itemGenre.Genre.Id);
 
                     if (existingItemGenre != null) {
-                        Genre localEntry = MediaCloudContext.Set<Genre>().Local.FirstOrDefault(entry => entry.Id == itemGenre.Genre.Id);
+                        Entities.Genre localEntry = MediaCloudContext.Set<Entities.Genre>().Local.FirstOrDefault(entry => entry.Id == itemGenre.Genre.Id);
 
                         //Make sure an already attached genre isn't attached again
                         if (localEntry != null)

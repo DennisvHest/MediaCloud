@@ -67,27 +67,6 @@ namespace MediaCloud.Services {
                 }
             }, progressReportCallback);
 
-//            foreach (IGrouping<string, TvMediaSearchModel> seriesSearchModel in groupedSeries) {
-//                //Search series in API
-//                Series foundSeries = await _seriesApiRepository.SearchSingleSeriesInclusive(seriesSearchModel.Key, seriesSearchModel.Select(m => m.SeasonEpisodePair));
-//
-//                if (foundSeries == null) continue;
-//
-//                foreach (Season season in foundSeries.Seasons) {
-//                    foreach (Episode episode in season.Episodes) {
-//                        TvMediaSearchModel episodeFile = seriesSearchModel.FirstOrDefault(m =>
-//                            m.SeasonEpisodePair.Season == season.SeasonNumber &&
-//                            m.SeasonEpisodePair.Episode == episode.EpisodeNumber);
-//
-//                        if (episodeFile == null) continue;
-//
-//                        media.Add(new Media { Episode = episode, FileLocation = episodeFile.FileInfo.FullName, Library = library });
-//                    }
-//                }
-//
-//                series.Add(foundSeries);
-//            }
-
             series = series.DistinctBy(s => s.Id).ToList();
             
             library.ItemLibraries = series.Select(m => new ItemLibrary { Item = m, Library = library }).ToList();
@@ -105,6 +84,11 @@ namespace MediaCloud.Services {
 
         public Task<SeriesLibrary> Get(int id) {
             throw new System.NotImplementedException();
+        }
+
+        public async Task Delete(Library library) {
+            _unitOfWork.SeriesLibraries.Remove((SeriesLibrary)library);
+            await _unitOfWork.Complete();
         }
     }
 }

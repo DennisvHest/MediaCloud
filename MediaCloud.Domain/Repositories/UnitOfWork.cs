@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using MediaCloud.Domain.Repositories.Episode;
+using MediaCloud.Domain.Repositories.Genre;
 using MediaCloud.Domain.Repositories.Item;
 using MediaCloud.Domain.Repositories.Library;
 using MediaCloud.Domain.Repositories.Media;
@@ -16,6 +17,7 @@ namespace MediaCloud.Domain.Repositories {
         public IMovieLibraryRepository MovieLibraries { get; }
         public ISeriesLibraryRepository SeriesLibraries { get; }
         public IItemRepository Items { get; }
+        public IGenreRepository Genres { get; }
         public IMovieRepository Movies { get; }
         public ISeasonRepository Seasons { get; }
         public IEpisodeRepository Episodes { get; }
@@ -27,6 +29,7 @@ namespace MediaCloud.Domain.Repositories {
             SeriesLibraries = new SeriesLibraryRepository(context);
             Libraries = new LibraryRepository(context);
             Items = new ItemRepository(context);
+            Genres = new GenreRepository(context);
             Movies = new MovieRepository(context);
             Seasons = new SeasonRepository(context);
             Episodes = new EpisodeRepository(context);

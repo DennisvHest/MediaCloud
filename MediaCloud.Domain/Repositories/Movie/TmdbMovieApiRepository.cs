@@ -50,7 +50,7 @@ namespace MediaCloud.Domain.Repositories.Movie {
             _progressReportCallback = progressReportCallback;
 
             //Retrieve all movie genres in one request to assign them fully later
-            List<Genre> movieGenres = await _tmdbClient.GetMovieGenresAsync();
+            List<TMDbLib.Objects.General.Genre> movieGenres = await _tmdbClient.GetMovieGenresAsync();
 
             //Create tasks to fetch search results from the API and wait until all of them are complete and add them to the found movies
             _movieTaskCount = files.Count();
@@ -65,7 +65,7 @@ namespace MediaCloud.Domain.Repositories.Movie {
             return foundMovies;
         }
 
-        private async Task<Entities.Movie> SearchMovie(FileInfo file, IEnumerable<Genre> movieGenres, Action<Entities.Movie, FileInfo> callback, Action<int, string> progressReportCallback) {
+        private async Task<Entities.Movie> SearchMovie(FileInfo file, IEnumerable<TMDbLib.Objects.General.Genre> movieGenres, Action<Entities.Movie, FileInfo> callback, Action<int, string> progressReportCallback) {
             SearchContainer<SearchMovie> searchResult = await _tmdbClient.SearchMovieAsync(Path.GetFileNameWithoutExtension(file.Name), includeAdult: true);
             IncrementRequestCount();
             AddProgress(1, $"Retrieving info for '{Path.GetFileNameWithoutExtension(file.Name)}'");
@@ -92,7 +92,7 @@ namespace MediaCloud.Domain.Repositories.Movie {
             SearchContainer<SearchMovie> searchResult = await _tmdbClient.SearchMovieAsync(query, includeAdult: true);
 
             //Retrieve all movie genres in one request to assign them fully later
-            List<Genre> movieGenres = await _tmdbClient.GetMovieGenresAsync();
+            List<TMDbLib.Objects.General.Genre> movieGenres = await _tmdbClient.GetMovieGenresAsync();
 
             return searchResult.Results.Select(r => {
                 Entities.Movie movie = new Entities.Movie(r);

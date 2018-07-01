@@ -52,7 +52,7 @@ namespace MediaCloud.Domain.Repositories.Series {
             _progressReportCallback = progressReportCallback;
 
             //Retrieve all movie genres in one request to assign them fully later
-            List<Genre> tvGenres = await _tmdbClient.GetTvGenresAsync();
+            List<TMDbLib.Objects.General.Genre> tvGenres = await _tmdbClient.GetTvGenresAsync();
 
             //Create tasks to fetch search results from the API and wait until all of them are complete and add them to the found series
             _seriesTaskCount = seriesSearchModels.Count();
@@ -67,7 +67,7 @@ namespace MediaCloud.Domain.Repositories.Series {
             return foundSeries;
         }
 
-        private async Task<Entities.Series> SearchSeries(IGrouping<string, TvMediaSearchModel> seriesSearchModel, IEnumerable<Genre> tvGenres, Action<Entities.Series, IGrouping<string, TvMediaSearchModel>> callback) {
+        private async Task<Entities.Series> SearchSeries(IGrouping<string, TvMediaSearchModel> seriesSearchModel, IEnumerable<TMDbLib.Objects.General.Genre> tvGenres, Action<Entities.Series, IGrouping<string, TvMediaSearchModel>> callback) {
             SearchContainer<SearchTv> searchResult = await _tmdbClient.SearchTvShowAsync(seriesSearchModel.Key);
             IncrementRequestCount();
 

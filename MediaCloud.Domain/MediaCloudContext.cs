@@ -36,12 +36,19 @@ namespace MediaCloud.Domain {
             modelBuilder.Entity<ItemLibrary>()
                 .HasOne(li => li.Item)
                 .WithMany(li => li.ItemLibraries)
-                .HasForeignKey(li => li.ItemId);
+                .HasForeignKey(li => li.ItemId)
+                .IsRequired();
 
             modelBuilder.Entity<ItemLibrary>()
                 .HasOne(li => li.Library)
                 .WithMany(li => li.ItemLibraries)
-                .HasForeignKey(li => li.LibraryId);
+                .HasForeignKey(li => li.LibraryId)
+                .IsRequired();
+
+            modelBuilder.Entity<Item>()
+                .HasMany(g => g.ItemLibraries)
+                .WithOne(ig => ig.Item)
+                .OnDelete(DeleteBehavior.Cascade);
 
             //Item-Genre many-to-many
             modelBuilder.Entity<ItemGenre>().HasKey(il => new { il.ItemId, il.GenreId });
@@ -49,12 +56,44 @@ namespace MediaCloud.Domain {
             modelBuilder.Entity<ItemGenre>()
                 .HasOne(li => li.Item)
                 .WithMany(li => li.ItemGenres)
-                .HasForeignKey(li => li.ItemId);
+                .HasForeignKey(li => li.ItemId)
+                .IsRequired();
 
             modelBuilder.Entity<ItemGenre>()
                 .HasOne(li => li.Genre)
                 .WithMany(li => li.ItemGenres)
-                .HasForeignKey(li => li.GenreId);
+                .HasForeignKey(li => li.GenreId)
+                .IsRequired();
+
+            modelBuilder.Entity<Genre>()
+                .HasMany(g => g.ItemGenres)
+                .WithOne(ig => ig.Genre)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Season>()
+                .HasOne(s => s.Series)
+                .WithMany(s => s.Seasons)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Episode>()
+                .HasOne(e => e.Season)
+                .WithMany(s => s.Episodes)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Media>()
+                .HasOne(m => m.Episode)
+                .WithMany(e => e.Media)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Media>()
+                .HasOne(m => m.Library)
+                .WithMany(l => l.Media)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Media>()
+                .HasOne(m => m.Movie)
+                .WithMany(m => m.Media)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

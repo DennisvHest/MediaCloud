@@ -56,20 +56,16 @@ namespace MediaCloud.Web.Controllers {
       return Ok(new ApiLibrary(library, itemsOnly: true));
     }
 
-//    [HttpPost]
-//    public async Task<IActionResult> Create(LibraryType type, string name, string folderPath) {
-//      Library newLibrary = null;
-//
-//      switch (type) {
-//        case LibraryType.Movies:
-//          newLibrary = await _movieLibraryService.Create(name, folderPath);
-//          break;
-//        case LibraryType.Series:
-//          newLibrary = await _seriesLibraryService.Create(name, folderPath);
-//          break;
-//      }
-//
-//      return CreatedAtAction("Get", "Libraries", new { id = newLibrary?.Id });
-//    }
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id) {
+      Library library = await _libraryService.Get(id);
+
+      if (library == null)
+        return NotFound();
+
+      await _libraryService.Delete(library);
+
+      return Ok();
+    }
   }
 }

@@ -84,6 +84,7 @@ namespace MediaCloud.Domain.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     SeasonNumber = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
+                    PosterPath = table.Column<string>(nullable: true),
                     SeriesId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -94,7 +95,7 @@ namespace MediaCloud.Domain.Migrations
                         column: x => x.SeriesId,
                         principalTable: "Items",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -129,6 +130,8 @@ namespace MediaCloud.Domain.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     EpisodeNumber = table.Column<int>(nullable: false),
                     Title = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    StillPath = table.Column<string>(nullable: true),
                     SeasonId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -139,7 +142,7 @@ namespace MediaCloud.Domain.Migrations
                         column: x => x.SeasonId,
                         principalTable: "Season",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -161,19 +164,19 @@ namespace MediaCloud.Domain.Migrations
                         column: x => x.EpisodeId,
                         principalTable: "Episodes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Media_Libraries_LibraryId",
                         column: x => x.LibraryId,
                         principalTable: "Libraries",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Media_Items_MovieId",
                         column: x => x.MovieId,
                         principalTable: "Items",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
