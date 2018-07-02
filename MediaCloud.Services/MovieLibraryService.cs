@@ -55,6 +55,8 @@ namespace MediaCloud.Services {
         }
 
         public async Task Delete(Library library) {
+            _unitOfWork.Genres.RemoveRange(_unitOfWork.Genres.Find(g => g.ItemGenres.Any(ig => ig.Item.ItemLibraries.All(il => il.LibraryId == library.Id))));
+            _unitOfWork.Items.RemoveRange(library.ItemLibraries.Where(il => il.Item.ItemLibraries.All(l => l.LibraryId == library.Id)).Select(il => il.Item));
             _unitOfWork.MovieLibraries.Remove((MovieLibrary)library);
             await _unitOfWork.Complete();
         }

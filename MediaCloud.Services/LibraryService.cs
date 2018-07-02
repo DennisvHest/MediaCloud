@@ -21,7 +21,11 @@ namespace MediaCloud.Services {
         Task Delete(Library library);
     }
 
-    public class LibraryService : ILibraryService<Library> {
+    public interface ILibraryService : ILibraryService<Library> {
+        IEnumerable<Library> GetHomeLibraries();
+    }
+
+    public class LibraryService : ILibraryService {
 
         private readonly IUnitOfWork _unitOfWork;
 
@@ -42,10 +46,14 @@ namespace MediaCloud.Services {
         }
 
         public async Task Delete(Library library) {
-            _unitOfWork.Genres.RemoveRange(_unitOfWork.Genres.Find(g => g.ItemGenres.Any(ig => !ig.Item.ItemLibraries.Any(il => il.LibraryId != library.Id))));
-            _unitOfWork.Items.RemoveRange(library.ItemLibraries.Where(il => !il.Item.ItemLibraries.Any(l => l.LibraryId != library.Id)).Select(il => il.Item));
+            _unitOfWork.Genres.RemoveRange(_unitOfWork.Genres.Find(g => g.ItemGenres.Any(ig => ig.Item.ItemLibraries.All(il => il.LibraryId == library.Id))));
+            _unitOfWork.Items.RemoveRange(library.ItemLibraries.Where(il => il.Item.ItemLibraries.All(l => l.LibraryId == library.Id)).Select(il => il.Item));
             _unitOfWork.Libraries.Remove(library);
             await _unitOfWork.Complete();
+        }
+
+        public IEnumerable<Library> GetHomeLibraries() {
+            return _unitOfWork.Libraries.GetHomeLibraries();
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using MediaCloud.Domain.Entities;
 
 namespace MediaCloud.Web.Models {
@@ -6,6 +7,7 @@ namespace MediaCloud.Web.Models {
 
     public int Id { get; set; }
     public string FileLocation { get; set; }
+    public DateTime DateAdded { get; set; }
 
     public virtual ApiEpisode Episode { get; set; }
     public virtual ApiMovie Movie { get; set; }
@@ -14,6 +16,7 @@ namespace MediaCloud.Web.Models {
     public ApiMedia(Media media, bool backInclusive = false) {
       Id = media.Id;
       FileLocation = media.FileLocation;
+      DateAdded = media.DateAdded;
 
       if (backInclusive) {
         if (media.Episode != null)

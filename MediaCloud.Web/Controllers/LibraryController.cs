@@ -12,11 +12,11 @@ namespace MediaCloud.Web.Controllers {
   [Route("api/libraries")]
   public class LibraryController : Controller {
 
-    private readonly ILibraryService<Library> _libraryService;
+    private readonly ILibraryService _libraryService;
     private readonly ILibraryService<MovieLibrary> _movieLibraryService;
     private readonly ILibraryService<SeriesLibrary> _seriesLibraryService;
 
-    public LibraryController(ILibraryService<Library> libraryService, ILibraryService<MovieLibrary> movieLibraryService, ILibraryService<SeriesLibrary> seriesLibraryService) {
+    public LibraryController(ILibraryService libraryService, ILibraryService<MovieLibrary> movieLibraryService, ILibraryService<SeriesLibrary> seriesLibraryService) {
       _libraryService = libraryService;
       _movieLibraryService = movieLibraryService;
       _seriesLibraryService = seriesLibraryService;
@@ -27,6 +27,13 @@ namespace MediaCloud.Web.Controllers {
       IEnumerable<Library> libraries = await _libraryService.Get();
 
       return Ok(libraries.Select(l => new ApiLibrary(l)));
+    }
+
+    [HttpGet("home")]
+    public IActionResult Home() {
+      IEnumerable<Library> libraries = _libraryService.GetHomeLibraries();
+
+      return Ok(libraries.Select(l => new ApiLibrary(l, mediaOnly: true)));
     }
 
     [HttpGet("list")]
