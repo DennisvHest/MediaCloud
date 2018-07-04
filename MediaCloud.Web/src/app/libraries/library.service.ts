@@ -28,6 +28,10 @@ export class LibraryService implements OnDestroy {
     return this.http.get<Library<Item>>(`${LibraryService.librariesUrl}/${id}/items`);
   }
 
+  getHome(): Observable<Library<Item>[]> {
+    return this.http.get<Library<Item>[]>(`${LibraryService.librariesUrl}/home`);
+  }
+
   async create(name: string, type: number, folderPath: string, onProgressReport: (progress: any) => void): Promise<number> {
     // Bind progress report callbacks.
     this._hubConnection.off('progressReport');

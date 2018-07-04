@@ -27,6 +27,10 @@
     position: absolute;
 }
 
+#side-bar li a:not(.dropdown-trigger) {
+    width: 100%;
+}
+
 li a, li i {
     color: white;
 }

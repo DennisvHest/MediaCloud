@@ -9,14 +9,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MediaCloud.Domain.Migrations
 {
     [DbContext(typeof(MediaCloudContext))]
-    [Migration("20180702124741_AddedDateAddedToMedia")]
-    partial class AddedDateAddedToMedia
+    [Migration("20180704134948_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rc1-32029");
+                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
 
             modelBuilder.Entity("MediaCloud.Domain.Entities.Episode", b =>
                 {

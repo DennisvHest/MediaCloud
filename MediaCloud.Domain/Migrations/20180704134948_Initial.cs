@@ -152,6 +152,7 @@ namespace MediaCloud.Domain.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     FileLocation = table.Column<string>(nullable: true),
+                    DateAdded = table.Column<DateTime>(nullable: false),
                     EpisodeId = table.Column<int>(nullable: true),
                     MovieId = table.Column<int>(nullable: true),
                     LibraryId = table.Column<int>(nullable: true)

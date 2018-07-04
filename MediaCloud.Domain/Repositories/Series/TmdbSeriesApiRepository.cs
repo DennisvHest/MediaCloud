@@ -68,6 +68,9 @@ namespace MediaCloud.Domain.Repositories.Series {
         }
 
         private async Task<Entities.Series> SearchSeries(IGrouping<string, TvMediaSearchModel> seriesSearchModel, IEnumerable<TMDbLib.Objects.General.Genre> tvGenres, Action<Entities.Series, IGrouping<string, TvMediaSearchModel>> callback) {
+            if (WaitForNextRequest())
+                Thread.Sleep(new TimeSpan(0, 0, 10));
+
             SearchContainer<SearchTv> searchResult = await _tmdbClient.SearchTvShowAsync(seriesSearchModel.Key);
             IncrementRequestCount();
 
@@ -87,6 +90,9 @@ namespace MediaCloud.Domain.Repositories.Series {
             //Retrieve required seasons
             for (int seasonIndex = 0; seasonIndex < seasons.Count(); seasonIndex++) {
                 int season = seasons.ElementAt(seasonIndex);
+
+                if (WaitForNextRequest())
+                    Thread.Sleep(new TimeSpan(0, 0, 10));
 
                 TvSeason foundSeason = await _tmdbClient.GetTvSeasonAsync(foundSeries.Id, season);
                 IncrementRequestCount();
@@ -150,9 +156,10 @@ namespace MediaCloud.Domain.Repositories.Series {
 
         private static void IncrementRequestCount() {
             _requestCount++;
+        }
 
-            if (_requestCount % 30 == 0)
-                Thread.Sleep(new TimeSpan(0, 0, 10));
+        private static bool WaitForNextRequest() {
+            return _requestCount != 0 && _requestCount % 30 == 0;
         }
 
         private static void AddProgress(double singleSeriesProgress, string message = null) {

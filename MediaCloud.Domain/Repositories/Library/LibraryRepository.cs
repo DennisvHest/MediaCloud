@@ -3,6 +3,7 @@ using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace MediaCloud.Domain.Repositories.Library {
 
@@ -26,7 +27,7 @@ namespace MediaCloud.Domain.Repositories.Library {
 	        DbSet<Entities.Library> libraries = MediaCloudContext.Libraries;
 
 	        foreach (Entities.Library library in libraries) {
-	            library.Media = library.Media.Where(m => m.Movie != null || m.Episode != null).OrderByDescending(m => m.DateAdded).Take(5).ToList();
+	            library.Media = library.Media.Where(m => m.MovieId != null || m.EpisodeId != null).OrderByDescending(m => m.DateAdded).Take(6).ToList();
 	        }
 
 	        return libraries;

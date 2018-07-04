@@ -24,7 +24,8 @@ import { McCommonModule } from '../common/mc-common.module';
     ItemCardComponent,
     SeasonCardComponent,
     SeasonDetailComponent,
-    EpisodeCardComponent, EpisodeDetailComponent
+    EpisodeCardComponent,
+    EpisodeDetailComponent
   ],
   exports: [
     ItemDetailComponent,

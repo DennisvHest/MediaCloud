@@ -83,16 +83,19 @@ namespace MediaCloud.Domain {
             modelBuilder.Entity<Media>()
                 .HasOne(m => m.Episode)
                 .WithMany(e => e.Media)
+                .HasForeignKey(m => m.EpisodeId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Media>()
                 .HasOne(m => m.Library)
                 .WithMany(l => l.Media)
+                .HasForeignKey(m => m.LibraryId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Media>()
                 .HasOne(m => m.Movie)
                 .WithMany(m => m.Media)
+                .HasForeignKey(m => m.MovieId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

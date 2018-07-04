@@ -14,7 +14,7 @@ namespace MediaCloud.Domain.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.0-rc1-32029");
+                .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
 
             modelBuilder.Entity("MediaCloud.Domain.Entities.Episode", b =>
                 {

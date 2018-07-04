@@ -1,0 +1,18 @@
+<div class="card item-card">
+    <div class="card-image placeholder">
+        <img mcImagePlaceholder [hiResImageUrl]="posterUrl" src="{{posterPlaceHolder}}">
+    </div>
+    <div class="card-content p-t-xs">
+        <a [routerLink]="itemLink">
+            <span class="card-title">{{mediaTitle}}</span>
+        </a>
+        <p *ngIf="itemType == 'Series'">
+            <a [routerLink]="['items', 'seasons', media.episode.season.id]">
+                <span class="new badge left m-t-xs m-l-0 m-r-xs" data-badge-caption="">Season {{media.episode.season.seasonNumber}}</span>
+            </a>
+            <a [routerLink]="['items', 'episodes', media.episode.id]">
+                <span class="new badge left m-t-xs m-l-0 m-r-xs" data-badge-caption="">Episode {{media.episode.episodeNumber}}</span>
+            </a>
+        </p>
+    </div>
+</div>

@@ -7,6 +7,9 @@ namespace MediaCloud.Domain.Entities {
         public int Id { get; set; }
         public string FileLocation { get; set; }
         public DateTime DateAdded { get; set; }
+        public int? EpisodeId { get; set; }
+        public int? MovieId { get; set; }
+        public int? LibraryId { get; set; }
         
         public virtual Episode Episode { get; set; }
         public virtual Movie Movie { get; set; }
