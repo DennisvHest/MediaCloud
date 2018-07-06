@@ -3,8 +3,8 @@
     <mc-library-add *ngIf="loadLibraryAddModal"></mc-library-add>
   </div>
 </div>
-<ul materialize="sideNav" [materializeActions]="sideNavActions" [materializeParams]="[{ draggable: false }]" id="side-bar"
-  class="side-nav fixed">
+<ul [@openState]="isOpen" materialize="sideNav" [materializeActions]="sideNavActions" [materializeParams]="[{ draggable: false }]" id="side-bar"
+  class="side-nav">
   <li class="d-inline-flex">
     <a class="subheader p-r-xs">Libraries</a>
     <button (click)="openAddLibraryModal()" class="icon-btn waves-effect waves-light btn-flat m-t-xxs modal-trigger">

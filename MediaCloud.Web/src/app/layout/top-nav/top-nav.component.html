@@ -1,5 +1,6 @@
 <nav>
   <div class="nav-wrapper">
+    <button id="side-bar-btn" class="btn nav-btn waves-effect waves-light" (click)="onMenuClick()"><i class="material-icons">menu</i></button>
     <div class="input-field col s12">
       <select2 [data]="autocompleteData" [options]="autocompleteOptions" (valueChanged)="onAutocompleteSelect($event)"></select2>
     </div>

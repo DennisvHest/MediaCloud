@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { MediaRoutingModule } from './media-routing.module';
 import { PlayerComponent } from './player/player.component';
-import { MediaCardComponent } from './media-card/media-card.component';
 import { McCommonModule } from '../common/mc-common.module';
 
 @NgModule({
@@ -13,12 +12,8 @@ import { McCommonModule } from '../common/mc-common.module';
         McCommonModule
     ],
     declarations: [
-        PlayerComponent,
-        MediaCardComponent
+        PlayerComponent
     ],
-    providers: [],
-    exports: [
-        MediaCardComponent
-    ]
+    providers: []
 })
 export class MediaModule { }

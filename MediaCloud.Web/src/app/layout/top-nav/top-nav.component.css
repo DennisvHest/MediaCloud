@@ -55,3 +55,32 @@ select2 {
 :host ::ng-deep li.select2-results__option.select2-results__message {
     display: none;
 }
+
+.nav-wrapper * {
+    display: inline-block;
+}
+
+.nav-wrapper i {
+    line-height: initial;
+    height: initial;
+}
+
+.nav-btn {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    margin-top: -12px;
+    width: 64px;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.nav-btn i {
+    line-height: 64px;
+}
+
+@media only screen and (min-width: 992px) {
+    #side-bar-btn {
+        display: none;
+    }
+}

@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Item } from '../../models/item';
 import { AppSettings } from '../../../AppSettings';
-import { Library } from '../../models/library';
+import { ItemCardModel } from '../../models/view-models/item-card-model';
 
 @Component({
   selector: 'mc-item-card',
@@ -10,7 +9,7 @@ import { Library } from '../../models/library';
 })
 export class ItemCardComponent implements OnInit {
 
-  @Input() item: Item;
+  @Input() item: ItemCardModel;
 
   constructor() { }
 
@@ -18,10 +17,18 @@ export class ItemCardComponent implements OnInit {
   }
 
   get posterUrl(): string {
-    return AppSettings.imageUrl(this.item.posterPath, 'w342');
+    return AppSettings.imageUrl(this.item.posterPath ? this.item.posterPath : this.item.backupPosterPath, this.item.imageWidth);
   }
 
   get posterPlaceHolder(): string {
     return AppSettings.posterPlaceHolder;
+  }
+
+  get stillUrl(): string {
+    return AppSettings.imageUrl(this.item.stillPath ? this.item.stillPath : this.item.backupStillPath, 'w300');
+  }
+
+  get stillPlaceHolder(): string {
+    return AppSettings.stillPlaceHolder;
   }
 }

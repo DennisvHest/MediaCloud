@@ -4,6 +4,7 @@ import { ItemService } from '../item.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { AppSettings } from '../../../AppSettings';
 import 'rxjs/add/operator/switchMap';
+import { ItemCardModel } from '../../models/view-models/item-card-model';
 
 @Component({
   selector: 'mc-season-detail',
@@ -13,10 +14,10 @@ import 'rxjs/add/operator/switchMap';
 export class SeasonDetailComponent implements OnInit {
 
   season: Season;
+  episodeCardModels: ItemCardModel[];
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private itemService: ItemService
   ) { }
 
@@ -25,6 +26,12 @@ export class SeasonDetailComponent implements OnInit {
       this.itemService.getSeason(+params.get('id')))
       .subscribe(r => {
         this.season = r;
+
+        for (const episode of this.season.episodes) {
+          episode.season = this.season;
+        }
+
+        this.episodeCardModels = r.episodes.map(e => new ItemCardModel(null, null, e, null));
       });
   }
 

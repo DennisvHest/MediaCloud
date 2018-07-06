@@ -12,6 +12,8 @@ import { NgProgressHttpModule } from '@ngx-progressbar/http';
 import { LayoutComponent } from './layout/layout/layout.component';
 import { ItemService } from './items/item.service';
 import { HomeComponent } from './home/home/home.component';
+import { ItemsModule } from './items/items.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
   {
@@ -32,6 +34,7 @@ const appRoutes: Routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot(
@@ -44,7 +47,8 @@ const appRoutes: Routes = [
     }),
     NgProgressHttpModule,
     LayoutModule,
-    MediaModule
+    MediaModule,
+    ItemsModule
   ],
   providers: [
     LibraryService,

@@ -5,3 +5,13 @@
 p {
     color: #a9adb5;
 }
+
+.item-card {
+    display: -ms-grid;
+    display: grid;
+    height: 100%;
+}
+
+.card-image img {
+    height: 100%;
+}

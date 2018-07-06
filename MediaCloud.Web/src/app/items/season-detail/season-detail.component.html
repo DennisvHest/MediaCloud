@@ -12,7 +12,7 @@
             </div>
             <hr class="m-y-md m-x-xs" />
             <div class="col s12">
-                <mc-episode-card *ngFor="let episode of season.episodes" [episode]="episode" [parentSeries]="season.series" class="col s12 m5 l4 xl4 p-l-0 p-r-md"></mc-episode-card>
+                <mc-item-card *ngFor="let episode of episodeCardModels" [item]="episode" class="col s12 m5 l4 xl4 p-l-0 p-r-md"></mc-item-card>
             </div>
         </div>
     </div>

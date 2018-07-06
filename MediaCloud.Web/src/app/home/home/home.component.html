@@ -1,5 +1,5 @@
 <div *ngFor="let library of libraries" class="row p-x-lg p-t-lg m-a-0">
   <h5 class="p-x-md">Recently added to '{{library.name}}'</h5>
   <hr class="m-x-md m-y">
-  <mc-media-card *ngFor="let media of library.media" [media]="media" class="col s12 m4 l3 xl2 p-x-md"></mc-media-card>
+  <mc-item-card *ngFor="let media of itemCardModels.get(library)" [item]="media" class="col s12 m4 l3 xl2 p-x-md"></mc-item-card>
 </div>

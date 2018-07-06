@@ -225,6 +225,16 @@ input:not([readonly]).ng-touched.ng-invalid, input:focus:not([readonly]).ng-touc
     position: fixed;
 }
 
+.row-eq-height {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
 .d-inline-block {
     display: inline-block;
 }
@@ -917,3 +927,9 @@ hr {
 .w66 { width: 66.66667% !important; }
 
 .w100 { width: 100% !important; }
+
+@media only screen and (max-width: 992px) {
+    #main-content {
+        padding-left: 0px;
+    }
+}

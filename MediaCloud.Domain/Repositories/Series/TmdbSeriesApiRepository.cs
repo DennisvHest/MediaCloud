@@ -71,8 +71,8 @@ namespace MediaCloud.Domain.Repositories.Series {
             if (WaitForNextRequest())
                 Thread.Sleep(new TimeSpan(0, 0, 10));
 
-            SearchContainer<SearchTv> searchResult = await _tmdbClient.SearchTvShowAsync(seriesSearchModel.Key);
             IncrementRequestCount();
+            SearchContainer<SearchTv> searchResult = await _tmdbClient.SearchTvShowAsync(seriesSearchModel.Key);
 
             IEnumerable<SeasonEpisodePair> seasonEpisodePairs = seriesSearchModel.Select(m => m.SeasonEpisodePair);
 
@@ -94,8 +94,8 @@ namespace MediaCloud.Domain.Repositories.Series {
                 if (WaitForNextRequest())
                     Thread.Sleep(new TimeSpan(0, 0, 10));
 
-                TvSeason foundSeason = await _tmdbClient.GetTvSeasonAsync(foundSeries.Id, season);
                 IncrementRequestCount();
+                TvSeason foundSeason = await _tmdbClient.GetTvSeasonAsync(foundSeries.Id, season);
 
                 if (foundSeason == null) continue;
 
@@ -155,7 +155,7 @@ namespace MediaCloud.Domain.Repositories.Series {
         }
 
         private static void IncrementRequestCount() {
-            _requestCount++;
+            _requestCount = _requestCount + 1;
         }
 
         private static bool WaitForNextRequest() {
@@ -163,7 +163,7 @@ namespace MediaCloud.Domain.Repositories.Series {
         }
 
         private static void AddProgress(double singleSeriesProgress, string message = null) {
-            _progress += (1 / (double)_seriesTaskCount) * singleSeriesProgress;
+            _progress += 1 / (double)_seriesTaskCount * singleSeriesProgress;
 
             _progressReportCallback((int)(_progress * 100), message);
         }

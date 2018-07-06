@@ -3,6 +3,7 @@ import { ItemService } from '../item.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Item } from '../../models/item';
 import { AppSettings } from '../../../AppSettings';
+import { ItemCardModel } from '../../models/view-models/item-card-model';
 
 @Component({
   selector: 'mc-item-detail',
@@ -12,6 +13,7 @@ import { AppSettings } from '../../../AppSettings';
 export class ItemDetailComponent implements OnInit {
 
   item: Item;
+  seasonCardModels: ItemCardModel[];
 
   constructor(
     private route: ActivatedRoute,
@@ -24,6 +26,12 @@ export class ItemDetailComponent implements OnInit {
       .subscribe(r => {
         r.releaseDate = new Date(r.releaseDate);
         this.item = r;
+
+        for (const season of this.item.seasons) {
+          season.series = this.item;
+        }
+
+        this.seasonCardModels = this.item.seasons.map(s => new ItemCardModel(null, s, null, null));
       });
   }
 

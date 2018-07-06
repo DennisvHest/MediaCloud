@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Select2OptionData } from 'ng2-select2';
 import { ItemService } from '../../items/item.service';
 import { Router } from '@angular/router';
+import { LayoutService } from '../layout.service';
 
 @Component({
   selector: 'mc-top-nav',
@@ -14,7 +15,7 @@ export class TopNavComponent implements OnInit {
   autocompleteOptions: Select2Options;
 
   constructor(
-    private itemService: ItemService,
+    private layoutService: LayoutService,
     private router: Router
   ) { }
 
@@ -41,6 +42,10 @@ export class TopNavComponent implements OnInit {
       },
       placeholder: 'Search for items in your libraries...'
     };
+  }
+
+  onMenuClick() {
+    this.layoutService.sideNavIsOpen.next(!this.layoutService.sideNavIsOpen.getValue());
   }
 
   onAutocompleteSelect(input: any) {

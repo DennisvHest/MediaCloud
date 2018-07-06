@@ -1,13 +1,21 @@
-<div class="card item-card">
+<div class="card item-card {{item.cardType}}-item-card">
     <div class="card-image placeholder">
-        <img mcImagePlaceholder [hiResImageUrl]="posterUrl" src="{{posterPlaceHolder}}">
+        <img *ngIf="item.posterPath || item.backupPosterPath" mcImagePlaceholder [hiResImageUrl]="posterUrl" src="{{posterPlaceHolder}}">
+        <img *ngIf="item.stillPath || item.backupStillPath" mcImagePlaceholder [hiResImageUrl]="stillUrl" src="{{stillPlaceHolder}}">
     </div>
     <div class="card-content p-t-xs">
-        <a [routerLink]="['/items', item.id]">
+        <a [routerLink]="item.linkPath">
             <span class="card-title">{{item.title}}</span>
         </a>
-        <p *ngIf="item.itemType == 'Series'">
-            <span class="new badge left m-t-xs m-l-0" data-badge-caption="Seasons">{{item.seasonCount}}</span>
+        <p>
+            <span *ngFor="let badge of item.badges" class="new badge left m-t-xs m-l-0 m-r-xs" data-badge-caption="">
+                <a *ngIf="badge.linkPath && badge.linkPath.length" [routerLink]="badge.linkPath">
+                    {{badge.text}}
+                </a>
+                <span *ngIf="!badge.linkPath || !badge.linkPath.length">
+                    {{badge.text}}
+                </span>
+            </span>
         </p>
     </div>
 </div>

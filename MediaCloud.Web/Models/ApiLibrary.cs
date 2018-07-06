@@ -29,7 +29,8 @@ namespace MediaCloud.Web.Models {
           });
         }
 
-        Media = library.Media.Select(m => new ApiMedia(m, mediaOnly));
+        if (!itemsOnly)
+          Media = library.Media.Select(m => new ApiMedia(m, mediaOnly));
       }
     }
   }
